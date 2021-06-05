@@ -1,0 +1,26 @@
+{
+  "name": "orca-typescript-sdk",
+  "version": "1.0.0",
+  "description": "Typescript SDK for the Orca DEX.",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@solana/spl-token": "^0.1.5",
+    "@solana/spl-token-swap": "^0.1.0",
+    "@solana/web3.js": "^1.17.0",
+    "decimal.js": "^10.2.1"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^4.11.6",
+    "@types/decimal.js": "^7.4.0",
+    "@types/node": "^12.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc --watch",
+    "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src"
+  }
+}
