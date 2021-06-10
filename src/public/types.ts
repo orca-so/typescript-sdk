@@ -22,4 +22,10 @@ export type OrcaPool = {
      * @return Returns the amount of LP token the user owns for this pool.
      */
     getLPBalance: (wallet: PublicKey) => Promise<number>
+
+    /**
+     * Query the supply of LP tokens for this pool.
+     * @return Returns the supply of LP tokens for this pool
+     */
+    getLPSupply:() => Promise<number>
 }

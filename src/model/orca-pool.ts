@@ -7,7 +7,7 @@ import { orcaPoolConfigs } from './pools'
 import { findAssociatedTokenAddress } from '../utils/find-associated-token-address'
 import { deserializeAccount } from '../utils/deserialize-account'
 import { shiftByDecimal } from '../utils/decimal-utils'
-import Decimal from 'decimal.js'
+import { u64 } from '@solana/spl-token'
 
 
 export class OrcaPoolFactory {
@@ -43,5 +43,11 @@ class OrcaPoolImpl implements OrcaPool {
         }
 
         return shiftByDecimal(result.amount, this.poolParams.poolTokenDecimals).toNumber()
-    };
+    }
+
+    public async getLPSupply(): Promise<number> {
+        const context = await this.connection.getTokenSupply(this.poolParams.poolTokenMint)
+        const amt = new u64(context.value.amount)
+        return shiftByDecimal(amt, this.poolParams.poolTokenDecimals).toNumber()
+    }
 }
