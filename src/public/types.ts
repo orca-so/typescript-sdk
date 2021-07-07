@@ -1,4 +1,4 @@
-import { PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { OrcaPoolConfig } from "./pools";
@@ -48,6 +48,23 @@ export type OrcaPool = {
    * @return Returns a quote on the exchanged token based on the input token amount
    */
   getQuote: (inputTokenId: string, inputAmount: Decimal, slippage: number) => Promise<Quote>;
+
+  // TODO: amountIn & minimumAmountOut type should be u64
+  /**
+   * Perform a swap from the input type to the other token in the pool.
+   * Fee for the transaction will be paid by the owner's wallet.
+   *
+   * @param owner The keypair for the user's wallet
+   * @param inputTokenId An Orca supported token id in the user's wallet to swap from
+   * @param amountIn The amount of inputToken to swap from
+   * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
+   */
+  swap: (
+    owner: Keypair,
+    inputTokenId: string,
+    amountIn: number,
+    minimumAmountOut: number
+  ) => Promise<void>;
 };
 
 export type Quote = {
