@@ -18,6 +18,8 @@
     "@typescript-eslint/parser": "^4.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^6.0.0",
+    "husky": "^7.0.1",
+    "lint-staged": ">=10",
     "prettier": "^2.3.2",
     "typescript": "^4.3.2"
   },
@@ -25,6 +27,10 @@
     "build": "tsc -p .",
     "watch": "tsc --watch",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "yarn run prettier-format"
   }
 }
