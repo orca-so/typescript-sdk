@@ -47,11 +47,7 @@ export type OrcaPool = {
    * @param slippage The slippage in percentage you are willing to take in this trade
    * @return Returns a quote on the exchanged token based on the input token amount
    */
-  getQuote: (
-    inputTokenId: string,
-    inputAmount: Decimal,
-    slippage: number
-  ) => Promise<Quote>;
+  getQuote: (inputTokenId: string, inputAmount: Decimal, slippage: number) => Promise<Quote>;
 };
 
 export type Quote = {
