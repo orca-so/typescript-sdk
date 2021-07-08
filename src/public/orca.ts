@@ -1,6 +1,6 @@
-import { Connection } from '@solana/web3.js'
-import { OrcaImpl } from '../model/orca-impl'
-import { Orca } from './types'
+import { Connection } from "@solana/web3.js";
+import { OrcaImpl } from "../model/orca-impl";
+import { Orca } from "./types";
 
 /**
  * Retrieve an instance of the Orca SDK
@@ -8,5 +8,5 @@ import { Orca } from './types'
  * @returns An instance of Orca SDK
  */
 export function getOrca(connection: Connection): Orca {
-    return new OrcaImpl(connection)
+  return new OrcaImpl(connection);
 }
