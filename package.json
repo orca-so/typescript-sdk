@@ -1,7 +1,7 @@
 {
   "name": "orca-typescript-sdk",
   "version": "1.0.0",
-  "description": "Typescript SDK for the Orca DEX.",
+  "description": "Typescript SDK for the Orca protocol.",
   "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {
@@ -16,11 +16,15 @@
     "@types/node": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
+    "prettier": "^2.3.2",
     "typescript": "^4.3.2"
   },
   "scripts": {
     "build": "tsc -p .",
     "watch": "tsc --watch",
-    "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src"
+    "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   }
 }
