@@ -24,9 +24,7 @@ export const ethUsdcPool: OrcaPoolParams = Object.freeze({
   address: new PublicKey("DY8qBwVGLeLJSrWib7L16mL7oB4HNAQ2f9yiYWKof54v"),
   nonce: 255,
   authority: new PublicKey("82oSibpDKnPZ2Yk1vn6McjCsQQbKfBkGeEh5FsqeVrtU"),
-  poolTokenAddress: new PublicKey(
-    "7TYb32qkwYosUQfUspU45cou7Bb3nefJocVMFX2mEGTT"
-  ),
+  poolTokenAddress: new PublicKey("7TYb32qkwYosUQfUspU45cou7Bb3nefJocVMFX2mEGTT"),
   poolTokenMint: new PublicKey("7TYb32qkwYosUQfUspU45cou7Bb3nefJocVMFX2mEGTT"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("AcMaBVt6S43JQXKnEDqdicxYofb5Cj1UgFWF9AsurTp6"),

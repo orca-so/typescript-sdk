@@ -21,12 +21,8 @@ export function getTokens(
 
   const forward = tokenAId == inputTokenId;
 
-  const inputOrcaToken = forward
-    ? poolParams.tokens[tokenAId]
-    : poolParams.tokens[tokenBId];
-  const outputOrcaToken = forward
-    ? poolParams.tokens[tokenBId]
-    : poolParams.tokens[tokenAId];
+  const inputOrcaToken = forward ? poolParams.tokens[tokenAId] : poolParams.tokens[tokenBId];
+  const outputOrcaToken = forward ? poolParams.tokens[tokenBId] : poolParams.tokens[tokenAId];
   return [inputOrcaToken, outputOrcaToken];
 }
 

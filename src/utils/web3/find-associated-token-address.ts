@@ -8,11 +8,7 @@ export async function findAssociatedTokenAddress(
 ): Promise<PublicKey> {
   return (
     await PublicKey.findProgramAddress(
-      [
-        walletAddress.toBuffer(),
-        TOKEN_PROGRAM_ID.toBuffer(),
-        tokenMint.toBuffer(),
-      ],
+      [walletAddress.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), tokenMint.toBuffer()],
       SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
     )
   )[0];

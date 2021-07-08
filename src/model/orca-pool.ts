@@ -6,11 +6,7 @@ import { defaultSlippagePercentage } from "../constants/orca-defaults";
 import { orcaPoolConfigs } from "../constants/pools";
 import { deserializeAccount } from "../utils/web3/deserialize-account";
 import { findAssociatedTokenAddress } from "../utils/web3/find-associated-token-address";
-import {
-  getTokens,
-  PoolTokenCount,
-  getTokenCount,
-} from "../utils/web3/get-token-count";
+import { getTokens, PoolTokenCount, getTokenCount } from "../utils/web3/get-token-count";
 import { OrcaPoolParams } from "./orca/orca-types";
 import { QuotePoolParams, QuoteBuilderFactory } from "./quote/quote-builder";
 import { DecimalUtil } from "../utils/decimal-utils";
@@ -40,10 +36,7 @@ class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getLPBalance(user: PublicKey): Promise<number> {
-    const address = await findAssociatedTokenAddress(
-      user,
-      this.poolParams.poolTokenMint
-    );
+    const address = await findAssociatedTokenAddress(user, this.poolParams.poolTokenMint);
 
     // TODO: SOL account handling
     const accountInfo = await this.connection.getAccountInfo(address);
@@ -57,23 +50,15 @@ class OrcaPoolImpl implements OrcaPool {
       throw new Error("Failed to parse user account for LP token.");
     }
 
-    return DecimalUtil.fromU64(
-      result.amount,
-      this.poolParams.poolTokenDecimals
-    ).toNumber();
+    return DecimalUtil.fromU64(result.amount, this.poolParams.poolTokenDecimals).toNumber();
   }
 
   public async getLPSupply(): Promise<number> {
-    const context = await this.connection.getTokenSupply(
-      this.poolParams.poolTokenMint
-    );
+    const context = await this.connection.getTokenSupply(this.poolParams.poolTokenMint);
 
     const amt = new u64(context.value.amount);
 
-    return DecimalUtil.fromU64(
-      amt,
-      this.poolParams.poolTokenDecimals
-    ).toNumber();
+    return DecimalUtil.fromU64(amt, this.poolParams.poolTokenDecimals).toNumber();
   }
 
   public async getQuote(
@@ -82,16 +67,11 @@ class OrcaPoolImpl implements OrcaPool {
     slippage?: number
   ): Promise<Quote> {
     const slippageTolerance =
-      slippage === undefined
-        ? defaultSlippagePercentage
-        : PercentageUtils.fromNumber(slippage);
+      slippage === undefined ? defaultSlippagePercentage : PercentageUtils.fromNumber(slippage);
 
     const feeStructure = this.poolParams.feeStructure;
 
-    const [inputPoolToken, outputPoolToken] = getTokens(
-      this.poolParams,
-      inputTokenId
-    );
+    const [inputPoolToken, outputPoolToken] = getTokens(this.poolParams, inputTokenId);
 
     const poolTokenCount: PoolTokenCount = await getTokenCount(
       this.connection,
@@ -108,9 +88,7 @@ class OrcaPoolImpl implements OrcaPool {
       slippageTolerance: slippageTolerance,
     };
 
-    const quoteBuilder = QuoteBuilderFactory.getBuilder(
-      this.poolParams.curveType
-    );
+    const quoteBuilder = QuoteBuilderFactory.getBuilder(this.poolParams.curveType);
 
     const quote = quoteBuilder?.buildQuote(
       quoteParams,
