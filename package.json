@@ -31,6 +31,6 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,css,md}": "yarn run prettier-format"
+    "*.{ts,md}": "yarn run prettier-format"
   }
 }
