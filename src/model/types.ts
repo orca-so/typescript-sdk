@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js'
+import { PublicKey } from "@solana/web3.js";
 
 /**
  * An Orca token-swap pool
@@ -13,13 +13,13 @@ import { PublicKey } from '@solana/web3.js'
  * @param curveType Trading curve type. 0 - ConstantProduct, 1 - ConstantPrice, 3 - Offset
  */
 export type OrcaPoolParams = {
-    address: PublicKey;
-    nonce: number;
-    authority: PublicKey;
-    poolTokenAddress: PublicKey;
-    poolTokenMint: PublicKey;
-    poolTokenDecimals: number;
-    feeAccount: PublicKey;
-    tokens: Record<string, PublicKey>;
-    curveType: number;
+  address: PublicKey;
+  nonce: number;
+  authority: PublicKey;
+  poolTokenAddress: PublicKey;
+  poolTokenMint: PublicKey;
+  poolTokenDecimals: number;
+  feeAccount: PublicKey;
+  tokens: Record<string, PublicKey>;
+  curveType: number;
 };
