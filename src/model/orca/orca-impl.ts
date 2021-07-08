@@ -1,7 +1,7 @@
 import { Connection } from "@solana/web3.js";
-import { OrcaPoolFactory } from "./orca-pool";
-import { OrcaPoolConfig } from "../public/pools";
-import { Orca, OrcaPool } from "../public/types";
+import { OrcaPoolConfig } from "../../public/pools";
+import { Orca, OrcaPool } from "../../public/types";
+import { OrcaPoolFactory } from "../orca-pool";
 
 export class OrcaImpl implements Orca {
   private connection: Connection;

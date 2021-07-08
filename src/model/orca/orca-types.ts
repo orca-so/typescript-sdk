@@ -1,4 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
+import { Percentage } from "../utils/percentage";
 
 /**
  * An Orca token-swap pool
@@ -20,6 +21,30 @@ export type OrcaPoolParams = {
   poolTokenMint: PublicKey;
   poolTokenDecimals: number;
   feeAccount: PublicKey;
-  tokens: Record<string, PublicKey>;
-  curveType: number;
+  tokenIds: string[];
+  tokens: Record<string, OrcaPoolToken>;
+  curveType: CurveType;
+  feeStructure: FeeStructure;
+};
+
+export type OrcaToken = {
+  name: string;
+  mint: PublicKey;
+  decimals: number;
+};
+
+export type OrcaPoolToken = OrcaToken & {
+  addr: PublicKey;
+};
+
+export enum CurveType {
+  ConstantProduct,
+  ConstantPrice,
+  Stable,
+  Offset,
+}
+
+export type FeeStructure = {
+  traderFee: Percentage;
+  ownerFee: Percentage;
 };
