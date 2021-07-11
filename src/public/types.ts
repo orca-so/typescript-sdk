@@ -1,4 +1,4 @@
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { OrcaPoolConfig } from "./pools";
@@ -58,13 +58,14 @@ export type OrcaPool = {
    * @param inputTokenId An Orca supported token id in the user's wallet to swap from
    * @param amountIn The amount of inputToken to swap from
    * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
+   * @return The transaction signature of the swap instruction
    */
   swap: (
     owner: Keypair,
     inputTokenId: string,
     amountIn: number,
     minimumAmountOut: number
-  ) => Promise<void>;
+  ) => Promise<TransactionSignature>;
 };
 
 export type Quote = {

@@ -1,11 +1,11 @@
-import { Connection, Keypair, PublicKey, Signer } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey, Signer, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaPoolConfig, OrcaPool, Quote } from "..";
 import { defaultSlippagePercentage } from "../constants/orca-defaults";
 import { orcaPoolConfigs } from "../constants/pools";
 import { deserializeAccount } from "../utils/web3/deserialize-account";
 import { findAssociatedTokenAddress } from "../utils/web3/find-associated-token-address";
-import { getTokens, PoolTokenCount, getTokenCount } from "../utils/web3/get-token-count";
+import { PoolTokenCount, getTokenCount } from "../utils/web3/get-token-count";
 import { OrcaPoolParams } from "./orca/orca-types";
 import { QuotePoolParams, QuoteBuilderFactory } from "./quote/quote-builder";
 import { DecimalUtil } from "../utils/decimal-utils";
@@ -14,6 +14,7 @@ import TransactionBuilder from "../utils/web3/transactions/transaction-builder";
 import { createApprovalInstruction, createSwapInstruction } from "../utils/web3/instructions";
 import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../utils/web3/transactions/transactions";
+import { getTokens } from "../utils/pool-utils";
 
 export class OrcaPoolFactory {
   getPool(connection: Connection, config: OrcaPoolConfig): OrcaPool {
@@ -111,7 +112,7 @@ class OrcaPoolImpl implements OrcaPool {
     inputTokenId: string,
     amountIn: number,
     minimumAmountOut: number
-  ): Promise<void> {
+  ): Promise<TransactionSignature> {
     const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
     const { approvalInstruction, userTransferAuthority } = await createApprovalInstruction(
       owner.publicKey,
@@ -135,6 +136,6 @@ class OrcaPoolImpl implements OrcaPool {
       .build();
 
     const signers: Signer[] = [owner, userTransferAuthority];
-    await sendAndConfirmTransaction(this.connection, txn, signers);
+    return await sendAndConfirmTransaction(this.connection, txn, signers);
   }
 }

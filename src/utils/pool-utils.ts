@@ -1,9 +1,6 @@
 import { OrcaPoolParams, OrcaPoolToken } from "../model/orca/orca-types";
 
-export function getPoolTokens(
-  poolParams: OrcaPoolParams,
-  inputTokenId: string
-): [OrcaPoolToken, OrcaPoolToken] {
+export function getTokens(poolParams: OrcaPoolParams, inputTokenId: string) {
   if (poolParams.tokens[inputTokenId] == undefined) {
     throw new Error("Input token not part of pool");
   }
@@ -15,5 +12,5 @@ export function getPoolTokens(
 
   const inputOrcaToken = forward ? poolParams.tokens[tokenAId] : poolParams.tokens[tokenBId];
   const outputOrcaToken = forward ? poolParams.tokens[tokenBId] : poolParams.tokens[tokenAId];
-  return [inputOrcaToken, outputOrcaToken];
+  return { inputPoolToken: inputOrcaToken, outputPoolToken: outputOrcaToken };
 }

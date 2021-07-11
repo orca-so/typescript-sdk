@@ -15,7 +15,7 @@ export const createApprovalInstruction = async (
   const amountIn = U64Utils.toU64(approveAmount, token.decimals);
   const userTransferAuthority = new Keypair();
 
-  // TODO: userATA should be mandatory when we build the support case to create ATA if it doesn't exist
+  // TODO: Build stack to support the scenario where ATA does not exist in user wallet
   const approvedTokenUserAddress =
     tokenUserAddress ?? (await findAssociatedTokenAddress(ownerAddress, token.mint));
 
@@ -49,7 +49,7 @@ export const createSwapInstruction = async (
   const amountInU64 = U64Utils.toU64(amountIn, inputToken.decimals);
   const minimumAmountOutU64 = U64Utils.toU64(minimumAmountOut, outputToken.decimals);
 
-  // TODO: userATA should be mandatory when we build the support case to create ATA if it doesn't exist
+  // TODO: Build stack to support the scenario where ATA does not exist in user wallet
   const inputUserAddress =
     inputTokenUserAddress ?? (await findAssociatedTokenAddress(ownerAddress, inputToken.mint));
   const outputUserAddress =
