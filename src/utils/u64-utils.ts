@@ -1,4 +1,5 @@
 import { u64 } from "@solana/spl-token";
+import Decimal from "decimal.js";
 import { OrcaU64 } from "../public/util-types";
 
 export const ZERO = new u64(0);
@@ -26,5 +27,12 @@ export class U64Utils {
     }
 
     return [quotient, divisor];
+  }
+
+  public static toU64(value: number | Decimal, decimals: number): u64 {
+    const shifter = Math.pow(10, decimals);
+    const shiftedValue = typeof value === "number" ? value * shifter : value.mul(shifter);
+
+    return new u64(shiftedValue.toString());
   }
 }

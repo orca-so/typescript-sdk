@@ -1,16 +1,20 @@
-import { Connection, PublicKey } from "@solana/web3.js";
-import { u64 } from "@solana/spl-token";
+import { Connection, Keypair, PublicKey, Signer, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaPoolConfig, OrcaPool, Quote } from "..";
 import { defaultSlippagePercentage } from "../constants/orca-defaults";
 import { orcaPoolConfigs } from "../constants/pools";
 import { deserializeAccount } from "../utils/web3/deserialize-account";
 import { findAssociatedTokenAddress } from "../utils/web3/find-associated-token-address";
-import { getTokens, PoolTokenCount, getTokenCount } from "../utils/web3/get-token-count";
+import { PoolTokenCount, getTokenCount } from "../utils/web3/get-token-count";
 import { OrcaPoolParams } from "./orca/orca-types";
 import { QuotePoolParams, QuoteBuilderFactory } from "./quote/quote-builder";
 import { DecimalUtil } from "../utils/decimal-utils";
 import { PercentageUtils } from "./utils/percentage";
+import TransactionBuilder from "../utils/web3/transactions/transaction-builder";
+import { createApprovalInstruction, createSwapInstruction } from "../utils/web3/instructions";
+import { u64 } from "@solana/spl-token";
+import { sendAndConfirmTransaction } from "../utils/web3/transactions/transactions";
+import { getTokens } from "../utils/pool-utils";
 
 export class OrcaPoolFactory {
   getPool(connection: Connection, config: OrcaPoolConfig): OrcaPool {
@@ -71,7 +75,7 @@ class OrcaPoolImpl implements OrcaPool {
 
     const feeStructure = this.poolParams.feeStructure;
 
-    const [inputPoolToken, outputPoolToken] = getTokens(this.poolParams, inputTokenId);
+    const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
 
     const poolTokenCount: PoolTokenCount = await getTokenCount(
       this.connection,
@@ -100,5 +104,38 @@ class OrcaPoolImpl implements OrcaPool {
     }
 
     return quote;
+  }
+
+  // TODO: Support Wallet Signing - allow user to pass in their own signing handler
+  public async swap(
+    owner: Keypair,
+    inputTokenId: string,
+    amountIn: number,
+    minimumAmountOut: number
+  ): Promise<TransactionSignature> {
+    const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
+    const { approvalInstruction, userTransferAuthority } = await createApprovalInstruction(
+      owner.publicKey,
+      inputPoolToken,
+      amountIn
+    );
+
+    const swapInstruction = await createSwapInstruction(
+      this.poolParams,
+      owner.publicKey,
+      inputPoolToken,
+      outputPoolToken,
+      amountIn,
+      minimumAmountOut,
+      userTransferAuthority.publicKey
+    );
+
+    const txn = await new TransactionBuilder(this.connection, owner.publicKey)
+      .addInstruction(approvalInstruction)
+      .addInstruction(swapInstruction)
+      .build();
+
+    const signers: Signer[] = [owner, userTransferAuthority];
+    return await sendAndConfirmTransaction(this.connection, txn, signers);
   }
 }
