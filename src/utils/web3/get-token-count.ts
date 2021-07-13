@@ -14,11 +14,11 @@ export async function getTokenCount(
   inputPoolToken: OrcaPoolToken,
   outputPoolToken: OrcaPoolToken
 ): Promise<PoolTokenCount> {
-  if (poolParams.tokens[inputPoolToken.name] == undefined) {
+  if (poolParams.tokens[inputPoolToken.id] == undefined) {
     throw new Error("Input token not part of pool");
   }
 
-  if (poolParams.tokens[outputPoolToken.name] == undefined) {
+  if (poolParams.tokens[outputPoolToken.id] == undefined) {
     throw new Error("Output token not part of pool");
   }
 
