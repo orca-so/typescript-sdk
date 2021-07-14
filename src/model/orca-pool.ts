@@ -16,13 +16,7 @@ import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../utils/web3/transactions/transactions";
 import { getTokens } from "../utils/pool-utils";
 
-export class OrcaPoolFactory {
-  getPool(connection: Connection, config: OrcaPoolConfig): OrcaPool {
-    return new OrcaPoolImpl(connection, orcaPoolConfigs[config]);
-  }
-}
-
-class OrcaPoolImpl implements OrcaPool {
+export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
   private poolParams: OrcaPoolParams;
 
