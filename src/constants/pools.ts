@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 import { OrcaPoolConfig } from "..";
-import { OrcaToken, OrcaPoolParams, CurveType } from "../model/orca/orca-types";
+import { OrcaToken, OrcaPoolParams, CurveType } from "../model/orca/pool/pool-types";
 import { PercentageUtils } from "../model/utils/percentage";
 
 /**

@@ -27,6 +27,11 @@ export default class TransactionBuilder {
     return this;
   }
 
+  addCleanUpInstruction(instruction: TransactionInstruction): TransactionBuilder {
+    this.cleanupInstructions.push(instruction);
+    return this;
+  }
+
   async build() {
     const recentBlockHash = (await this.connection.getRecentBlockhash("singleGossip")).blockhash;
     const txFields: TransactionCtorFields = {
