@@ -32,7 +32,7 @@ export type OrcaPool = {
    * @param wallet The public key for the user.
    * @return Returns the amount of LP token the user owns for this pool.
    */
-  getLPBalance: (wallet: PublicKey) => Promise<number>;
+  getLPBalance: (owner: PublicKey) => Promise<number>;
 
   /**
    * Query the supply of LP tokens for this pool.
@@ -53,6 +53,8 @@ export type OrcaPool = {
   /**
    * Perform a swap from the input type to the other token in the pool.
    * Fee for the transaction will be paid by the owner's wallet.
+   *
+   * NOTE: User has to ensure that their owner address has established spl-token accounts for the trading pair.
    *
    * @param owner The keypair for the user's wallet
    * @param inputTokenId An Orca supported token id in the user's wallet to swap from
