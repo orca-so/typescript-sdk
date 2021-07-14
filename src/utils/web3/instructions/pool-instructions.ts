@@ -1,36 +1,39 @@
 import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
-import { Keypair, PublicKey } from "@solana/web3.js";
-import { OrcaPoolParams, OrcaPoolToken } from "../../model/orca/orca-types";
-import { ORCA_TOKEN_SWAP_ID } from "../constants";
-import { U64Utils } from "../u64-utils";
-import { findAssociatedTokenAddress } from "./find-associated-token-address";
+import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { OrcaPoolParams, OrcaPoolToken } from "../../../model/orca/pool/pool-types";
+import { ORCA_TOKEN_SWAP_ID } from "../../constants";
+import { U64Utils } from "../../u64-utils";
 
-export const createApprovalInstruction = async (
+export const createUserTransferAuthrority = (
   ownerAddress: PublicKey,
   token: OrcaPoolToken,
   approveAmount: number,
-  tokenUserAddress?: PublicKey
+  tokenUserAddress: PublicKey
 ) => {
   const amountIn = U64Utils.toU64(approveAmount, token.decimals);
   const userTransferAuthority = new Keypair();
 
-  // TODO: Build stack to support the scenario where ATA does not exist in user wallet
-  const approvedTokenUserAddress =
-    tokenUserAddress ?? (await findAssociatedTokenAddress(ownerAddress, token.mint));
-
   const approvalInstruction = Token.createApproveInstruction(
     TOKEN_PROGRAM_ID,
-    approvedTokenUserAddress,
+    tokenUserAddress,
     userTransferAuthority.publicKey,
     ownerAddress,
     [],
     amountIn
   );
 
+  const revokeInstruction = Token.createRevokeInstruction(
+    TOKEN_PROGRAM_ID,
+    tokenUserAddress,
+    ownerAddress,
+    []
+  );
+
   return {
-    approvalInstruction: approvalInstruction,
     userTransferAuthority: userTransferAuthority,
+    approvalInstruction: approvalInstruction,
+    revokeInstruction: revokeInstruction,
   };
 };
 
@@ -39,21 +42,15 @@ export const createSwapInstruction = async (
   poolParams: OrcaPoolParams,
   ownerAddress: PublicKey,
   inputToken: OrcaPoolToken,
+  inputTokenUserAddress: PublicKey,
   outputToken: OrcaPoolToken,
+  outputTokenUserAddress: PublicKey,
   amountIn: number,
   minimumAmountOut: number,
-  userTransferAuthority: PublicKey,
-  inputTokenUserAddress?: PublicKey,
-  outputTokenUserAddress?: PublicKey
+  userTransferAuthority: PublicKey
 ) => {
   const amountInU64 = U64Utils.toU64(amountIn, inputToken.decimals);
   const minimumAmountOutU64 = U64Utils.toU64(minimumAmountOut, outputToken.decimals);
-
-  // TODO: Build stack to support the scenario where ATA does not exist in user wallet
-  const inputUserAddress =
-    inputTokenUserAddress ?? (await findAssociatedTokenAddress(ownerAddress, inputToken.mint));
-  const outputUserAddress =
-    outputTokenUserAddress ?? (await findAssociatedTokenAddress(ownerAddress, outputToken.mint));
 
   const [authorityForPoolAddress] = await PublicKey.findProgramAddress(
     [poolParams.address.toBuffer()],
@@ -64,10 +61,10 @@ export const createSwapInstruction = async (
     poolParams.address,
     authorityForPoolAddress,
     userTransferAuthority,
-    inputUserAddress,
+    inputTokenUserAddress,
     inputToken.addr,
     outputToken.addr,
-    outputUserAddress,
+    outputTokenUserAddress,
     poolParams.poolTokenMint,
     poolParams.feeAccount,
     ownerAddress,
