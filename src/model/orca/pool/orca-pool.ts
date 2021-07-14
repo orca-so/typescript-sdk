@@ -1,6 +1,5 @@
 import { Connection, Keypair, PublicKey, Signer, TransactionSignature } from "@solana/web3.js";
-import Decimal from "decimal.js";
-import { OrcaPool, Quote } from "../../..";
+import { OrcaPool, OrcaU64, Quote } from "../../..";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { deserializeAccount } from "../../../utils/web3/deserialize-account";
 import {
@@ -10,7 +9,6 @@ import {
 import { PoolTokenCount, getTokenCount } from "../../../utils/web3/get-token-count";
 import { OrcaPoolParams } from "./pool-types";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
-import { DecimalUtil } from "../../../utils/decimal-utils";
 import { PercentageUtils } from "../../utils/percentage";
 import TransactionBuilder from "../../../utils/web3/transactions/transaction-builder";
 import {
@@ -38,7 +36,7 @@ export class OrcaPoolImpl implements OrcaPool {
     return this.poolParams.tokenIds[1];
   }
 
-  public async getLPBalance(owner: PublicKey): Promise<number> {
+  public async getLPBalance(owner: PublicKey): Promise<OrcaU64> {
     const address = await findAssociatedTokenAddress(owner, this.poolParams.poolTokenMint);
 
     // TODO: SOL account handling
@@ -46,27 +44,27 @@ export class OrcaPoolImpl implements OrcaPool {
 
     // User does not have a balance for this account
     if (accountInfo == undefined) {
-      return 0;
+      return OrcaU64.fromNumber(0, this.poolParams.poolTokenDecimals);
     }
     const result = deserializeAccount(accountInfo?.data);
     if (result == undefined) {
       throw new Error("Failed to parse user account for LP token.");
     }
 
-    return DecimalUtil.fromU64(result.amount, this.poolParams.poolTokenDecimals).toNumber();
+    return OrcaU64.fromU64(result.amount, this.poolParams.poolTokenDecimals);
   }
 
-  public async getLPSupply(): Promise<number> {
+  public async getLPSupply(): Promise<OrcaU64> {
     const context = await this.connection.getTokenSupply(this.poolParams.poolTokenMint);
 
     const amt = new u64(context.value.amount);
 
-    return DecimalUtil.fromU64(amt, this.poolParams.poolTokenDecimals).toNumber();
+    return OrcaU64.fromU64(amt, this.poolParams.poolTokenDecimals);
   }
 
   public async getQuote(
     inputTokenId: string,
-    inputAmount: Decimal,
+    inputAmount: OrcaU64,
     slippage?: number
   ): Promise<Quote> {
     const slippageTolerance =
@@ -95,7 +93,7 @@ export class OrcaPoolImpl implements OrcaPool {
 
     const quote = quoteBuilder?.buildQuote(
       quoteParams,
-      DecimalUtil.toU64(inputAmount, inputPoolToken.decimals)
+      inputAmount.shiftToScale(inputPoolToken.decimals).toU64()
     );
 
     if (quote == undefined) {
@@ -108,33 +106,27 @@ export class OrcaPoolImpl implements OrcaPool {
   public async swap(
     owner: Keypair,
     inputTokenId: string,
-    amountIn: number,
-    minimumAmountOut: number
+    amountIn: OrcaU64,
+    minimumAmountOut: OrcaU64
   ): Promise<TransactionSignature> {
     const ownerAddress = owner.publicKey;
     const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
 
-    const userAddresses = await deriveAssociatedTokenAddresses(owner.publicKey, [
-      inputPoolToken.mint,
-      outputPoolToken.mint,
-    ]);
-    const inputPoolTokenUserAddress = userAddresses[0],
-      outputPoolTokenUserAddress = userAddresses[1];
+    const [inputPoolTokenUserAddress, outputPoolTokenUserAddress] =
+      await deriveAssociatedTokenAddresses(owner.publicKey, [
+        inputPoolToken.mint,
+        outputPoolToken.mint,
+      ]);
 
-    console.log(
-      `inputPoolTokenUserAddress - ${inputPoolTokenUserAddress}, outputPoolTokenUserAddress - ${outputPoolTokenUserAddress}`
-    );
     if (inputPoolTokenUserAddress === undefined || outputPoolTokenUserAddress === undefined) {
       throw new Error("Unable to derive input / output token associated address.");
     }
-
-    // TODO: Check balance
 
     const { userTransferAuthority, approvalInstruction, revokeInstruction } =
       createUserTransferAuthrority(
         ownerAddress,
         inputPoolToken,
-        amountIn,
+        amountIn.shiftToScale(inputPoolToken.decimals).toU64(),
         inputPoolTokenUserAddress
       );
 
@@ -145,8 +137,8 @@ export class OrcaPoolImpl implements OrcaPool {
       inputPoolTokenUserAddress,
       outputPoolToken,
       outputPoolTokenUserAddress,
-      amountIn,
-      minimumAmountOut,
+      amountIn.shiftToScale(inputPoolToken.decimals).toU64(),
+      minimumAmountOut.shiftToScale(outputPoolToken.decimals).toU64(),
       userTransferAuthority.publicKey
     );
 

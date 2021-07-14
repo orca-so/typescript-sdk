@@ -1,7 +1,7 @@
 import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaU64 } from "..";
 import { OrcaPoolConfig } from "./pools";
+import { OrcaU64 } from "./utils/orca-u64";
 
 export type Orca = {
   /**
@@ -34,13 +34,13 @@ export type OrcaPool = {
    * @param wallet The public key for the user.
    * @return Returns the amount of LP token the user owns for this pool.
    */
-  getLPBalance: (owner: PublicKey) => Promise<number>;
+  getLPBalance: (owner: PublicKey) => Promise<OrcaU64>;
 
   /**
    * Query the supply of LP tokens for this pool.
    * @return Returns the supply of LP tokens for this pool
    */
-  getLPSupply: () => Promise<number>;
+  getLPSupply: () => Promise<OrcaU64>;
 
   /**
    * Get the latest quote to trade one token to another in this pool
@@ -49,7 +49,7 @@ export type OrcaPool = {
    * @param slippage The slippage in percentage you are willing to take in this trade
    * @return Returns a quote on the exchanged token based on the input token amount
    */
-  getQuote: (inputTokenId: string, inputAmount: Decimal, slippage: number) => Promise<Quote>;
+  getQuote: (inputTokenId: string, inputAmount: OrcaU64, slippage: number) => Promise<Quote>;
 
   // TODO: amountIn & minimumAmountOut type should be u64
   /**
@@ -67,8 +67,8 @@ export type OrcaPool = {
   swap: (
     owner: Keypair,
     inputTokenId: string,
-    amountIn: number,
-    minimumAmountOut: number
+    amountIn: OrcaU64,
+    minimumAmountOut: OrcaU64
   ) => Promise<TransactionSignature>;
 };
 

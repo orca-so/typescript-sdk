@@ -1,6 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { Quote } from "../..";
+import { OrcaU64, Quote } from "../..";
 import { DecimalUtil } from "../../utils/decimal-utils";
 import { U64Utils } from "../../utils/u64-utils";
 import { QuotePoolParams } from "./quote-builder";
@@ -96,18 +96,14 @@ export class ConstantProductPoolQuoteBuilder {
     return {
       getRate: () => getRate(inputTradeAmount, params),
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),
-      getFees: () =>
-        U64Utils.toOrcaU64(getFees(inputTradeAmount, params), params.inputToken.decimals),
+      getFees: () => OrcaU64.fromU64(getFees(inputTradeAmount, params), params.inputToken.decimals),
       getExpectedOutputAmount: () =>
-        U64Utils.toOrcaU64(
+        OrcaU64.fromU64(
           getExpectedOutputAmount(inputTradeAmount, params),
           params.outputToken.decimals
         ),
       getMinOutputAmount: () =>
-        U64Utils.toOrcaU64(
-          getMinimumAmountOut(inputTradeAmount, params),
-          params.outputToken.decimals
-        ),
+        OrcaU64.fromU64(getMinimumAmountOut(inputTradeAmount, params), params.outputToken.decimals),
     };
   }
 }
