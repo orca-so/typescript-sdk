@@ -13,14 +13,17 @@
   "devDependencies": {
     "@types/bn.js": "^4.11.6",
     "@types/decimal.js": "^7.4.0",
+    "@types/jest": "^26.0.24",
     "@types/node": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^6.0.0",
     "husky": "^7.0.1",
+    "jest": "^27.0.6",
     "lint-staged": ">=10",
     "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3",
     "typescript": "^4.3.2"
   },
   "scripts": {
@@ -28,7 +31,8 @@
     "watch": "tsc --watch",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "jest"
   },
   "lint-staged": {
     "*.{ts,md}": "yarn run prettier-format"
