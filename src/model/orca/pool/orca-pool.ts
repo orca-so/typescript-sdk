@@ -2,10 +2,6 @@ import { Connection, Keypair, PublicKey, Signer, TransactionSignature } from "@s
 import { OrcaPool, OrcaU64, Quote } from "../../..";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { deserializeAccount } from "../../../utils/web3/deserialize-account";
-import {
-  deriveAssociatedTokenAddresses,
-  findAssociatedTokenAddress,
-} from "../../../utils/web3/find-associated-token-address";
 import { PoolTokenCount, getTokenCount } from "../../../utils/web3/get-token-count";
 import { OrcaPoolParams } from "./pool-types";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
@@ -13,7 +9,7 @@ import { PercentageUtils } from "../../utils/percentage";
 import TransactionBuilder from "../../../utils/web3/transactions/transaction-builder";
 import {
   createSwapInstruction,
-  createUserTransferAuthrority,
+  createUserTransferAuthority,
 } from "../../../utils/web3/instructions/pool-instructions";
 import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/transactions";
@@ -21,6 +17,10 @@ import { getTokens } from "../../../utils/pool-utils";
 import Decimal from "decimal.js";
 import { U64Utils } from "../../../utils/u64-utils";
 import { OrcaToken } from "../../../public/types";
+import {
+  deriveAssociatedTokenAddress,
+  resolveAssociatedTokenAddress,
+} from "../../../utils/web3/ata-utils";
 
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
@@ -42,9 +42,8 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getLPBalance(owner: PublicKey): Promise<OrcaU64> {
-    const address = await findAssociatedTokenAddress(owner, this.poolParams.poolTokenMint);
+    const address = await deriveAssociatedTokenAddress(owner, this.poolParams.poolTokenMint);
 
-    // TODO: SOL account handling
     const accountInfo = await this.connection.getAccountInfo(address);
 
     // User does not have a balance for this account
@@ -127,23 +126,28 @@ export class OrcaPoolImpl implements OrcaPool {
       "minimumAmountOut"
     );
 
-    const [inputPoolTokenUserAddress, outputPoolTokenUserAddress] =
-      await deriveAssociatedTokenAddresses(owner.publicKey, [
-        inputPoolToken.mint,
-        outputPoolToken.mint,
-      ]);
+    const resolvedInputATA = await resolveAssociatedTokenAddress(
+      this.connection,
+      owner.publicKey,
+      inputPoolToken.mint,
+      amountInU64
+    );
+    const resolvedOutputATA = await resolveAssociatedTokenAddress(
+      this.connection,
+      owner.publicKey,
+      outputPoolToken.mint,
+      amountInU64
+    );
+
+    const inputPoolTokenUserAddress = resolvedInputATA.address,
+      outputPoolTokenUserAddress = resolvedOutputATA.address;
 
     if (inputPoolTokenUserAddress === undefined || outputPoolTokenUserAddress === undefined) {
       throw new Error("Unable to derive input / output token associated address.");
     }
 
     const { userTransferAuthority, approvalInstruction, revokeInstruction } =
-      createUserTransferAuthrority(
-        ownerAddress,
-        inputPoolToken,
-        amountInU64,
-        inputPoolTokenUserAddress
-      );
+      createUserTransferAuthority(ownerAddress, amountInU64, inputPoolTokenUserAddress);
 
     const swapInstruction = await createSwapInstruction(
       this.poolParams,
@@ -158,12 +162,22 @@ export class OrcaPoolImpl implements OrcaPool {
     );
 
     const txn = await new TransactionBuilder(this.connection, ownerAddress)
+      .addInstructions(resolvedInputATA.instructions)
+      .addInstructions(resolvedOutputATA.instructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
+      .addCleanUpInstruction(resolvedInputATA.cleanupInstruction)
+      .addCleanUpInstruction(resolvedOutputATA.cleanupInstruction)
       .addCleanUpInstruction(revokeInstruction)
       .build();
 
-    const signers: Signer[] = [owner, userTransferAuthority];
+    var signers: Signer[] = [
+      owner,
+      userTransferAuthority,
+      ...(resolvedInputATA.signers || []),
+      ...(resolvedOutputATA.signers || []),
+    ];
+
     return await sendAndConfirmTransaction(this.connection, txn, signers);
   }
 }

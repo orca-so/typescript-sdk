@@ -1,13 +1,11 @@
 import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
-import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { OrcaPoolParams, OrcaPoolToken } from "../../../model/orca/pool/pool-types";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
-import { U64Utils } from "../../u64-utils";
 
-export const createUserTransferAuthrority = (
+export const createUserTransferAuthority = (
   ownerAddress: PublicKey,
-  token: OrcaPoolToken,
   approveAmount: u64,
   tokenUserAddress: PublicKey
 ) => {
@@ -36,7 +34,6 @@ export const createUserTransferAuthrority = (
   };
 };
 
-// TODO: SOL & WSOL Handling
 export const createSwapInstruction = async (
   poolParams: OrcaPoolParams,
   ownerAddress: PublicKey,

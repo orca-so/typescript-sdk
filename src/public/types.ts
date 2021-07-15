@@ -56,7 +56,6 @@ export type OrcaPool = {
     slippage: Decimal
   ) => Promise<Quote>;
 
-  // TODO: amountIn & minimumAmountOut type should be u64
   /**
    * Perform a swap from the input type to the other token in the pool.
    * Fee for the transaction will be paid by the owner's wallet.

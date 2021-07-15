@@ -27,7 +27,18 @@ export default class TransactionBuilder {
     return this;
   }
 
-  addCleanUpInstruction(instruction: TransactionInstruction): TransactionBuilder {
+  addInstructions(instructions: TransactionInstruction[] | undefined): TransactionBuilder {
+    if (instructions === undefined) {
+      return this;
+    }
+    this.instructions = this.instructions.concat(instructions);
+    return this;
+  }
+
+  addCleanUpInstruction(instruction: TransactionInstruction | undefined): TransactionBuilder {
+    if (instruction === undefined) {
+      return this;
+    }
     this.cleanupInstructions.push(instruction);
     return this;
   }
