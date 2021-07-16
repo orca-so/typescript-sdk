@@ -1,16 +1,29 @@
-# Orca SDK
+# Orca Typescript SDK
 
-** Insert Blob about SDK here **
+The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca exchange platform.
+
+Learn more Orca [here](https://docs.orca.so).
+
+## Orca Liquidity Pools
+
+- Get detailed quotes and make swaps between trading pairs in an Orca Pool
+- Check your Orca Pool LP token balance and total supply
+
+**Supported Orca Pools**
+- SOLUSDC, SOLUSDT, RAYSOL, ETHSOL, ETHUSDC
+- More coming in the future!
 
 # Installation
 
-Use your environment's package manager to install @orca-so/sdk in your project.
+Use your environment's package manager to install @orca-so/sdk and other related packages into your project.
 
 ```bash
 yarn add @orca-so/sdk
+yarn add @solana/web3.js
 ```
 ```bash
 npm install @orca-so/sdk
+npm install @solana/web3.js
 ```
 
 # Usage
@@ -51,9 +64,20 @@ try {
 }
 
 ```
+# Support
 
-# Contribution
-** Insert Contribution Blob here **
+**Integration Questions**
+
+Have problems integrating with the SDK? Pop by over to our [Discord](https://discord.gg/nSwGWn5KSG) #integrations channel and chat with one of our engineers.
+
+**Issues / Bugs** 
+
+If you found a bug, open up an issue on github with the prefix [ISSUE]. To help us be more effective in resolving the problem, be specific in the steps it took to reproduce the problem (ex. when did the issue occur, code samples, debug logs etc).
+
+**Feedback**
+
+Got ideas on how to improve the system? Open up an issue on github with the prefix [FEEDBACK] and let's brainstorm more about it together!
+
 
 # License
 [MIT](https://choosealicense.com/licenses/mit/)
