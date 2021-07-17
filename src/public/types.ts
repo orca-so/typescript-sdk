@@ -16,13 +16,15 @@ export type Orca = {
  */
 export type OrcaPool = {
   /**
-   * Query the token id of tokenA in this pool
+   * Query the token id of tokenA in this pool.
+   * The token id is the mint of the token.
    * @returns Returns the token id of tokenA in this pool
    */
   getTokenAId: () => string;
 
   /**
    * Query the token id of the tokenB in this pool
+   * The token id is the mint of the token.
    * @returns Returns the token id of tokenB in this pool
    */
   getTokenBId: () => string;

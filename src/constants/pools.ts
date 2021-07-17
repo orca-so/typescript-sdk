@@ -50,13 +50,13 @@ export const solUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("ECFcUGwHHMaZynAQpqRHkYeTBnS5GnPWZywM8aggcs3A"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("4pdzKqAGd1WbXn1L4UpY4r58irTfjFYMYNudBrqbQaYJ"),
-  tokenIds: ["SOL", "USDC"],
+  tokenIds: [solToken.mint.toString(), usdcToken.mint.toString()],
   tokens: {
-    SOL: {
+    [solToken.mint.toString()]: {
       ...solToken,
       addr: new PublicKey("FdiTt7XQ94fGkgorywN1GuXqQzmURHCDgYtUutWRcy4q"),
     },
-    USDC: {
+    [usdcToken.mint.toString()]: {
       ...usdcToken,
       addr: new PublicKey("7VcwKUtdKnvcgNhZt5BQHsbPrXLxhdVomsgrr7k2N5P5"),
     },
@@ -75,13 +75,13 @@ export const solUsdtPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("BmZNYGt7aApGTUUxAQUYsW64cMbb6P7uniokCWaptj4D"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("HR2rWgcU6SNCWxJDozDu6qCgSSvUoKCynbhQPGRNqpCG"),
-  tokenIds: ["SOL", "USDT"],
+  tokenIds: [solToken.mint.toString(), usdtToken.mint.toString()],
   tokens: {
-    SOL: {
+    [solToken.mint.toString()]: {
       ...solToken,
       addr: new PublicKey("BBDQmitNga99M9QsBRnyos9uWPumNbWLC1mfbReJi45C"),
     },
-    USDT: {
+    [usdtToken.mint.toString()]: {
       ...usdtToken,
       addr: new PublicKey("8xepSs1iXsSw8QrCS1rpZk8KY3fMwUZqDT4dmzDa2trX"),
     },
@@ -100,13 +100,13 @@ export const raySolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("GWEmABT4rD3sGhyghv9rKbfdiaFe5uMHeJqr6hhu3XvA"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("3uUNB1KSwyF6YDuiQiRbFnnDW4Q625SQJk7LuoxQA8Pw"),
-  tokenIds: ["RAY", "SOL"],
+  tokenIds: [rayToken.mint.toString(), solToken.mint.toString()],
   tokens: {
-    RAY: {
+    [rayToken.mint.toString()]: {
       ...rayToken,
       addr: new PublicKey("HxuUQPpqkxzYPYQqM6XkVVVw2UQt4m3eMYzYQFJZjuvG"),
     },
-    SOL: {
+    [solToken.mint.toString()]: {
       ...solToken,
       addr: new PublicKey("B6whMxirSzzNcSeJ1G4HDFTRKjPFcWovCL53uxG7LexB"),
     },
@@ -125,13 +125,13 @@ export const ethSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("7bb88DAnQY7LSoWEuqezCcbk4vutQbuRqgJMqpX8h6dL"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("CYGRBB4qAYzSqdnvVaXvyZLg5j7YNVcuqM6gdD2MMUi1"),
-  tokenIds: ["ETH", "SOL"],
+  tokenIds: [ethToken.mint.toString(), solToken.mint.toString()],
   tokens: {
-    ETH: {
+    [ethToken.mint.toString()]: {
       ...ethToken,
       addr: new PublicKey("FidGus13X2HPzd3cuBEFSq32UcBQkF68niwvP6bM4fs2"),
     },
-    SOL: {
+    [solToken.mint.toString()]: {
       ...solToken,
       addr: new PublicKey("5x1amFuGMfUVzy49Y4Pc3HyCVD2usjLaofnzB3d8h7rv"),
     },
@@ -150,13 +150,13 @@ export const ethUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("7TYb32qkwYosUQfUspU45cou7Bb3nefJocVMFX2mEGTT"),
   poolTokenDecimals: 9,
   feeAccount: new PublicKey("AcMaBVt6S43JQXKnEDqdicxYofb5Cj1UgFWF9AsurTp6"),
-  tokenIds: ["ETH", "USDC"],
+  tokenIds: [ethToken.mint.toString(), usdcToken.mint.toString()],
   tokens: {
-    ETH: {
+    [ethToken.mint.toString()]: {
       ...ethToken,
       addr: new PublicKey("8eUUP3t9nkXPub8X6aW2a2gzi82pUFqefwkSY8rCcVxg"),
     },
-    USDC: {
+    [usdcToken.mint.toString()]: {
       ...usdcToken,
       addr: new PublicKey("2tNEBoEuqJ1pPmA1fpitDnowgUQZXvCT6W3fui67AFfV"),
     },
