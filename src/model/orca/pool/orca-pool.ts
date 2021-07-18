@@ -9,7 +9,7 @@ import { PercentageUtils } from "../../utils/percentage";
 import TransactionBuilder from "../../../utils/web3/transactions/transaction-builder";
 import {
   createSwapInstruction,
-  createUserTransferAuthority,
+  createApprovalInstruction,
 } from "../../../utils/web3/instructions/pool-instructions";
 import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/transactions";
@@ -126,32 +126,34 @@ export class OrcaPoolImpl implements OrcaPool {
       "minimumAmountOut"
     );
 
-    const resolvedInputATA = await resolveAssociatedTokenAddress(
-      this.connection,
-      owner.publicKey,
-      inputPoolToken.mint,
-      amountInU64
-    );
-    const resolvedOutputATA = await resolveAssociatedTokenAddress(
-      this.connection,
-      owner.publicKey,
-      outputPoolToken.mint,
-      amountInU64
-    );
-
-    const inputPoolTokenUserAddress = resolvedInputATA.address,
-      outputPoolTokenUserAddress = resolvedOutputATA.address;
+    const { address: inputPoolTokenUserAddress, ...resolveInputAddrInstructions } =
+      await resolveAssociatedTokenAddress(
+        this.connection,
+        owner.publicKey,
+        inputPoolToken.mint,
+        amountInU64
+      );
+    const { address: outputPoolTokenUserAddress, ...resolveOutputAddrInstructions } =
+      await resolveAssociatedTokenAddress(
+        this.connection,
+        owner.publicKey,
+        outputPoolToken.mint,
+        amountInU64
+      );
 
     if (inputPoolTokenUserAddress === undefined || outputPoolTokenUserAddress === undefined) {
       throw new Error("Unable to derive input / output token associated address.");
     }
 
-    const { userTransferAuthority, approvalInstruction, revokeInstruction } =
-      createUserTransferAuthority(ownerAddress, amountInU64, inputPoolTokenUserAddress);
+    const { userTransferAuthority, ...approvalInstruction } = createApprovalInstruction(
+      ownerAddress,
+      amountInU64,
+      inputPoolTokenUserAddress
+    );
 
     const swapInstruction = await createSwapInstruction(
       this.poolParams,
-      ownerAddress,
+      owner,
       inputPoolToken,
       inputPoolTokenUserAddress,
       outputPoolToken,
@@ -161,23 +163,13 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    const txn = await new TransactionBuilder(this.connection, ownerAddress)
-      .addInstructions(resolvedInputATA.instructions)
-      .addInstructions(resolvedOutputATA.instructions)
+    const { transaction, signers } = await new TransactionBuilder(this.connection, ownerAddress)
+      .addInstruction(resolveInputAddrInstructions)
+      .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
-      .addCleanUpInstruction(resolvedInputATA.cleanupInstruction)
-      .addCleanUpInstruction(resolvedOutputATA.cleanupInstruction)
-      .addCleanUpInstruction(revokeInstruction)
       .build();
 
-    var signers: Signer[] = [
-      owner,
-      userTransferAuthority,
-      ...(resolvedInputATA.signers || []),
-      ...(resolvedOutputATA.signers || []),
-    ];
-
-    return await sendAndConfirmTransaction(this.connection, txn, signers);
+    return await sendAndConfirmTransaction(this.connection, transaction, signers);
   }
 }

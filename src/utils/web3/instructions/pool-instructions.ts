@@ -2,13 +2,14 @@ import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { OrcaPoolParams, OrcaPoolToken } from "../../../model/orca/pool/pool-types";
+import { Instruction } from "../../../model/utils/instruction";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
 
-export const createUserTransferAuthority = (
+export const createApprovalInstruction = (
   ownerAddress: PublicKey,
   approveAmount: u64,
   tokenUserAddress: PublicKey
-) => {
+): { userTransferAuthority: Keypair } & Instruction => {
   const userTransferAuthority = new Keypair();
 
   const approvalInstruction = Token.createApproveInstruction(
@@ -29,14 +30,15 @@ export const createUserTransferAuthority = (
 
   return {
     userTransferAuthority: userTransferAuthority,
-    approvalInstruction: approvalInstruction,
-    revokeInstruction: revokeInstruction,
+    instructions: [approvalInstruction],
+    cleanupInstructions: [revokeInstruction],
+    signers: [userTransferAuthority],
   };
 };
 
 export const createSwapInstruction = async (
   poolParams: OrcaPoolParams,
-  ownerAddress: PublicKey,
+  owner: Keypair,
   inputToken: OrcaPoolToken,
   inputTokenUserAddress: PublicKey,
   outputToken: OrcaPoolToken,
@@ -44,7 +46,7 @@ export const createSwapInstruction = async (
   amountIn: u64,
   minimumAmountOut: u64,
   userTransferAuthority: PublicKey
-) => {
+): Promise<Instruction> => {
   const amountInU64 = amountIn;
   const minimumAmountOutU64 = minimumAmountOut;
 
@@ -63,12 +65,16 @@ export const createSwapInstruction = async (
     outputTokenUserAddress,
     poolParams.poolTokenMint,
     poolParams.feeAccount,
-    ownerAddress,
+    owner.publicKey,
     ORCA_TOKEN_SWAP_ID,
     TOKEN_PROGRAM_ID,
     amountInU64,
     minimumAmountOutU64
   );
 
-  return swapInstruction;
+  return {
+    instructions: [swapInstruction],
+    cleanupInstructions: [],
+    signers: [owner],
+  };
 };
