@@ -14,7 +14,6 @@ export async function getTokenCount(
   inputPoolToken: OrcaPoolToken,
   outputPoolToken: OrcaPoolToken
 ): Promise<PoolTokenCount> {
-  console.log(`inputPoolToken - ${JSON.stringify(inputPoolToken)}`);
   if (poolParams.tokens[inputPoolToken.mint.toString()] == undefined) {
     throw new Error("Input token not part of pool");
   }
