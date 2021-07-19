@@ -20,6 +20,7 @@ import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/tran
 import { getTokens } from "../../../utils/pool-utils";
 import Decimal from "decimal.js";
 import { U64Utils } from "../../../utils/u64-utils";
+import { OrcaToken } from "../../../public/types";
 
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
@@ -30,12 +31,14 @@ export class OrcaPoolImpl implements OrcaPool {
     this.poolParams = config;
   }
 
-  public getTokenAId(): string {
-    return this.poolParams.tokenIds[0];
+  public getTokenA(): OrcaToken {
+    const tokenId = this.poolParams.tokenIds[0];
+    return this.poolParams.tokens[tokenId];
   }
 
-  public getTokenBId(): string {
-    return this.poolParams.tokenIds[1];
+  public getTokenB(): OrcaToken {
+    const tokenId = this.poolParams.tokenIds[1];
+    return this.poolParams.tokens[tokenId];
   }
 
   public async getLPBalance(owner: PublicKey): Promise<OrcaU64> {
@@ -65,7 +68,7 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getQuote(
-    inputTokenId: string,
+    inputToken: OrcaToken,
     inputAmount: Decimal | OrcaU64,
     slippage?: Decimal
   ): Promise<Quote> {
@@ -74,7 +77,10 @@ export class OrcaPoolImpl implements OrcaPool {
 
     const feeStructure = this.poolParams.feeStructure;
 
-    const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
+    const { inputPoolToken, outputPoolToken } = getTokens(
+      this.poolParams,
+      inputToken.mint.toString()
+    );
     const inputAmountU64 = U64Utils.toTokenU64(inputAmount, inputPoolToken, "inputAmount");
 
     const poolTokenCount: PoolTokenCount = await getTokenCount(
@@ -105,12 +111,15 @@ export class OrcaPoolImpl implements OrcaPool {
 
   public async swap(
     owner: Keypair,
-    inputTokenId: string,
+    inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
   ): Promise<TransactionSignature> {
     const ownerAddress = owner.publicKey;
-    const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
+    const { inputPoolToken, outputPoolToken } = getTokens(
+      this.poolParams,
+      inputToken.mint.toString()
+    );
     const amountInU64 = U64Utils.toTokenU64(amountIn, inputPoolToken, "amountIn");
     const minimumAmountOutU64 = U64Utils.toTokenU64(
       minimumAmountOut,

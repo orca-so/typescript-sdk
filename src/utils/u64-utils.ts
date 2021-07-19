@@ -10,15 +10,15 @@ export const ONE = new u64(1);
 export class U64Utils {
   public static toTokenU64(input: Decimal | OrcaU64, token: OrcaPoolToken, varName: string) {
     if (input instanceof OrcaU64) {
-      if (input.scale !== token.decimals) {
+      if (input.scale !== token.scale) {
         throw new Error(
-          `${varName}'s scale of ${input.scale} does not match token's decimal of ${token.decimals}`
+          `${varName}'s scale of ${input.scale} does not match token's decimal of ${token.scale}`
         );
       }
       return input.toU64();
     }
 
-    return DecimalUtil.toU64(input, token.decimals);
+    return DecimalUtil.toU64(input, token.scale);
   }
 
   public static ceilingDivision(dividend: u64, divisor: u64): [u64, u64] {

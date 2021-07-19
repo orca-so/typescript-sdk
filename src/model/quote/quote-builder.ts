@@ -1,7 +1,7 @@
 import { u64 } from "@solana/spl-token";
-import { Quote } from "../../public/types";
+import { OrcaToken, Quote } from "../../public/types";
 import { PoolTokenCount } from "../../utils/web3/get-token-count";
-import { CurveType, FeeStructure, OrcaToken } from "../orca/pool/pool-types";
+import { CurveType, FeeStructure } from "../orca/pool/pool-types";
 import { Percentage } from "../utils/percentage";
 import { ConstantProductPoolQuoteBuilder } from "./constant-product-quote";
 
