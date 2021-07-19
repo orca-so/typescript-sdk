@@ -6,29 +6,21 @@ import {
   TransactionCtorFields,
   TransactionInstruction,
 } from "@solana/web3.js";
+import { Instruction } from "../../../model/utils/instruction";
 
 export default class TransactionBuilder {
-  connection: Connection;
-  feePayer: PublicKey;
-  instructions: TransactionInstruction[];
-  cleanupInstructions: TransactionInstruction[];
-  signers: Keypair[];
+  private connection: Connection;
+  private feePayer: PublicKey;
+  private instructions: Instruction[];
 
   constructor(connection: Connection, feePayer: PublicKey) {
     this.connection = connection;
     this.feePayer = feePayer;
     this.instructions = [];
-    this.cleanupInstructions = [];
-    this.signers = [];
   }
 
-  addInstruction(instruction: TransactionInstruction): TransactionBuilder {
+  addInstruction(instruction: Instruction): TransactionBuilder {
     this.instructions.push(instruction);
-    return this;
-  }
-
-  addCleanUpInstruction(instruction: TransactionInstruction): TransactionBuilder {
-    this.cleanupInstructions.push(instruction);
     return this;
   }
 
@@ -39,10 +31,19 @@ export default class TransactionBuilder {
       feePayer: this.feePayer,
     };
 
+    let instructions: TransactionInstruction[] = [];
+    let cleanupInstructions: TransactionInstruction[] = [];
+    let signers: Keypair[] = [];
+    this.instructions.forEach((curr) => {
+      instructions = instructions.concat(curr.instructions);
+      cleanupInstructions = cleanupInstructions.concat(curr.cleanupInstructions);
+      signers = signers.concat(curr.signers);
+    });
+
     const transaction = new Transaction(txFields);
-    transaction.add(...this.instructions.concat(this.cleanupInstructions));
+    transaction.add(...instructions.concat(cleanupInstructions));
     transaction.feePayer = this.feePayer;
 
-    return transaction;
+    return { transaction: transaction, signers: signers };
   }
 }
