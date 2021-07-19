@@ -27,9 +27,8 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "build": "tsc -p .",
-    "watch": "tsc --watch",
-    "lint": "tsc --project ./tsconfig.json --noEmit && eslint --ext=jsx,ts,tsx src",
+    "build": "tsc -p src",
+    "watch": "tsc -w -p src",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "prepare": "husky install",
     "test": "jest"
