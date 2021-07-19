@@ -77,36 +77,3 @@ describe.each([
     expect(value.toU64()).toEqual(expectedValue);
   });
 });
-
-// OrcaU64.shiftToScale
-describe.each([
-  {
-    value: OrcaU64.fromU64(new u64("25000000"), 3),
-    shiftTo: 5,
-    expectedValue: OrcaU64.fromU64(new u64("2500000000"), 5),
-  },
-  {
-    value: OrcaU64.fromU64(new u64("2500000000"), 5),
-    shiftTo: 3,
-    expectedValue: OrcaU64.fromU64(new u64("25000000"), 3),
-  },
-  {
-    value: OrcaU64.fromU64(new u64("2500000000"), 5),
-    shiftTo: 3.1,
-    expectedValue: OrcaU64.fromU64(new u64("25000000"), 3),
-  },
-  {
-    value: OrcaU64.fromU64(new u64("25"), 3),
-    shiftTo: 3,
-    expectedValue: OrcaU64.fromU64(new u64("25"), 3),
-  },
-  {
-    value: OrcaU64.fromU64(new u64("250"), 0),
-    shiftTo: -3,
-    expectedValue: OrcaU64.fromU64(new u64("0"), 0),
-  },
-])("shiftToScale($value, $shift)", ({ value, shiftTo, expectedValue }) => {
-  test(`returns {${expectedValue.toNumber()}}`, () => {
-    expect(value.shiftToScale(shiftTo)).toEqual(expectedValue);
-  });
-});

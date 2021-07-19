@@ -11,7 +11,6 @@ export const createUserTransferAuthrority = (
   approveAmount: u64,
   tokenUserAddress: PublicKey
 ) => {
-  const amountIn = approveAmount;
   const userTransferAuthority = new Keypair();
 
   const approvalInstruction = Token.createApproveInstruction(
@@ -20,7 +19,7 @@ export const createUserTransferAuthrority = (
     userTransferAuthority.publicKey,
     ownerAddress,
     [],
-    amountIn
+    approveAmount
   );
 
   const revokeInstruction = Token.createRevokeInstruction(

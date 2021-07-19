@@ -18,6 +18,8 @@ import {
 import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/transactions";
 import { getTokens } from "../../../utils/pool-utils";
+import Decimal from "decimal.js";
+import { U64Utils } from "../../../utils/u64-utils";
 
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
@@ -64,15 +66,16 @@ export class OrcaPoolImpl implements OrcaPool {
 
   public async getQuote(
     inputTokenId: string,
-    inputAmount: OrcaU64,
-    slippage?: number
+    inputAmount: Decimal | OrcaU64,
+    slippage?: Decimal
   ): Promise<Quote> {
     const slippageTolerance =
-      slippage === undefined ? defaultSlippagePercentage : PercentageUtils.fromNumber(slippage);
+      slippage === undefined ? defaultSlippagePercentage : PercentageUtils.fromDecimal(slippage);
 
     const feeStructure = this.poolParams.feeStructure;
 
     const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
+    const inputAmountU64 = U64Utils.toTokenU64(inputAmount, inputPoolToken, "inputAmount");
 
     const poolTokenCount: PoolTokenCount = await getTokenCount(
       this.connection,
@@ -91,10 +94,7 @@ export class OrcaPoolImpl implements OrcaPool {
 
     const quoteBuilder = QuoteBuilderFactory.getBuilder(this.poolParams.curveType);
 
-    const quote = quoteBuilder?.buildQuote(
-      quoteParams,
-      inputAmount.shiftToScale(inputPoolToken.decimals).toU64()
-    );
+    const quote = quoteBuilder?.buildQuote(quoteParams, inputAmountU64);
 
     if (quote == undefined) {
       throw new Error("Failed to get quote!");
@@ -106,11 +106,17 @@ export class OrcaPoolImpl implements OrcaPool {
   public async swap(
     owner: Keypair,
     inputTokenId: string,
-    amountIn: OrcaU64,
-    minimumAmountOut: OrcaU64
+    amountIn: Decimal | OrcaU64,
+    minimumAmountOut: Decimal | OrcaU64
   ): Promise<TransactionSignature> {
     const ownerAddress = owner.publicKey;
     const { inputPoolToken, outputPoolToken } = getTokens(this.poolParams, inputTokenId);
+    const amountInU64 = U64Utils.toTokenU64(amountIn, inputPoolToken, "amountIn");
+    const minimumAmountOutU64 = U64Utils.toTokenU64(
+      minimumAmountOut,
+      outputPoolToken,
+      "minimumAmountOut"
+    );
 
     const [inputPoolTokenUserAddress, outputPoolTokenUserAddress] =
       await deriveAssociatedTokenAddresses(owner.publicKey, [
@@ -126,7 +132,7 @@ export class OrcaPoolImpl implements OrcaPool {
       createUserTransferAuthrority(
         ownerAddress,
         inputPoolToken,
-        amountIn.shiftToScale(inputPoolToken.decimals).toU64(),
+        amountInU64,
         inputPoolTokenUserAddress
       );
 
@@ -137,8 +143,8 @@ export class OrcaPoolImpl implements OrcaPool {
       inputPoolTokenUserAddress,
       outputPoolToken,
       outputPoolTokenUserAddress,
-      amountIn.shiftToScale(inputPoolToken.decimals).toU64(),
-      minimumAmountOut.shiftToScale(outputPoolToken.decimals).toU64(),
+      amountInU64,
+      minimumAmountOutU64,
       userTransferAuthority.publicKey
     );
 
