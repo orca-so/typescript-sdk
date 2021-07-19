@@ -2,7 +2,7 @@ import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaU64, Quote } from "../..";
 import { DecimalUtil } from "../../utils/numbers/decimal-utils";
-import { U64Utils } from "../../utils/numbers/u64-utils";
+import { U64Utils, ZERO } from "../../utils/numbers/u64-utils";
 import { QuotePoolParams } from "./quote-builder";
 
 /**
@@ -15,13 +15,21 @@ import { QuotePoolParams } from "./quote-builder";
  */
 
 function getRate(inputTradeAmountU64: u64, params: QuotePoolParams): Decimal {
+  if (inputTradeAmountU64.eq(ZERO)) {
+    return new Decimal(0);
+  }
+
   const expectedOutputAmountU64 = getExpectedOutputAmount(inputTradeAmountU64, params);
   const inputTradeAmount = DecimalUtil.fromU64(inputTradeAmountU64, params.inputToken.scale);
   const outputTradeAmount = DecimalUtil.fromU64(expectedOutputAmountU64, params.outputToken.scale);
-  return outputTradeAmount.div(inputTradeAmount);
+  return outputTradeAmount.div(inputTradeAmount).toDecimalPlaces(params.outputToken.scale);
 }
 
 function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal {
+  if (inputTradeAmount.eq(ZERO) || params.outputTokenCount.eq(ZERO)) {
+    return new Decimal(0);
+  }
+
   const noSlippageOutputCountU64 = getExpectedOutputAmountWithNoSlippage(inputTradeAmount, params);
   const outputCountU64 = getExpectedOutputAmount(inputTradeAmount, params);
 
@@ -32,7 +40,7 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
   const outputCount = DecimalUtil.fromU64(outputCountU64, params.outputToken.scale);
 
   const impact = noSlippageOutputCount.sub(outputCount).div(noSlippageOutputCount);
-  return impact.mul(100);
+  return impact.mul(100).toDecimalPlaces(params.outputToken.scale);
 }
 
 function getFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
@@ -57,6 +65,10 @@ function getExpectedOutputAmountWithNoSlippage(
   inputTradeAmount: u64,
   params: QuotePoolParams
 ): u64 {
+  if (params.inputTokenCount.eq(ZERO)) {
+    return params.outputTokenCount;
+  }
+
   const inputTradeLessFees = inputTradeAmount.sub(getFees(inputTradeAmount, params));
   return inputTradeLessFees.mul(params.outputTokenCount).div(params.inputTokenCount);
 }
@@ -89,7 +101,7 @@ function getOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
 }
 
 export class ConstantProductPoolQuoteBuilder {
-  async buildQuote(params: QuotePoolParams, inputTradeAmount: u64): Promise<Quote> {
+  buildQuote(params: QuotePoolParams, inputTradeAmount: u64): Quote {
     return {
       getRate: () => getRate(inputTradeAmount, params),
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),

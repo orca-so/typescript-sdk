@@ -13,7 +13,7 @@ export type QuotePoolParams = PoolTokenCount & {
 };
 
 export interface QuoteBuilder {
-  buildQuote(pool: QuotePoolParams, inputAmount: u64): Promise<Quote>;
+  buildQuote(pool: QuotePoolParams, inputAmount: u64): Quote;
 }
 
 export class QuoteBuilderFactory {
