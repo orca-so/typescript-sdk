@@ -2,7 +2,7 @@ import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { OrcaPoolToken } from "../model/orca/pool/pool-types";
-import { DecimalUtil } from "./decimal-utils";
+import { DecimalUtil } from "./numbers/decimal-utils";
 
 export const ZERO = new u64(0);
 export const ONE = new u64(1);
