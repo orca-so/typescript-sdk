@@ -1,7 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { DecimalUtil } from "../../utils/numbers/decimal-utils";
-import { U64Utils } from "../../utils/u64-utils";
+import { U64Utils } from "../../utils/numbers/u64-utils";
 
 /**
  * Orca's U64 wrapper class to help users convert to/from regular javascript number types
@@ -28,7 +28,7 @@ export class OrcaU64 {
    */
   static fromDecimal(value: Decimal, scale = 0) {
     const dec = Math.floor(scale);
-    return new OrcaU64(U64Utils.toU64(value, dec), dec);
+    return new OrcaU64(DecimalUtil.toU64(value, dec), dec);
   }
 
   /**
@@ -39,7 +39,7 @@ export class OrcaU64 {
    */
   static fromNumber(value: number, scale = 0) {
     const dec = Math.floor(scale);
-    return new OrcaU64(U64Utils.toU64(value, dec), dec);
+    return new OrcaU64(DecimalUtil.toU64(new Decimal(value), dec), dec);
   }
 
   /**

@@ -2,7 +2,7 @@ import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaU64, Quote } from "../..";
 import { DecimalUtil } from "../../utils/numbers/decimal-utils";
-import { U64Utils } from "../../utils/u64-utils";
+import { U64Utils } from "../../utils/numbers/u64-utils";
 import { QuotePoolParams } from "./quote-builder";
 
 /**

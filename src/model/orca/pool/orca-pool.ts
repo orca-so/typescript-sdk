@@ -15,7 +15,7 @@ import { u64 } from "@solana/spl-token";
 import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/transactions";
 import { getTokens } from "../../../utils/pool-utils";
 import Decimal from "decimal.js";
-import { U64Utils } from "../../../utils/u64-utils";
+import { U64Utils } from "../../../utils/numbers/u64-utils";
 import { OrcaToken } from "../../../public/types";
 import {
   deriveAssociatedTokenAddress,

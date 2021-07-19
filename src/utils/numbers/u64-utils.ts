@@ -1,14 +1,13 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { OrcaU64 } from "..";
-import { OrcaPoolToken } from "../model/orca/pool/pool-types";
-import { DecimalUtil } from "./numbers/decimal-utils";
+import { OrcaToken, OrcaU64 } from "../..";
+import { DecimalUtil } from "./decimal-utils";
 
 export const ZERO = new u64(0);
 export const ONE = new u64(1);
 
 export class U64Utils {
-  public static toTokenU64(input: Decimal | OrcaU64, token: OrcaPoolToken, varName: string) {
+  public static toTokenU64(input: Decimal | OrcaU64, token: OrcaToken, varName: string) {
     if (input instanceof OrcaU64) {
       if (input.scale !== token.scale) {
         throw new Error(
@@ -38,12 +37,5 @@ export class U64Utils {
     }
 
     return [quotient, divisor];
-  }
-
-  public static toU64(value: number | Decimal, decimals: number): u64 {
-    const shifter = Math.pow(10, decimals);
-    const shiftedValue = typeof value === "number" ? value * shifter : value.mul(shifter);
-
-    return new u64(shiftedValue.toString());
   }
 }
