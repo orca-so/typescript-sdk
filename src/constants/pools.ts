@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
-import { OrcaPoolConfig } from "..";
-import { OrcaToken, OrcaPoolParams, CurveType } from "../model/orca/pool/pool-types";
+import { OrcaPoolConfig, OrcaToken } from "..";
+import { OrcaPoolParams, CurveType } from "../model/orca/pool/pool-types";
 import { PercentageUtils } from "../model/utils/percentage";
 
 /**
@@ -9,38 +9,38 @@ import { PercentageUtils } from "../model/utils/percentage";
  */
 
 export const solToken: OrcaToken = Object.freeze({
-  id: "SOL",
+  tag: "SOL",
   name: "Solana",
   mint: new PublicKey("So11111111111111111111111111111111111111112"),
-  decimals: 9,
+  scale: 9,
 });
 
 export const ethToken: OrcaToken = Object.freeze({
-  id: "ETH",
+  tag: "ETH",
   name: "Ethereum",
   mint: new PublicKey("2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk"),
-  decimals: 6,
+  scale: 6,
 });
 
 export const rayToken: OrcaToken = Object.freeze({
-  id: "RAY",
+  tag: "RAY",
   name: "Raydium",
   mint: new PublicKey("4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R"),
-  decimals: 6,
+  scale: 6,
 });
 
 export const usdcToken: OrcaToken = Object.freeze({
-  id: "USDC",
+  tag: "USDC",
   name: "USD Coin",
   mint: new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"),
-  decimals: 6,
+  scale: 6,
 });
 
 export const usdtToken: OrcaToken = Object.freeze({
-  id: "USDT",
+  tag: "USDT",
   name: "Tether USD",
   mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
-  decimals: 6,
+  scale: 6,
 });
 
 export const solUsdcPool: OrcaPoolParams = Object.freeze({

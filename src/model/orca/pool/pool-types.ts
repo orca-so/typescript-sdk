@@ -1,4 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
+import { OrcaToken } from "../../../public/types";
 import { Percentage } from "../../utils/percentage";
 
 /**
@@ -25,20 +26,6 @@ export type OrcaPoolParams = {
   tokens: Record<string, OrcaPoolToken>;
   curveType: CurveType;
   feeStructure: FeeStructure;
-};
-
-/**
- * An Orca Token
- * @param id The id of the token
- * @param name The presentable name of the token
- * @param mint The mint public key for the token
- * @param decimals The number of integers in the u64 return type representing the fractional part of the number
- */
-export type OrcaToken = {
-  id: string;
-  name: string;
-  mint: PublicKey;
-  decimals: number;
 };
 
 /**

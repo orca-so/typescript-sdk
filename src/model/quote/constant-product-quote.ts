@@ -1,6 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { Quote } from "../..";
+import { OrcaU64, Quote } from "../..";
 import { DecimalUtil } from "../../utils/decimal-utils";
 import { U64Utils } from "../../utils/u64-utils";
 import { QuotePoolParams } from "./quote-builder";
@@ -16,11 +16,8 @@ import { QuotePoolParams } from "./quote-builder";
 
 function getRate(inputTradeAmountU64: u64, params: QuotePoolParams): Decimal {
   const expectedOutputAmountU64 = getExpectedOutputAmount(inputTradeAmountU64, params);
-  const inputTradeAmount = DecimalUtil.fromU64(inputTradeAmountU64, params.inputToken.decimals);
-  const outputTradeAmount = DecimalUtil.fromU64(
-    expectedOutputAmountU64,
-    params.outputToken.decimals
-  );
+  const inputTradeAmount = DecimalUtil.fromU64(inputTradeAmountU64, params.inputToken.scale);
+  const outputTradeAmount = DecimalUtil.fromU64(expectedOutputAmountU64, params.outputToken.scale);
   return outputTradeAmount.div(inputTradeAmount);
 }
 
@@ -30,9 +27,9 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
 
   const noSlippageOutputCount = DecimalUtil.fromU64(
     noSlippageOutputCountU64,
-    params.outputToken.decimals
+    params.outputToken.scale
   );
-  const outputCount = DecimalUtil.fromU64(outputCountU64, params.outputToken.decimals);
+  const outputCount = DecimalUtil.fromU64(outputCountU64, params.outputToken.scale);
 
   const impact = noSlippageOutputCount.sub(outputCount).div(noSlippageOutputCount);
   return impact.mul(100);
@@ -96,18 +93,14 @@ export class ConstantProductPoolQuoteBuilder {
     return {
       getRate: () => getRate(inputTradeAmount, params),
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),
-      getFees: () =>
-        U64Utils.toOrcaU64(getFees(inputTradeAmount, params), params.inputToken.decimals),
+      getFees: () => OrcaU64.fromU64(getFees(inputTradeAmount, params), params.inputToken.scale),
       getExpectedOutputAmount: () =>
-        U64Utils.toOrcaU64(
+        OrcaU64.fromU64(
           getExpectedOutputAmount(inputTradeAmount, params),
-          params.outputToken.decimals
+          params.outputToken.scale
         ),
       getMinOutputAmount: () =>
-        U64Utils.toOrcaU64(
-          getMinimumAmountOut(inputTradeAmount, params),
-          params.outputToken.decimals
-        ),
+        OrcaU64.fromU64(getMinimumAmountOut(inputTradeAmount, params), params.outputToken.scale),
     };
   }
 }

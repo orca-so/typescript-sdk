@@ -1,4 +1,4 @@
-import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { OrcaPoolParams, OrcaPoolToken } from "../../../model/orca/pool/pool-types";
@@ -8,10 +8,9 @@ import { U64Utils } from "../../u64-utils";
 export const createUserTransferAuthrority = (
   ownerAddress: PublicKey,
   token: OrcaPoolToken,
-  approveAmount: number,
+  approveAmount: u64,
   tokenUserAddress: PublicKey
 ) => {
-  const amountIn = U64Utils.toU64(approveAmount, token.decimals);
   const userTransferAuthority = new Keypair();
 
   const approvalInstruction = Token.createApproveInstruction(
@@ -20,7 +19,7 @@ export const createUserTransferAuthrority = (
     userTransferAuthority.publicKey,
     ownerAddress,
     [],
-    amountIn
+    approveAmount
   );
 
   const revokeInstruction = Token.createRevokeInstruction(
@@ -45,12 +44,12 @@ export const createSwapInstruction = async (
   inputTokenUserAddress: PublicKey,
   outputToken: OrcaPoolToken,
   outputTokenUserAddress: PublicKey,
-  amountIn: number,
-  minimumAmountOut: number,
+  amountIn: u64,
+  minimumAmountOut: u64,
   userTransferAuthority: PublicKey
 ) => {
-  const amountInU64 = U64Utils.toU64(amountIn, inputToken.decimals);
-  const minimumAmountOutU64 = U64Utils.toU64(minimumAmountOut, outputToken.decimals);
+  const amountInU64 = amountIn;
+  const minimumAmountOutU64 = minimumAmountOut;
 
   const [authorityForPoolAddress] = await PublicKey.findProgramAddress(
     [poolParams.address.toBuffer()],

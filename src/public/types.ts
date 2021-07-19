@@ -1,7 +1,7 @@
 import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaU64 } from "..";
 import { OrcaPoolConfig } from "./pools";
+import { OrcaU64 } from "./utils/orca-u64";
 
 export type Orca = {
   /**
@@ -16,60 +16,81 @@ export type Orca = {
  */
 export type OrcaPool = {
   /**
-   * Query the token id of tokenA in this pool.
-   * The token id is the mint of the token.
+   * Query the token of tokenA in this pool.
    * @returns Returns the token id of tokenA in this pool
    */
-  getTokenAId: () => string;
+  getTokenA: () => OrcaToken;
 
   /**
-   * Query the token id of the tokenB in this pool
-   * The token id is the mint of the token.
+   * Query the token of tokenB in this pool.
    * @returns Returns the token id of tokenB in this pool
    */
-  getTokenBId: () => string;
+  getTokenB: () => OrcaToken;
 
   /**
    * Query the balance for an user address
    * @param wallet The public key for the user.
    * @return Returns the amount of LP token the user owns for this pool.
    */
-  getLPBalance: (owner: PublicKey) => Promise<number>;
+  getLPBalance: (owner: PublicKey) => Promise<OrcaU64>;
 
   /**
    * Query the supply of LP tokens for this pool.
    * @return Returns the supply of LP tokens for this pool
    */
-  getLPSupply: () => Promise<number>;
+  getLPSupply: () => Promise<OrcaU64>;
 
   /**
    * Get the latest quote to trade one token to another in this pool
+   *
+   * Note: slippage supports a maximum scale of 1 (ex. 0.1%). Additional decimal places will be floored.
+   *
    * @param inputTokenId The token you want to trade from
    * @param inputAmount The amount of token you would to trade
    * @param slippage The slippage in percentage you are willing to take in this trade
    * @return Returns a quote on the exchanged token based on the input token amount
    */
-  getQuote: (inputTokenId: string, inputAmount: Decimal, slippage: number) => Promise<Quote>;
+  getQuote: (
+    inputToken: OrcaToken,
+    inputAmount: Decimal | OrcaU64,
+    slippage: Decimal
+  ) => Promise<Quote>;
 
   // TODO: amountIn & minimumAmountOut type should be u64
   /**
    * Perform a swap from the input type to the other token in the pool.
    * Fee for the transaction will be paid by the owner's wallet.
    *
-   * NOTE: User has to ensure that their owner address has established spl-token accounts for the trading pair.
+   * NOTE:
+   * 1. User has to ensure that their owner address has established spl-token accounts for the trading pair.
+   * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
    * @param owner The keypair for the user's wallet
-   * @param inputTokenId An Orca supported token id in the user's wallet to swap from
+   * @param inputToken An Orca supported token in the user's wallet to swap from
    * @param amountIn The amount of inputToken to swap from
    * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
    * @return The transaction signature of the swap instruction
    */
   swap: (
     owner: Keypair,
-    inputTokenId: string,
-    amountIn: number,
-    minimumAmountOut: number
+    inputToken: OrcaToken,
+    amountIn: Decimal | OrcaU64,
+    minimumAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionSignature>;
+};
+
+/**
+ * An Orca Token
+ * @param tag The tag of the token
+ * @param name The presentable name of the token
+ * @param mint The mint public key for the token
+ * @param scale The scale of the u64 return type
+ */
+export type OrcaToken = {
+  tag: string;
+  name: string;
+  mint: PublicKey;
+  scale: number;
 };
 
 export type Quote = {
