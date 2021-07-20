@@ -20,6 +20,8 @@ export class U64Utils {
     return DecimalUtil.toU64(input, token.scale);
   }
 
+  // Note: divisor input variable modified in place
+  // https://github.com/solana-labs/solana-program-library/blob/master/libraries/math/src/checked_ceil_div.rs#L5-L22
   public static ceilingDivision(dividend: u64, divisor: u64): [u64, u64] {
     let quotient = dividend.div(divisor);
     if (quotient.eq(ZERO)) {
