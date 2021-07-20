@@ -62,7 +62,7 @@ try {
 # Technical Notes
 
 **Decimals & OrcaU64**
-The SDK relies on the use of [Decimal](https://github.com/MikeMcl/decimal.js/) for number inputs and Decimal/OrcaU64 for token-value inputs. If a Decimal instance is provided for a token-value input, it will be automatically transformed to the token's scale.
+The SDK relies on the use of [Decimal](https://github.com/MikeMcl/decimal.js/) for number inputs and Decimal/[OrcaU64](https://github.com/orca-so/typescript-sdk/blob/main/src/public/utils/orca-u64.ts) for token-value inputs. If a Decimal instance is provided for a token-value input, it will be automatically transformed to the token's scale.
 
 **Funding Associated Token Addresses**
 The swap() function assumes the owner keypair address has already created & initialized the [associated token addresses](https://spl.solana.com/associated-token-account) for the trading pair tokens. The swap will fail if this is not the case.
