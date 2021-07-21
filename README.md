@@ -19,11 +19,11 @@ Learn more Orca [here](https://docs.orca.so).
 Use your environment's package manager to install @orca-so/sdk and other related packages into your project.
 
 ```bash
-yarn add @orca-so/sdk @solana/web3.js decimal.js
+yarn add @orca.so/sdk @solana/web3.js decimal.js
 ```
 
 ```bash
-npm install @orca-so/sdk @solana/web3.js decimal.js
+npm install @orca.so/sdk @solana/web3.js decimal.js
 ```
 
 # Usage
