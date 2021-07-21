@@ -4,7 +4,7 @@ The Orca SDK contains a set of simple to use APIs to allow developers to integra
 
 Learn more Orca [here](https://docs.orca.so).
 
-## Trading Orca Liquidity Pools
+### Trading Orca Liquidity Pools
 
 - Get detailed quotes and make swaps between trading pairs in an Orca Pool
 - Check your Orca Pool LP token balance and total supply
@@ -12,7 +12,12 @@ Learn more Orca [here](https://docs.orca.so).
 **Supported Orca Pools**
 
 - SOLUSDC, SOLUSDT, RAYSOL, ETHSOL, ETHUSDC
-- More coming in the future!
+
+**Features Coming Soon**
+- Supporting more pools on Orca!
+- More trader information (APY, Volume)
+- Deposit/Withdraw from OrcaPools
+
 
 # Installation
 
