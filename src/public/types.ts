@@ -95,6 +95,7 @@ export type OrcaToken = {
 export type Quote = {
   /**
    * Returns the rate of exchange given the trade amount. Fees are included.
+   * Rate is zero if the input trade amount, input or output token balance in pool is zero.
    * @returns a function that returns the rate of exchange when the quote was built (denominated by output token)
    */
   getRate: () => Decimal;
@@ -107,7 +108,7 @@ export type Quote = {
 
   /**
    * Returns the % impact to the rate if this transaction goes through.
-   * @return a function to return the % impact to the rate if this transaction goes through.
+   * @return a function to return the % impact to the rate if this transaction goes through. Zero if input or output token balance in pool is zero.
    */
   getPriceImpact: () => Decimal;
 
