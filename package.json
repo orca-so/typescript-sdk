@@ -1,8 +1,9 @@
 {
-  "name": "@orca-so/sdk",
+  "name": "@orca.so/sdk",
   "version": "1.0.0",
   "description": "Typescript SDK for the Orca protocol.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
     "@solana/spl-token": "^0.1.5",
@@ -36,5 +37,26 @@
   },
   "lint-staged": {
     "*.{ts,md}": "yarn run prettier-format"
-  }
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orca-so/typescript-sdk.git"
+  },
+  "keywords": [
+    "orca_so",
+    "orca",
+    "solana",
+    "typescript",
+    "sdk",
+    "crypto",
+    "dex"
+  ],
+  "author": "team@orca.so",
+  "bugs": {
+    "url": "https://github.com/orca-so/typescript-sdk/issues"
+  },
+  "homepage": "https://www.orca.so"
 }
