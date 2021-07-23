@@ -14,7 +14,9 @@ import { defaultQuotePoolParams } from "../../../test-utils";
 import { solToken, usdcToken } from "../../../../src/constants/pools";
 import { DecimalUtil } from "../../../../src/utils/numbers/decimal-utils";
 
-const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(CurveType.ConstantProduct);
+const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(
+  CurveType.ConstantProduct
+) as QuoteBuilder;
 
 test("Input & Output tokens have different scale", () => {
   const params = Builder<QuotePoolParams>(defaultQuotePoolParams).build();
