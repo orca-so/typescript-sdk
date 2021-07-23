@@ -8,7 +8,7 @@ import {
 } from "@solana/web3.js";
 import { Instruction } from "../..";
 
-export default class TransactionBuilder {
+export class TransactionBuilder {
   private connection: Connection;
   private feePayer: PublicKey;
   private instructions: Instruction[];

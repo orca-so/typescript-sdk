@@ -19,12 +19,12 @@ import {
   PoolTokenCount,
   getTokenCount,
   resolveAssociatedTokenAddress,
+  TransactionBuilder,
 } from "../../../public";
 import {
   createApprovalInstruction,
   createSwapInstruction,
 } from "../../../public/utils/web3/instructions/pool-instructions";
-import TransactionBuilder from "../../../public/utils/web3/transactions/transaction-builder";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
 import { OrcaPoolParams } from "./pool-types";
 
