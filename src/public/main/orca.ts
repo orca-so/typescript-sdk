@@ -1,5 +1,5 @@
 import { Connection } from "@solana/web3.js";
-import { OrcaImpl } from "../model/orca/orca-impl";
+import { OrcaImpl } from "../../model/orca/orca-impl";
 import { Orca } from "./types";
 
 /**

@@ -1,5 +1,5 @@
 import { u64 } from "@solana/spl-token";
-import { Percentage } from "../model/utils/percentage";
+import { Percentage } from "../public/utils/models/percentage";
 
 export const defaultSlippagePercentage: Percentage = {
   numerator: new u64(1),

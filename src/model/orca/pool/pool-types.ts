@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
-import { OrcaToken } from "../../../public/types";
-import { Percentage } from "../../utils/percentage";
+import { OrcaToken } from "../../..";
+import { Percentage } from "../../../public";
 
 /**
  * An Orca token-swap pool

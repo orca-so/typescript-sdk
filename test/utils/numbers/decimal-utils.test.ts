@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { DecimalUtil } from "../../../src/utils/numbers/decimal-utils";
+import { DecimalUtil } from "../../../src/public";
+
 /**
  * DecimalUtil.fromU64
  */

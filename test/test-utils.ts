@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 import { OrcaToken } from "../src";
 import { FeeStructure } from "../src/model/orca/pool/pool-types";
 import { QuotePoolParams } from "../src/model/quote/quote-builder";
-import { PercentageUtils } from "../src/model/utils/percentage";
+import { PercentageUtils } from "../src/public";
 
 export const defaultSOLToken: OrcaToken = {
   tag: "SOL",

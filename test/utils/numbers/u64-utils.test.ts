@@ -1,8 +1,8 @@
 import { u64 } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaToken, OrcaU64 } from "../../../src";
-import { U64Utils } from "../../../src/utils/numbers/u64-utils";
+import { OrcaToken } from "../../../src";
+import { OrcaU64, U64Utils } from "../../../src/public";
 
 const tokenWithScale6: OrcaToken = {
   tag: "tag5",

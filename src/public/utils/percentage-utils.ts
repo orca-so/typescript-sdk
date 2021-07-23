@@ -1,10 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
+import { Percentage } from "./models/percentage";
 
-export type Percentage = {
-  numerator: u64;
-  denominator: u64;
-};
 export class PercentageUtils {
   public static fromDecimal(number: Decimal): Percentage {
     return PercentageUtils.fromFraction(number.toDecimalPlaces(1).mul(10).toNumber(), 1000);

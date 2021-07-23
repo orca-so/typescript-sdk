@@ -1,7 +1,7 @@
 import { AccountLayout, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { Connection, PublicKey, Signer, TransactionInstruction } from "@solana/web3.js";
-import { solToken } from "../../constants/pools";
-import { Instruction } from "../../model/utils/instruction";
+import { Instruction } from "..";
+import { solToken } from "../../../constants/pools";
 import { SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../constants";
 import { createWSOLAccountInstructions } from "./instructions/token-instructions";
 

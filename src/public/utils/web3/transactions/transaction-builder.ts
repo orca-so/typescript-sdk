@@ -6,7 +6,7 @@ import {
   TransactionCtorFields,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { Instruction } from "../../../model/utils/instruction";
+import { Instruction } from "../..";
 
 export default class TransactionBuilder {
   private connection: Connection;
