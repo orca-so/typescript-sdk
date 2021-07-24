@@ -10,6 +10,7 @@ export type QuotePoolParams = PoolTokenCount & {
   outputToken: OrcaToken;
   feeStructure: FeeStructure;
   slippageTolerance: Percentage;
+  lamportsPerSignature: number;
 };
 
 export interface QuoteBuilder {

@@ -43,12 +43,8 @@ async function confirmTransaction(
 
 export async function sendAndConfirmTransaction(
   connection: Connection,
-  tx: Transaction,
-  signers: Signer[]
+  tx: Transaction
 ): Promise<TransactionSignature> {
-  // TODO: Support Wallet Signing
-  tx.sign(...signers);
-
   const txId = await connection.sendRawTransaction(tx.serialize());
   return await confirmTransaction(connection, txId);
 }

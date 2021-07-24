@@ -1,4 +1,4 @@
-import { Connection, Keypair, PublicKey, Signer, TransactionSignature } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey, Transaction, TransactionSignature } from "@solana/web3.js";
 import { OrcaPool, OrcaU64, Quote } from "../../..";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { deserializeAccount } from "../../../utils/web3/deserialize-account";
@@ -89,12 +89,17 @@ export class OrcaPoolImpl implements OrcaPool {
       outputPoolToken
     );
 
+    const {
+      value: { feeCalculator },
+    } = await this.connection.getRecentBlockhashAndContext("singleGossip");
+
     const quoteParams: QuotePoolParams = {
       ...poolTokenCount,
       inputToken: inputPoolToken,
       outputToken: outputPoolToken,
       feeStructure: feeStructure,
       slippageTolerance: slippageTolerance,
+      lamportsPerSignature: feeCalculator.lamportsPerSignature,
     };
 
     const quoteBuilder = QuoteBuilderFactory.getBuilder(this.poolParams.curveType);
@@ -108,12 +113,12 @@ export class OrcaPoolImpl implements OrcaPool {
     return quote;
   }
 
-  public async swap(
+  public async buildSwapTransaction(
     owner: Keypair,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<TransactionSignature> {
+  ): Promise<Transaction> {
     const ownerAddress = owner.publicKey;
     const { inputPoolToken, outputPoolToken } = getTokens(
       this.poolParams,
@@ -170,6 +175,24 @@ export class OrcaPoolImpl implements OrcaPool {
       .addInstruction(swapInstruction)
       .build();
 
-    return await sendAndConfirmTransaction(this.connection, transaction, signers);
+    transaction.sign(...signers);
+
+    return transaction;
+  }
+
+  public async swap(
+    owner: Keypair,
+    inputToken: OrcaToken,
+    amountIn: Decimal | OrcaU64,
+    minimumAmountOut: Decimal | OrcaU64
+  ): Promise<TransactionSignature> {
+    const transaction = await this.buildSwapTransaction(
+      owner,
+      inputToken,
+      amountIn,
+      minimumAmountOut
+    );
+
+    return await sendAndConfirmTransaction(this.connection, transaction);
   }
 }

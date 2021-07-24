@@ -43,7 +43,7 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
   return impact.mul(100).toDecimalPlaces(params.outputToken.scale);
 }
 
-function getFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
+function getLPFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   const { feeStructure } = params;
   const tradingFee = inputTradeAmount
     .mul(feeStructure.traderFee.numerator)
@@ -57,7 +57,7 @@ function getFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
 }
 
 function getExpectedOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
-  const inputTradeLessFees = inputTradeAmount.sub(getFees(inputTradeAmount, params));
+  const inputTradeLessFees = inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
   return getOutputAmount(inputTradeLessFees, params);
 }
 
@@ -69,7 +69,7 @@ function getExpectedOutputAmountWithNoSlippage(
     return params.outputTokenCount;
   }
 
-  const inputTradeLessFees = inputTradeAmount.sub(getFees(inputTradeAmount, params));
+  const inputTradeLessFees = inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
   return inputTradeLessFees.mul(params.outputTokenCount).div(params.inputTokenCount);
 }
 
@@ -100,12 +100,17 @@ function getOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   return new u64(outputAmount.toString());
 }
 
+const NUM_SIGNATURES_IN_SWAP_TRANSACTION = 2;
+
 export class ConstantProductPoolQuoteBuilder {
   buildQuote(params: QuotePoolParams, inputTradeAmount: u64): Quote {
     return {
       getRate: () => getRate(inputTradeAmount, params),
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),
-      getFees: () => OrcaU64.fromU64(getFees(inputTradeAmount, params), params.inputToken.scale),
+      getLPFees: () =>
+        OrcaU64.fromU64(getLPFees(inputTradeAmount, params), params.inputToken.scale),
+      getNetworkFees: () =>
+        OrcaU64.fromNumber(params.lamportsPerSignature * NUM_SIGNATURES_IN_SWAP_TRANSACTION),
       getExpectedOutputAmount: () =>
         OrcaU64.fromU64(
           getExpectedOutputAmount(inputTradeAmount, params),
