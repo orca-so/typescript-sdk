@@ -7,7 +7,6 @@ import {
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaPool, OrcaToken, Quote } from "../../..";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { PercentageUtils } from "../../../public/utils/percentage-utils";
 import {
@@ -20,6 +19,9 @@ import {
   getTokenCount,
   resolveAssociatedTokenAddress,
   TransactionBuilder,
+  OrcaPool,
+  OrcaToken,
+  Quote,
 } from "../../../public";
 import {
   createApprovalInstruction,
