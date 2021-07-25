@@ -1,20 +1,20 @@
-import { CurveType, FeeStructure } from "../../../../src/model/orca/pool/pool-types";
+import { u64 } from "@solana/spl-token";
+import Decimal from "decimal.js";
+import { OrcaToken } from "../../../../src";
+import { usdcToken, solToken } from "../../../../src/constants/pools";
+import { CurveType } from "../../../../src/model/orca/pool/pool-types";
 import {
   QuoteBuilder,
   QuoteBuilderFactory,
   QuotePoolParams,
 } from "../../../../src/model/quote/quote-builder";
-import { PercentageUtils } from "../../../../src/model/utils/percentage";
-
-import { OrcaToken, OrcaU64, Quote } from "../../../../src";
-import { u64 } from "@solana/spl-token";
-import Decimal from "decimal.js";
-import { Builder } from "builder-pattern";
+import { DecimalUtil, OrcaU64, PercentageUtils } from "../../../../src/public";
 import { defaultQuotePoolParams } from "../../../test-utils";
-import { solToken, usdcToken } from "../../../../src/constants/pools";
-import { DecimalUtil } from "../../../../src/utils/numbers/decimal-utils";
+import { Builder } from "builder-pattern";
 
-const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(CurveType.ConstantProduct);
+const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(
+  CurveType.ConstantProduct
+) as QuoteBuilder;
 
 test("Input & Output tokens have different scale", () => {
   const params = Builder<QuotePoolParams>(defaultQuotePoolParams).build();
@@ -26,7 +26,7 @@ test("Input & Output tokens have different scale", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(24.175536));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("241513608"), params.outputToken.scale)
   );
@@ -49,7 +49,7 @@ test("Input & Output tokens have the same scale", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(24.175536404));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059609));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("241513608677"), params.outputToken.scale)
   );
@@ -68,7 +68,7 @@ test("Input trade amount equal 0 ", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(0));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("0"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("0"), params.inputToken.scale));
   expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
   expect(quote.getExpectedOutputAmount()).toEqual(
     new OrcaU64(new u64("0"), params.outputToken.scale)
@@ -87,7 +87,7 @@ test("Input Token Count is zero", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(67043.258021));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("669762147627"), params.outputToken.scale)
   );
@@ -108,7 +108,7 @@ test("Output Token Count is zero", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(0));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
   expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
   expect(quote.getExpectedOutputAmount()).toEqual(
     new OrcaU64(new u64("0"), params.outputToken.scale)
@@ -127,7 +127,7 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("241755364"), params.outputToken.scale)
     );
@@ -147,7 +147,7 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("241513608"), params.outputToken.scale)
     );
@@ -167,7 +167,7 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("239337810"), params.outputToken.scale)
     );

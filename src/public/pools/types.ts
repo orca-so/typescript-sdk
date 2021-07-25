@@ -1,15 +1,6 @@
 import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaPoolConfig } from "./pools";
-import { OrcaU64 } from "./utils/orca-u64";
-
-export type Orca = {
-  /**
-   * Get an instance of an Orca pool.
-   * @param pool a pool config targeting an Orca pool
-   */
-  getPool: (pool: OrcaPoolConfig) => OrcaPool;
-};
+import { OrcaU64 } from "..";
 
 /**
  * Allows interactions with an Orca liquidity pool.

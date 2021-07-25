@@ -1,26 +1,34 @@
-import { Connection, Keypair, PublicKey, Transaction, TransactionSignature } from "@solana/web3.js";
-import { OrcaPool, OrcaU64, Quote } from "../../..";
-import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
-import { deserializeAccount } from "../../../utils/web3/deserialize-account";
-import { PoolTokenCount, getTokenCount } from "../../../utils/web3/get-token-count";
-import { OrcaPoolParams } from "./pool-types";
-import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
-import { PercentageUtils } from "../../utils/percentage";
-import TransactionBuilder from "../../../utils/web3/transactions/transaction-builder";
-import {
-  createSwapInstruction,
-  createApprovalInstruction,
-} from "../../../utils/web3/instructions/pool-instructions";
 import { u64 } from "@solana/spl-token";
-import { sendAndConfirmTransaction } from "../../../utils/web3/transactions/transactions";
-import { getTokens } from "../../../utils/pool-utils";
-import Decimal from "decimal.js";
-import { U64Utils } from "../../../utils/numbers/u64-utils";
-import { OrcaToken } from "../../../public/types";
 import {
+  Connection,
+  PublicKey,
+  Keypair,
+  TransactionSignature,
+  sendAndConfirmTransaction,
+  Signer,
+} from "@solana/web3.js";
+import Decimal from "decimal.js";
+import { OrcaPool, OrcaToken, Quote } from "../../..";
+import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
+import { PercentageUtils } from "../../../public/utils/percentage-utils";
+import {
+  OrcaU64,
   deriveAssociatedTokenAddress,
+  deserializeAccount,
+  getTokens,
+  U64Utils,
+  PoolTokenCount,
+  getTokenCount,
   resolveAssociatedTokenAddress,
-} from "../../../utils/web3/ata-utils";
+  TransactionBuilder,
+} from "../../../public";
+import {
+  createApprovalInstruction,
+  createSwapInstruction,
+} from "../../../public/utils/web3/instructions/pool-instructions";
+import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
+import { OrcaPoolParams } from "./pool-types";
+import { Transaction } from "@solana/web3.js";
 
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
@@ -118,7 +126,7 @@ export class OrcaPoolImpl implements OrcaPool {
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<Transaction> {
+  ): Promise<{ transaction: Transaction; signers: Signer[] }> {
     const ownerAddress = owner.publicKey;
     const { inputPoolToken, outputPoolToken } = getTokens(
       this.poolParams,
@@ -168,16 +176,12 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    const { transaction, signers } = await new TransactionBuilder(this.connection, ownerAddress)
+    return await new TransactionBuilder(this.connection, ownerAddress)
       .addInstruction(resolveInputAddrInstructions)
       .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
       .build();
-
-    transaction.sign(...signers);
-
-    return transaction;
   }
 
   public async swap(
@@ -186,13 +190,13 @@ export class OrcaPoolImpl implements OrcaPool {
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
   ): Promise<TransactionSignature> {
-    const transaction = await this.buildSwapTransaction(
+    const { transaction, signers } = await this.buildSwapTransaction(
       owner,
       inputToken,
       amountIn,
       minimumAmountOut
     );
 
-    return await sendAndConfirmTransaction(this.connection, transaction);
+    return await sendAndConfirmTransaction(this.connection, transaction, signers);
   }
 }

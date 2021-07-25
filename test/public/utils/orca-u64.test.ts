@@ -1,6 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { OrcaU64 } from "../../../src";
+import { OrcaU64 } from "../../../src/public";
 
 // OrcaU64.fromDecimal
 describe.each([

@@ -1,7 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { DecimalUtil } from "../../utils/numbers/decimal-utils";
-import { U64Utils } from "../../utils/numbers/u64-utils";
 
 /**
  * Orca's U64 wrapper class to help users convert to/from regular javascript number types
