@@ -26,7 +26,8 @@ test("Input & Output tokens have different scale", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(24.175536));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("241513608"), params.outputToken.scale)
   );
@@ -49,7 +50,8 @@ test("Input & Output tokens have the same scale", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(24.175536404));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059609));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("241513608677"), params.outputToken.scale)
   );
@@ -68,7 +70,8 @@ test("Input trade amount equal 0 ", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(0));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("0"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("0"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
   expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
   expect(quote.getExpectedOutputAmount()).toEqual(
     new OrcaU64(new u64("0"), params.outputToken.scale)
@@ -87,7 +90,8 @@ test("Input Token Count is zero", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(67043.258021));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
   expect(quote.getMinOutputAmount()).toEqual(
     new OrcaU64(new u64("669762147627"), params.outputToken.scale)
   );
@@ -108,7 +112,8 @@ test("Output Token Count is zero", () => {
 
   expect(quote.getRate()).toEqual(new Decimal(0));
   expect(quote.getPriceImpact()).toEqual(new Decimal(0));
-  expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
   expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
   expect(quote.getExpectedOutputAmount()).toEqual(
     new OrcaU64(new u64("0"), params.outputToken.scale)
@@ -127,7 +132,8 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("241755364"), params.outputToken.scale)
     );
@@ -147,7 +153,8 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("241513608"), params.outputToken.scale)
     );
@@ -167,7 +174,8 @@ describe("Slippage tolerance", () => {
 
     expect(quote.getRate()).toEqual(new Decimal(24.175536));
     expect(quote.getPriceImpact()).toEqual(new Decimal(0.036059));
-    expect(quote.getFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("30000000"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
     expect(quote.getMinOutputAmount()).toEqual(
       new OrcaU64(new u64("239337810"), params.outputToken.scale)
     );

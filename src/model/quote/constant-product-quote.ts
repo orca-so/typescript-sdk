@@ -1,6 +1,8 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { ZERO, DecimalUtil, U64Utils, OrcaU64, Quote } from "../../public";
+import { Quote } from "../..";
+import { solToken } from "../../constants";
+import { ZERO, DecimalUtil, U64Utils, OrcaU64 } from "../../public";
 import { QuotePoolParams } from "./quote-builder";
 
 /**
@@ -41,7 +43,7 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
   return impact.mul(100).toDecimalPlaces(params.outputToken.scale);
 }
 
-function getFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
+function getLPFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   const { feeStructure } = params;
   const tradingFee = inputTradeAmount
     .mul(feeStructure.traderFee.numerator)
@@ -55,7 +57,7 @@ function getFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
 }
 
 function getExpectedOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
-  const inputTradeLessFees = inputTradeAmount.sub(getFees(inputTradeAmount, params));
+  const inputTradeLessFees = inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
   return getOutputAmount(inputTradeLessFees, params);
 }
 
@@ -67,7 +69,7 @@ function getExpectedOutputAmountWithNoSlippage(
     return params.outputTokenCount;
   }
 
-  const inputTradeLessFees = inputTradeAmount.sub(getFees(inputTradeAmount, params));
+  const inputTradeLessFees = inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
   return inputTradeLessFees.mul(params.outputTokenCount).div(params.inputTokenCount);
 }
 
@@ -98,12 +100,25 @@ function getOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   return new u64(outputAmount.toString());
 }
 
+function getNetworkFees(params: QuotePoolParams) {
+  let numSigs;
+  if (params.inputToken === solToken || params.outputToken === solToken) {
+    numSigs = 3;
+  } else {
+    numSigs = 2;
+  }
+
+  return params.lamportsPerSignature * numSigs;
+}
+
 export class ConstantProductPoolQuoteBuilder {
   buildQuote(params: QuotePoolParams, inputTradeAmount: u64): Quote {
     return {
       getRate: () => getRate(inputTradeAmount, params),
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),
-      getFees: () => OrcaU64.fromU64(getFees(inputTradeAmount, params), params.inputToken.scale),
+      getLPFees: () =>
+        OrcaU64.fromU64(getLPFees(inputTradeAmount, params), params.inputToken.scale),
+      getNetworkFees: () => OrcaU64.fromNumber(getNetworkFees(params)),
       getExpectedOutputAmount: () =>
         OrcaU64.fromU64(
           getExpectedOutputAmount(inputTradeAmount, params),

@@ -1,11 +1,5 @@
 import { u64 } from "@solana/spl-token";
-import {
-  Connection,
-  PublicKey,
-  Keypair,
-  TransactionSignature,
-  sendAndConfirmTransaction,
-} from "@solana/web3.js";
+import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { PercentageUtils } from "../../../public/utils/percentage-utils";
@@ -98,12 +92,17 @@ export class OrcaPoolImpl implements OrcaPool {
       outputPoolToken
     );
 
+    const {
+      value: { feeCalculator },
+    } = await this.connection.getRecentBlockhashAndContext("singleGossip");
+
     const quoteParams: QuotePoolParams = {
       ...poolTokenCount,
       inputToken: inputPoolToken,
       outputToken: outputPoolToken,
       feeStructure: feeStructure,
       slippageTolerance: slippageTolerance,
+      lamportsPerSignature: feeCalculator.lamportsPerSignature,
     };
 
     const quoteBuilder = QuoteBuilderFactory.getBuilder(this.poolParams.curveType);

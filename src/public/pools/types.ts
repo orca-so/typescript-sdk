@@ -96,7 +96,13 @@ export type Quote = {
    * Returns the fee that will be charged in this exchange.
    * @return a function that returns the fee (denominated by input token) that will be charged in this exchange.
    */
-  getFees: () => OrcaU64;
+  getLPFees: () => OrcaU64;
+
+  /**
+   * Return the network fee that will be charged to submit the transaction.
+   * @return a function that returns the network fee in lamports that will be charged to submit the transaction.
+   */
+  getNetworkFees: () => OrcaU64;
 
   /**
    * Returns the % impact to the rate if this transaction goes through.

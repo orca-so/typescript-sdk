@@ -32,6 +32,8 @@ export const defaultFeeStructure: FeeStructure = {
   ownerFee: PercentageUtils.fromDecimal(new Decimal(0.1)),
 };
 
+export const defaultLamportsPerSignature: number = 5000;
+
 export const defaultQuotePoolParams: QuotePoolParams = {
   inputTokenCount: new u64("27638693975460"),
   outputTokenCount: new u64("670432580208"),
@@ -39,4 +41,5 @@ export const defaultQuotePoolParams: QuotePoolParams = {
   outputToken: defaultUsdcToken,
   feeStructure: defaultFeeStructure,
   slippageTolerance: PercentageUtils.fromDecimal(new Decimal(0.1)),
+  lamportsPerSignature: defaultLamportsPerSignature,
 };
