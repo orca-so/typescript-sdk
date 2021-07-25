@@ -549,7 +549,7 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@solana/spl-token-swap@^0.1.0":
+"@solana/spl-token-swap@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@solana/spl-token-swap/-/spl-token-swap-0.1.0.tgz#a1bc2b0c96edae8b31bb2cc000ebacdc36e131c8"
   integrity sha512-h0ntp6xwRZBEKDd6oNhJTbPISjIfeGm0eqQqAccTkeluo1zHve4dnUChTKF4MQ+JqXjfqd6z6DJjfa0+dGA37w==
