@@ -2,11 +2,13 @@ import {
   Connection,
   Keypair,
   PublicKey,
+  sendAndConfirmTransaction,
   Transaction,
   TransactionCtorFields,
   TransactionInstruction,
+  TransactionSignature,
 } from "@solana/web3.js";
-import { Instruction } from "../..";
+import { Instruction, TransactionPayload } from "../..";
 
 export class TransactionBuilder {
   private connection: Connection;
@@ -44,6 +46,14 @@ export class TransactionBuilder {
     transaction.add(...instructions.concat(cleanupInstructions));
     transaction.feePayer = this.feePayer;
 
-    return { transaction: transaction, signers: signers };
+    const payload: TransactionPayload = {
+      transaction: transaction,
+      signers: signers,
+      execute: async () => {
+        return sendAndConfirmTransaction(this.connection, transaction, signers);
+      },
+    };
+
+    return payload;
   }
 }
