@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { Quote } from "../..";
+import { solToken } from "../../constants";
 import { ZERO, DecimalUtil, U64Utils, OrcaU64 } from "../../public";
 import { QuotePoolParams } from "./quote-builder";
 
@@ -99,7 +100,16 @@ function getOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   return new u64(outputAmount.toString());
 }
 
-const NUM_SIGNATURES_IN_SWAP_TRANSACTION = 2;
+function getNetworkFees(params: QuotePoolParams) {
+  let numSigs;
+  if (params.inputToken === solToken || params.outputToken === solToken) {
+    numSigs = 3;
+  } else {
+    numSigs = 2;
+  }
+
+  return params.lamportsPerSignature * numSigs;
+}
 
 export class ConstantProductPoolQuoteBuilder {
   buildQuote(params: QuotePoolParams, inputTradeAmount: u64): Quote {
@@ -108,8 +118,7 @@ export class ConstantProductPoolQuoteBuilder {
       getPriceImpact: () => getPriceImpact(inputTradeAmount, params),
       getLPFees: () =>
         OrcaU64.fromU64(getLPFees(inputTradeAmount, params), params.inputToken.scale),
-      getNetworkFees: () =>
-        OrcaU64.fromNumber(params.lamportsPerSignature * NUM_SIGNATURES_IN_SWAP_TRANSACTION),
+      getNetworkFees: () => OrcaU64.fromNumber(getNetworkFees(params)),
       getExpectedOutputAmount: () =>
         OrcaU64.fromU64(
           getExpectedOutputAmount(inputTradeAmount, params),
