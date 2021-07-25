@@ -1,20 +1,20 @@
-import { CurveType, FeeStructure } from "../../../../src/model/orca/pool/pool-types";
+import { u64 } from "@solana/spl-token";
+import Decimal from "decimal.js";
+import { OrcaToken } from "../../../../src";
+import { usdcToken, solToken } from "../../../../src/constants/pools";
+import { CurveType } from "../../../../src/model/orca/pool/pool-types";
 import {
   QuoteBuilder,
   QuoteBuilderFactory,
   QuotePoolParams,
 } from "../../../../src/model/quote/quote-builder";
-import { PercentageUtils } from "../../../../src/model/utils/percentage";
-
-import { OrcaToken, OrcaU64, Quote } from "../../../../src";
-import { u64 } from "@solana/spl-token";
-import Decimal from "decimal.js";
-import { Builder } from "builder-pattern";
+import { DecimalUtil, OrcaU64, PercentageUtils } from "../../../../src/public";
 import { defaultQuotePoolParams } from "../../../test-utils";
-import { solToken, usdcToken } from "../../../../src/constants/pools";
-import { DecimalUtil } from "../../../../src/utils/numbers/decimal-utils";
+import { Builder } from "builder-pattern";
 
-const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(CurveType.ConstantProduct);
+const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(
+  CurveType.ConstantProduct
+) as QuoteBuilder;
 
 test("Input & Output tokens have different scale", () => {
   const params = Builder<QuotePoolParams>(defaultQuotePoolParams).build();

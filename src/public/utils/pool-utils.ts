@@ -1,4 +1,4 @@
-import { OrcaPoolParams, OrcaPoolToken } from "../model/orca/pool/pool-types";
+import { OrcaPoolParams } from "../../model/orca/pool/pool-types";
 
 export function getTokens(poolParams: OrcaPoolParams, inputTokenId: string) {
   if (poolParams.tokens[inputTokenId] == undefined) {
