@@ -58,7 +58,7 @@ try {
   let quote = await pool.getQuote(usdcToken, tradeValue, new Decimal(0.1));
 
   // Perform a swap for 1USDC to the quoted minimum amount of ETH
-  const txId = await pool.swap(owner, usdcToken, tradeValue, quote.getMinOutputAmount());
+  const txId = await pool.swap(owner, usdcToken, tradeValue, quote.getMinOutputAmount()).execute();
 } catch (err) {
   // Handle errors
 }
@@ -67,10 +67,16 @@ try {
 # Technical Notes
 
 **Decimals & OrcaU64**
+
 The SDK relies on the use of [Decimal](https://github.com/MikeMcl/decimal.js/) for number inputs and Decimal/[OrcaU64](https://github.com/orca-so/typescript-sdk/blob/main/src/public/utils/orca-u64.ts) for token-value inputs. If a Decimal instance is provided for a token-value input, it will be automatically transformed to the token's scale.
 
 **Funding Associated Token Addresses**
+
 The swap() function assumes the owner keypair address has already created & initialized the [associated token addresses](https://spl.solana.com/associated-token-account) for the trading pair tokens. The swap will fail if this is not the case.
+
+**Stability of the Public Util Functions**
+
+We hope you find the tools we used to build our API useful in the public/utils folder. Due to our on-going development of the Orca platform, we cannot guarrantee the stability of the util APIs. The trading APIs can only be upgraded on major version updates.
 
 # Support
 
