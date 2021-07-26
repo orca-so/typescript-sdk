@@ -1,6 +1,7 @@
 import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
+import { TransactionPayload } from "../utils";
 
 /**
  * Allows interactions with an Orca liquidity pool.
@@ -66,7 +67,7 @@ export type OrcaPool = {
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ) => Promise<TransactionSignature>;
+  ) => Promise<TransactionPayload>;
 };
 
 /**

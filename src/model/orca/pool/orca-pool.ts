@@ -7,7 +7,6 @@ import {
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { OrcaPool, OrcaToken, Quote } from "../../..";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
 import { PercentageUtils } from "../../../public/utils/percentage-utils";
 import {
@@ -20,6 +19,10 @@ import {
   getTokenCount,
   resolveAssociatedTokenAddress,
   TransactionBuilder,
+  OrcaPool,
+  OrcaToken,
+  Quote,
+  TransactionPayload,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -119,7 +122,7 @@ export class OrcaPoolImpl implements OrcaPool {
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<TransactionSignature> {
+  ): Promise<TransactionPayload> {
     const ownerAddress = owner.publicKey;
     const { inputPoolToken, outputPoolToken } = getTokens(
       this.poolParams,
@@ -169,13 +172,11 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    const { transaction, signers } = await new TransactionBuilder(this.connection, ownerAddress)
+    return await new TransactionBuilder(this.connection, ownerAddress)
       .addInstruction(resolveInputAddrInstructions)
       .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
       .build();
-
-    return await sendAndConfirmTransaction(this.connection, transaction, signers);
   }
 }
