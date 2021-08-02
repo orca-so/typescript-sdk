@@ -2,7 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import { CurveType, OrcaPoolParams } from "../model/orca/pool/pool-types";
 import { OrcaPoolConfig } from "../public/pools/config";
 import { OrcaToken } from "../public/pools/types";
-import { PercentageUtils } from "../public/utils/percentage-utils";
+import { Percentage } from "../public/utils/models/percentage";
 
 /**
  * Constants
@@ -64,8 +64,8 @@ export const solUsdcPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: PercentageUtils.fromFraction(2, 1000),
-    ownerFee: PercentageUtils.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(2, 1000),
+    ownerFee: Percentage.fromFraction(1, 1000),
   },
 });
 
@@ -89,8 +89,8 @@ export const solUsdtPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: PercentageUtils.fromFraction(2, 1000),
-    ownerFee: PercentageUtils.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(2, 1000),
+    ownerFee: Percentage.fromFraction(1, 1000),
   },
 });
 
@@ -114,8 +114,8 @@ export const raySolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: PercentageUtils.fromFraction(2, 1000),
-    ownerFee: PercentageUtils.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(2, 1000),
+    ownerFee: Percentage.fromFraction(1, 1000),
   },
 });
 
@@ -139,8 +139,8 @@ export const ethSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: PercentageUtils.fromFraction(2, 1000),
-    ownerFee: PercentageUtils.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(2, 1000),
+    ownerFee: Percentage.fromFraction(1, 1000),
   },
 });
 
@@ -164,8 +164,8 @@ export const ethUsdcPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: PercentageUtils.fromFraction(2, 1000),
-    ownerFee: PercentageUtils.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(2, 1000),
+    ownerFee: Percentage.fromFraction(1, 1000),
   },
 });
 
