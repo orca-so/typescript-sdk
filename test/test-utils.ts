@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 import { OrcaToken } from "../src";
 import { FeeStructure } from "../src/model/orca/pool/pool-types";
 import { QuotePoolParams } from "../src/model/quote/quote-builder";
-import { PercentageUtils } from "../src/public";
+import { Percentage } from "../src/public";
 
 export const defaultSOLToken: OrcaToken = {
   tag: "SOL",
@@ -28,8 +28,8 @@ export const defaultEthToken: OrcaToken = {
 };
 
 export const defaultFeeStructure: FeeStructure = {
-  traderFee: PercentageUtils.fromDecimal(new Decimal(0.2)),
-  ownerFee: PercentageUtils.fromDecimal(new Decimal(0.1)),
+  traderFee: Percentage.fromDecimal(new Decimal(0.2)),
+  ownerFee: Percentage.fromDecimal(new Decimal(0.1)),
 };
 
 export const defaultLamportsPerSignature: number = 5000;
@@ -40,6 +40,6 @@ export const defaultQuotePoolParams: QuotePoolParams = {
   inputToken: defaultSOLToken,
   outputToken: defaultUsdcToken,
   feeStructure: defaultFeeStructure,
-  slippageTolerance: PercentageUtils.fromDecimal(new Decimal(0.1)),
+  slippageTolerance: Percentage.fromDecimal(new Decimal(0.1)),
   lamportsPerSignature: defaultLamportsPerSignature,
 };

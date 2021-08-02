@@ -8,7 +8,7 @@ import {
   QuoteBuilderFactory,
   QuotePoolParams,
 } from "../../../../src/model/quote/quote-builder";
-import { DecimalUtil, OrcaU64, PercentageUtils } from "../../../../src/public";
+import { DecimalUtil, OrcaU64, Percentage } from "../../../../src/public";
 import { defaultQuotePoolParams } from "../../../test-utils";
 import { Builder } from "builder-pattern";
 
@@ -123,7 +123,7 @@ test("Output Token Count is zero", () => {
 describe("Slippage tolerance", () => {
   test("tolerance equal 0", () => {
     const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
-      .slippageTolerance(PercentageUtils.fromDecimal(new Decimal(0)))
+      .slippageTolerance(Percentage.fromDecimal(new Decimal(0)))
       .build();
     const quote = builder.buildQuote(
       params,
@@ -144,7 +144,7 @@ describe("Slippage tolerance", () => {
 
   test("tolerance equals 0.1", () => {
     const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
-      .slippageTolerance(PercentageUtils.fromDecimal(new Decimal(0.1)))
+      .slippageTolerance(Percentage.fromDecimal(new Decimal(0.1)))
       .build();
     const quote = builder.buildQuote(
       params,
@@ -165,7 +165,7 @@ describe("Slippage tolerance", () => {
 
   test("tolerance equals 1 ", () => {
     const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
-      .slippageTolerance(PercentageUtils.fromDecimal(new Decimal(1)))
+      .slippageTolerance(Percentage.fromDecimal(new Decimal(1)))
       .build();
     const quote = builder.buildQuote(
       params,

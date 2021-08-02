@@ -2,7 +2,7 @@ import { u64 } from "@solana/spl-token";
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
-import { PercentageUtils } from "../../../public/utils/percentage-utils";
+
 import {
   OrcaU64,
   deriveAssociatedTokenAddress,
@@ -17,6 +17,7 @@ import {
   OrcaToken,
   Quote,
   TransactionPayload,
+  Percentage,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -75,7 +76,7 @@ export class OrcaPoolImpl implements OrcaPool {
     slippage?: Decimal
   ): Promise<Quote> {
     const slippageTolerance =
-      slippage === undefined ? defaultSlippagePercentage : PercentageUtils.fromDecimal(slippage);
+      slippage === undefined ? defaultSlippagePercentage : Percentage.fromDecimal(slippage);
 
     const feeStructure = this.poolParams.feeStructure;
 
