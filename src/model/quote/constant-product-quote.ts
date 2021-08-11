@@ -1,6 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { solToken } from "../../constants";
+import { solToken } from "../../constants/tokens";
 import { ZERO, DecimalUtil, U64Utils, OrcaU64, Quote } from "../../public";
 import { QuotePoolParams } from "./quote-builder";
 
