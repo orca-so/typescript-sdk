@@ -27,8 +27,8 @@ export const solUsdcPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -52,8 +52,8 @@ export const solUsdtPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -77,8 +77,8 @@ export const ethSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -102,8 +102,8 @@ export const ethUsdcPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -127,8 +127,8 @@ export const raySolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -152,8 +152,8 @@ export const ropeSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -177,8 +177,8 @@ export const stepSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -202,8 +202,8 @@ export const srmSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -227,8 +227,8 @@ export const fttSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -252,8 +252,8 @@ export const copeSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -277,8 +277,8 @@ export const oxySolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -302,8 +302,8 @@ export const btcSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -327,8 +327,8 @@ export const merSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -352,8 +352,8 @@ export const fidaSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -377,8 +377,8 @@ export const mapsSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -402,8 +402,8 @@ export const usdcUsdtPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.Stable,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(6, 10000),
+    ownerFee: Percentage.fromFraction(1, 10000),
   },
 });
 
@@ -427,8 +427,8 @@ export const orcaSolPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
@@ -452,8 +452,8 @@ export const orcaUsdcPool: OrcaPoolParams = Object.freeze({
   },
   curveType: CurveType.ConstantProduct,
   feeStructure: {
-    traderFee: Percentage.fromFraction(2, 1000),
-    ownerFee: Percentage.fromFraction(1, 1000),
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
   },
 });
 
