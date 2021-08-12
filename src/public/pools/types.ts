@@ -53,7 +53,7 @@ export type OrcaPool = {
    * Fee for the transaction will be paid by the owner's wallet.
    *
    * NOTE:
-   * 1. User has to ensure that their owner address has established spl-token accounts for the trading pair.
+   * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
    * @param owner The keypair for the user's wallet

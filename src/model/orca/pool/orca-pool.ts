@@ -11,13 +11,13 @@ import {
   U64Utils,
   PoolTokenCount,
   getTokenCount,
-  resolveAssociatedTokenAddress,
   TransactionBuilder,
   OrcaPool,
   OrcaToken,
   Quote,
   TransactionPayload,
   Percentage,
+  resolveOrCreateAssociatedTokenAddress,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -136,16 +136,16 @@ export class OrcaPoolImpl implements OrcaPool {
     );
 
     const { address: inputPoolTokenUserAddress, ...resolveInputAddrInstructions } =
-      await resolveAssociatedTokenAddress(
+      await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner.publicKey,
+        owner,
         inputPoolToken.mint,
         amountInU64
       );
     const { address: outputPoolTokenUserAddress, ...resolveOutputAddrInstructions } =
-      await resolveAssociatedTokenAddress(
+      await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner.publicKey,
+        owner,
         outputPoolToken.mint,
         amountInU64
       );
