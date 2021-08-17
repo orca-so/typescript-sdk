@@ -24,4 +24,7 @@ export enum OrcaPoolConfig {
   USDC_USDT = "H2uzgruPvonVpCRhwwdukcpXK8TG17swFNzYFr2rtPxy",
   ORCA_SOL = "2uVjAuRXavpM6h1scGQaxqb6HVaNRn6T2X7HHXTabz25",
   ORCA_USDC = "n8Mpu28RjeYD7oUX3LG1tPxzhRZh3YYLRSHcHRdS3Zx",
+  KIN_SOL = "HEvnD66WcBfTajS9adUYnGRBMDehFtLySiFHSD6kEBWs",
+  SAMO_SOL = "D6N9j8F2DhtzDtrdpT74y3u2YmYAzcggiLc3nTjqux9M",
+  LIQ_USDC = "3PD9SZFwXKkXr4akLf4ofo37ZUMycwML89R2P3qxcbZG",
 }

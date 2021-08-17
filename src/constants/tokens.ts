@@ -47,6 +47,13 @@ export const kinToken: OrcaToken = Object.freeze({
   scale: 5,
 });
 
+export const liqToken: OrcaToken = Object.freeze({
+  tag: "LIQ",
+  name: "LIQ Protocol",
+  mint: new PublicKey("4wjPQJ6PrkC4dHhYghwJzGBVP78DkBzA2U3kHoFNBuhj"),
+  scale: 6,
+});
+
 export const mapsToken: OrcaToken = Object.freeze({
   tag: "MAPS",
   name: "MAPS",
