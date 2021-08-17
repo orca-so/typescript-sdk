@@ -11,10 +11,9 @@ Learn more Orca [here](https://docs.orca.so).
 
 **Supported Orca Pools**
 
-- SOLUSDC, SOLUSDT, RAYSOL, ETHSOL, ETHUSDC
+- The SDK supports all pools currently listed on [Orca](https://www.orca.so/pools)
 
 **Features Coming Soon**
-- Supporting more pools on Orca!
 - More trader information (APY, Volume)
 - Deposit/Withdraw from OrcaPools
 
@@ -58,6 +57,8 @@ try {
   let quote = await pool.getQuote(usdcToken, tradeValue, new Decimal(0.1));
 
   // Perform a swap for 1USDC to the quoted minimum amount of ETH
+  // If the user does not have the Associated Token Address(ATA) to receive the output token, the ATA 
+  // instructions will be appended in the transaction.
   const txId = await pool.swap(owner, usdcToken, tradeValue, quote.getMinOutputAmount()).execute();
 } catch (err) {
   // Handle errors
@@ -69,10 +70,6 @@ try {
 **Decimals & OrcaU64**
 
 The SDK relies on the use of [Decimal](https://github.com/MikeMcl/decimal.js/) for number inputs and Decimal/[OrcaU64](https://github.com/orca-so/typescript-sdk/blob/main/src/public/utils/orca-u64.ts) for token-value inputs. If a Decimal instance is provided for a token-value input, it will be automatically transformed to the token's scale.
-
-**Funding Associated Token Addresses**
-
-The swap() function assumes the owner keypair address has already created & initialized the [associated token addresses](https://spl.solana.com/associated-token-account) for the trading pair tokens. The swap will fail if this is not the case.
 
 **Stability of the Public Util Functions**
 
