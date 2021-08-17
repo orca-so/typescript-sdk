@@ -1,7 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaToken } from "../../../../src";
-import { usdcToken, solToken } from "../../../../src/constants/pools";
+import * as Token from "../../../../src/constants/tokens";
 import { CurveType } from "../../../../src/model/orca/pool/pool-types";
 import {
   QuoteBuilder,
@@ -37,7 +37,9 @@ test("Input & Output tokens have different scale", () => {
 });
 
 test("Input & Output tokens have the same scale", () => {
-  const usdcTokenWithSameScale = Builder<OrcaToken>(usdcToken).scale(solToken.scale).build();
+  const usdcTokenWithSameScale = Builder<OrcaToken>(Token.usdcToken)
+    .scale(Token.solToken.scale)
+    .build();
   const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
     .outputTokenCount(new u64("670432580208000"))
     .outputToken(usdcTokenWithSameScale)
