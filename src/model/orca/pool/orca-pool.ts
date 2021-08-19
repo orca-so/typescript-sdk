@@ -142,6 +142,7 @@ export class OrcaPoolImpl implements OrcaPool {
         inputPoolToken.mint,
         amountInU64
       );
+
     const { address: outputPoolTokenUserAddress, ...resolveOutputAddrInstructions } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,

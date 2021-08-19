@@ -65,7 +65,7 @@ export const createSwapInstruction = async (
     outputTokenUserAddress,
     poolParams.poolTokenMint,
     poolParams.feeAccount,
-    owner.publicKey,
+    null,
     ORCA_TOKEN_SWAP_ID,
     TOKEN_PROGRAM_ID,
     amountInU64,
