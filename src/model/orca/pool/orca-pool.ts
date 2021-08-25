@@ -18,11 +18,13 @@ import {
   TransactionPayload,
   Percentage,
   resolveOrCreateAssociatedTokenAddress,
+  ExecutableTransactionPayload,
 } from "../../../public";
 import {
   createApprovalInstruction,
   createSwapInstruction,
 } from "../../../public/utils/web3/instructions/pool-instructions";
+import { Owner } from "../../../public/utils/web3/key-utils";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
 import { OrcaPoolParams } from "./pool-types";
 
@@ -117,13 +119,16 @@ export class OrcaPoolImpl implements OrcaPool {
     return quote;
   }
 
-  public async swap(
-    owner: Keypair,
+  public async swap<O extends Keypair | PublicKey>(
+    owner: O,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<TransactionPayload> {
-    const ownerAddress = owner.publicKey;
+  ): Promise<O extends Keypair ? ExecutableTransactionPayload : TransactionPayload> {
+    const _owner = new Owner(owner);
+
+    const ownerAddress = _owner.getPublicKey();
+
     const { inputPoolToken, outputPoolToken } = getTokens(
       this.poolParams,
       inputToken.mint.toString()
@@ -138,7 +143,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: inputPoolTokenUserAddress, ...resolveInputAddrInstructions } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         inputPoolToken.mint,
         amountInU64
       );
@@ -146,7 +151,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: outputPoolTokenUserAddress, ...resolveOutputAddrInstructions } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         outputPoolToken.mint,
         amountInU64
       );
@@ -163,7 +168,7 @@ export class OrcaPoolImpl implements OrcaPool {
 
     const swapInstruction = await createSwapInstruction(
       this.poolParams,
-      owner,
+      _owner,
       inputPoolToken,
       inputPoolTokenUserAddress,
       outputPoolToken,
@@ -173,11 +178,11 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    return await new TransactionBuilder(this.connection, ownerAddress)
+    return (await new TransactionBuilder(this.connection, ownerAddress)
       .addInstruction(resolveInputAddrInstructions)
       .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
-      .build();
+      .build()) as O extends Keypair ? ExecutableTransactionPayload : TransactionPayload;
   }
 }

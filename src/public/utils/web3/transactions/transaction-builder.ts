@@ -6,9 +6,10 @@ import {
   Transaction,
   TransactionCtorFields,
   TransactionInstruction,
-  TransactionSignature,
 } from "@solana/web3.js";
 import { Instruction, TransactionPayload } from "../..";
+import { ExecutableTransactionPayload } from "../../models";
+import { onlyKeyPairs, Owner } from "../key-utils";
 
 export class TransactionBuilder {
   private connection: Connection;
@@ -35,7 +36,7 @@ export class TransactionBuilder {
 
     let instructions: TransactionInstruction[] = [];
     let cleanupInstructions: TransactionInstruction[] = [];
-    let signers: Keypair[] = [];
+    let signers: (Keypair | PublicKey)[] = [];
     this.instructions.forEach((curr) => {
       instructions = instructions.concat(curr.instructions);
       cleanupInstructions = cleanupInstructions.concat(curr.cleanupInstructions);
@@ -46,14 +47,19 @@ export class TransactionBuilder {
     transaction.add(...instructions.concat(cleanupInstructions));
     transaction.feePayer = this.feePayer;
 
-    const payload: TransactionPayload = {
-      transaction: transaction,
-      signers: signers,
-      execute: async () => {
-        return sendAndConfirmTransaction(this.connection, transaction, signers);
-      },
-    };
-
-    return payload;
+    if (onlyKeyPairs(signers)) {
+      return {
+        transaction: transaction,
+        signers: signers as Keypair[],
+        execute: async () => {
+          return sendAndConfirmTransaction(this.connection, transaction, signers as Keypair[]);
+        },
+      } as ExecutableTransactionPayload;
+    } else {
+      return {
+        transaction: transaction,
+        signers: signers,
+      } as TransactionPayload;
+    }
   }
 }

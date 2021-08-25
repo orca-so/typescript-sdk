@@ -1,7 +1,7 @@
 import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
-import { TransactionPayload } from "../utils";
+import { ExecutableTransactionPayload, TransactionPayload } from "../utils";
 
 /**
  * Allows interactions with an Orca liquidity pool.
@@ -56,18 +56,18 @@ export type OrcaPool = {
    * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
-   * @param owner The keypair for the user's wallet
+   * @param owner The keypair for the user's wallet or just the user's public key
    * @param inputToken An Orca supported token in the user's wallet to swap from
    * @param amountIn The amount of inputToken to swap from
    * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
    * @return The transaction signature of the swap instruction
    */
-  swap: (
-    owner: Keypair,
+  swap: <O extends Keypair | PublicKey>(
+    owner: O,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ) => Promise<TransactionPayload>;
+  ) => Promise<O extends Keypair ? ExecutableTransactionPayload : TransactionPayload>;
 };
 
 /**
