@@ -19,7 +19,7 @@ export async function resolveOrCreateAssociatedTokenAddress(
   amountIn = new u64(0)
 ): Promise<ResolvedTokenAddressInstruction> {
   if (tokenMint !== solToken.mint) {
-    const derivedAddress = await deriveAssociatedTokenAddress(owner.getPublicKey(), tokenMint);
+    const derivedAddress = await deriveAssociatedTokenAddress(owner.publicKey, tokenMint);
 
     // Check if current wallet has an ATA for this spl-token mint. If not, create one.
     let resolveAtaInstruction = emptyInstruction;
@@ -29,8 +29,8 @@ export async function resolveOrCreateAssociatedTokenAddress(
       if (!tokenAccountInfo) {
         resolveAtaInstruction = createAssociatedTokenAccountInstruction(
           derivedAddress,
-          owner.getPublicKey(),
-          owner.getPublicKey(),
+          owner.publicKey,
+          owner.publicKey,
           tokenMint,
           owner
         );
@@ -50,7 +50,7 @@ export async function resolveOrCreateAssociatedTokenAddress(
     );
     // Create a temp-account to transfer SOL in the form of WSOL
     return createWSOLAccountInstructions(
-      owner.getPublicKey(),
+      owner.publicKey,
       solToken.mint,
       amountIn,
       accountRentExempt

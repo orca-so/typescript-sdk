@@ -9,7 +9,7 @@ export class Owner {
     this._owner = owner;
   }
 
-  getPublicKey(): PublicKey {
+  get publicKey(): PublicKey {
     if (Owner.isKeyPair(this._owner)) {
       return this._owner.publicKey;
     }
@@ -17,7 +17,7 @@ export class Owner {
     return this._owner;
   }
 
-  getSigner(): Keypair | PublicKey {
+  get signer(): Keypair | PublicKey {
     return this._owner;
   }
 

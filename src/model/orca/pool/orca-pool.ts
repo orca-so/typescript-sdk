@@ -127,7 +127,7 @@ export class OrcaPoolImpl implements OrcaPool {
   ): Promise<O extends Keypair ? ExecutableTransactionPayload : TransactionPayload> {
     const _owner = new Owner(owner);
 
-    const ownerAddress = _owner.getPublicKey();
+    const ownerAddress = _owner.publicKey;
 
     const { inputPoolToken, outputPoolToken } = getTokens(
       this.poolParams,

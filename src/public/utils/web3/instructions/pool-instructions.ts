@@ -76,6 +76,6 @@ export const createSwapInstruction = async (
   return {
     instructions: [swapInstruction],
     cleanupInstructions: [],
-    signers: [owner.getSigner()],
+    signers: [owner.signer],
   };
 };
