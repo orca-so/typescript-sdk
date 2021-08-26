@@ -68,6 +68,36 @@ export type OrcaPool = {
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
+
+  /**
+   *
+   * @param owner
+   * @param poolTokenAmount
+   * @param maximumTokenA
+   * @param maximumTokenB
+   * @return
+   */
+  deposit: (
+    owner: Keypair,
+    poolTokenAmount: Decimal | OrcaU64,
+    maximumTokenA: Decimal | OrcaU64,
+    maximumTokenB: Decimal | OrcaU64
+  ) => Promise<TransactionPayload>;
+
+  /**
+   *
+   * @param owner
+   * @param poolTokenAmount
+   * @param minimumTokenA
+   * @param minimumTokenB
+   * @return
+   */
+  withdraw: (
+    owner: Keypair,
+    poolTokenAmount: Decimal | OrcaU64,
+    minimumTokenA: Decimal | OrcaU64,
+    minimumTokenB: Decimal | OrcaU64
+  ) => Promise<TransactionPayload>;
 };
 
 /**
