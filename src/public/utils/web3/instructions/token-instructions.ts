@@ -102,6 +102,6 @@ export function createAssociatedTokenAccountInstruction(
   return {
     instructions: [createATAInstruction],
     cleanupInstructions: [],
-    signers: [fundAddressOwner.signer],
+    signers: fundAddressOwner.signer ? [fundAddressOwner.signer] : [],
   };
 }

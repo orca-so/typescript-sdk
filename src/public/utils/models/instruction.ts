@@ -16,16 +16,11 @@ export const emptyInstruction: Instruction = {
 export type Instruction = {
   instructions: TransactionInstruction[];
   cleanupInstructions: TransactionInstruction[];
-  signers: (Keypair | PublicKey)[];
+  signers: Signer[];
 };
 
-export type ExecutableTransactionPayload = {
+export type TransactionPayload<Owner extends Keypair | PublicKey> = {
   transaction: Transaction;
   signers: Signer[];
-  execute: () => Promise<TransactionSignature>;
-};
-
-export type TransactionPayload = {
-  transaction: Transaction;
-  signers: (Keypair | PublicKey)[];
+  execute: Owner extends Keypair ? () => Promise<TransactionSignature> : undefined;
 };

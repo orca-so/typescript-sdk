@@ -18,7 +18,6 @@ import {
   TransactionPayload,
   Percentage,
   resolveOrCreateAssociatedTokenAddress,
-  ExecutableTransactionPayload,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -124,7 +123,7 @@ export class OrcaPoolImpl implements OrcaPool {
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<O extends Keypair ? ExecutableTransactionPayload : TransactionPayload> {
+  ): Promise<TransactionPayload<O>> {
     const _owner = new Owner(owner);
 
     const ownerAddress = _owner.publicKey;
@@ -178,11 +177,11 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    return (await new TransactionBuilder(this.connection, ownerAddress)
+    return await new TransactionBuilder(this.connection, ownerAddress, owner)
       .addInstruction(resolveInputAddrInstructions)
       .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)
       .addInstruction(swapInstruction)
-      .build()) as O extends Keypair ? ExecutableTransactionPayload : TransactionPayload;
+      .build();
   }
 }

@@ -17,8 +17,8 @@ export class Owner {
     return this._owner;
   }
 
-  get signer(): Keypair | PublicKey {
-    return this._owner;
+  get signer(): Signer | undefined {
+    return Owner.isKeyPair(this._owner) ? this._owner : undefined;
   }
 
   static isKeyPair(owner: _Owner): owner is Keypair {
@@ -26,7 +26,7 @@ export class Owner {
   }
 
   static isPublicKey(owner: _Owner): owner is PublicKey {
-    return !Owner.isPublicKey(owner);
+    return !Owner.isKeyPair(owner);
   }
 }
 
