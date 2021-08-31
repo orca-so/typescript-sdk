@@ -21,6 +21,14 @@ export class Owner {
     return Owner.isKeyPair(this._owner) ? this._owner : undefined;
   }
 
+  get isKeyPair(): boolean {
+    return Owner.isKeyPair(this._owner);
+  }
+
+  get isPublicKey(): boolean {
+    return Owner.isPublicKey(this._owner);
+  }
+
   static isKeyPair(owner: _Owner): owner is Keypair {
     return (owner as Keypair).secretKey !== undefined;
   }

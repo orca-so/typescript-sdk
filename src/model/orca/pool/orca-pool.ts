@@ -177,7 +177,7 @@ export class OrcaPoolImpl implements OrcaPool {
       userTransferAuthority.publicKey
     );
 
-    return await new TransactionBuilder(this.connection, ownerAddress, owner)
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
       .addInstruction(resolveInputAddrInstructions)
       .addInstruction(resolveOutputAddrInstructions)
       .addInstruction(approvalInstruction)

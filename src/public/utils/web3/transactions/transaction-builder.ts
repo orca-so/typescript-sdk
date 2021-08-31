@@ -12,7 +12,7 @@ import { Instruction } from "../..";
 import { TransactionPayload } from "../../models";
 import { Owner } from "../key-utils";
 
-export class TransactionBuilder<Owner extends Keypair | PublicKey> {
+export class TransactionBuilder {
   private connection: Connection;
   private feePayer: PublicKey;
   private instructions: Instruction[];
@@ -25,7 +25,7 @@ export class TransactionBuilder<Owner extends Keypair | PublicKey> {
     this.owner = owner;
   }
 
-  addInstruction(instruction: Instruction): TransactionBuilder<Owner> {
+  addInstruction(instruction: Instruction): TransactionBuilder {
     this.instructions.push(instruction);
     return this;
   }
@@ -53,12 +53,14 @@ export class TransactionBuilder<Owner extends Keypair | PublicKey> {
     return {
       transaction: transaction,
       signers: signers,
-      execute: Owner.isKeyPair(this.owner)
+      execute: this.owner.isKeyPair
         ? async () => {
             return sendAndConfirmTransaction(this.connection, transaction, signers);
           }
         : async () => {
-            throw new Error("Public key based swap does not support transaction execution");
+            throw new Error(
+              "Please use a Keypair for the owner parameter to enable the execute function"
+            );
           },
     };
   }
