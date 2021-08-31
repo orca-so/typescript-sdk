@@ -19,8 +19,8 @@ export type Instruction = {
   signers: Signer[];
 };
 
-export type TransactionPayload<Owner extends Keypair | PublicKey> = {
+export type TransactionPayload = {
   transaction: Transaction;
   signers: Signer[];
-  execute: Owner extends Keypair ? () => Promise<TransactionSignature> : undefined;
+  execute: () => Promise<TransactionSignature>;
 };

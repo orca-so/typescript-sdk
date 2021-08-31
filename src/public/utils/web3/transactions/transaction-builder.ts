@@ -30,7 +30,7 @@ export class TransactionBuilder<Owner extends Keypair | PublicKey> {
     return this;
   }
 
-  async build(): Promise<TransactionPayload<Owner>> {
+  async build(): Promise<TransactionPayload> {
     const recentBlockHash = (await this.connection.getRecentBlockhash("singleGossip")).blockhash;
     const txFields: TransactionCtorFields = {
       recentBlockhash: recentBlockHash,
@@ -57,7 +57,9 @@ export class TransactionBuilder<Owner extends Keypair | PublicKey> {
         ? async () => {
             return sendAndConfirmTransaction(this.connection, transaction, signers);
           }
-        : undefined,
-    } as TransactionPayload<Owner>;
+        : async () => {
+            throw new Error("Public key based swap does not support transaction execution");
+          },
+    };
   }
 }

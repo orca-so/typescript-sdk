@@ -118,12 +118,12 @@ export class OrcaPoolImpl implements OrcaPool {
     return quote;
   }
 
-  public async swap<O extends Keypair | PublicKey>(
-    owner: O,
+  public async swap(
+    owner: Keypair | PublicKey,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ): Promise<TransactionPayload<O>> {
+  ): Promise<TransactionPayload> {
     const _owner = new Owner(owner);
 
     const ownerAddress = _owner.publicKey;

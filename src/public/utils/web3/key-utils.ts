@@ -29,11 +29,3 @@ export class Owner {
     return !Owner.isKeyPair(owner);
   }
 }
-
-export function onlyKeyPairs(owners: _Owner[]): owners is Keypair[] {
-  return !owners.some(Owner.isPublicKey);
-}
-
-export function onlyPublicKeys(owners: _Owner[]): owners is PublicKey[] {
-  return !owners.some(Owner.isKeyPair);
-}

@@ -62,12 +62,12 @@ export type OrcaPool = {
    * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
    * @return The transaction signature of the swap instruction
    */
-  swap: <O extends Keypair | PublicKey>(
-    owner: O,
+  swap: (
+    owner: Keypair | PublicKey,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
-  ) => Promise<TransactionPayload<O>>;
+  ) => Promise<TransactionPayload>;
 };
 
 /**
