@@ -23,6 +23,7 @@ import {
   createApprovalInstruction,
   createDepositInstruction,
   createSwapInstruction,
+  createWithdrawInstruction,
 } from "../../../public/utils/web3/instructions/pool-instructions";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
 import { OrcaPoolParams, OrcaPoolToken } from "./pool-types";
@@ -225,8 +226,7 @@ export class OrcaPoolImpl implements OrcaPool {
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
         owner,
-        this.poolParams.poolTokenMint,
-        poolTokenAmount_U64
+        this.poolParams.poolTokenMint
       );
 
     // Approve transfer of the tokens being deposited
@@ -263,7 +263,6 @@ export class OrcaPoolImpl implements OrcaPool {
       .addInstruction(resolvePoolTokenInstructions)
       .addInstruction(transferTokenAInstruction)
       .addInstruction(transferTokenBInstruction)
-      .addInstruction(transferTokenBInstruction)
       .addInstruction(depositInstruction)
       .build();
   }
@@ -275,13 +274,71 @@ export class OrcaPoolImpl implements OrcaPool {
     minimumTokenB: Decimal | OrcaU64
   ): Promise<TransactionPayload> {
     const ownerAddress = owner.publicKey;
+    const tokenA = this.getTokenA();
+    const tokenB = this.getTokenB();
 
-    // TODO
-    // 1. Create the user's token account for the tokens being withdrawn, if necessary
-    // 2. Approve transfer of the pool token
-    // 3. Create the withdraw function
-    // 4. Add above instructions into TransactionBuilder and build the payload
+    const minimumTokenA_U64 = U64Utils.toTokenU64(minimumTokenA, tokenA, "minimumTokenA");
+    const minimumTokenB_U64 = U64Utils.toTokenU64(minimumTokenB, tokenB, "minimumTokenB");
+    const poolTokenAmount_U64 = U64Utils.toPoolU64(
+      poolTokenAmount,
+      this.poolParams,
+      "poolTokenAmount"
+    );
 
-    return await new TransactionBuilder(this.connection, ownerAddress).build();
+    // Create a token account for tokenA, if necessary
+    const { address: userTokenAPublicKey, ...resolveTokenAInstrucitons } =
+      await resolveOrCreateAssociatedTokenAddress(
+        this.connection,
+        owner,
+        tokenA.mint,
+        minimumTokenA_U64
+      );
+
+    // Create a token account for tokenB, if necessary
+    const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
+      await resolveOrCreateAssociatedTokenAddress(
+        this.connection,
+        owner,
+        tokenB.mint,
+        minimumTokenB_U64
+      );
+
+    // Get user's poolToken token account
+    const { address: userPoolTokenPublicKey, ...resolvePoolTokenInstructions } =
+      await resolveOrCreateAssociatedTokenAddress(
+        this.connection,
+        owner,
+        this.poolParams.poolTokenMint
+      );
+
+    // Approve transfer of pool token
+    const { userTransferAuthority, ...transferPoolTokenInstruction } = createApprovalInstruction(
+      ownerAddress,
+      poolTokenAmount_U64,
+      userPoolTokenPublicKey
+    );
+
+    // Create the withdraw instruction
+    const withdrawInstruction = await createWithdrawInstruction(
+      this.poolParams,
+      userTransferAuthority.publicKey,
+      userTokenAPublicKey,
+      userTokenBPublicKey,
+      userPoolTokenPublicKey,
+      poolTokenAmount_U64,
+      minimumTokenA_U64,
+      minimumTokenB_U64,
+      tokenA.addr,
+      tokenB.addr,
+      owner
+    );
+
+    return await new TransactionBuilder(this.connection, ownerAddress)
+      .addInstruction(resolveTokenAInstrucitons)
+      .addInstruction(resolveTokenBInstrucitons)
+      .addInstruction(resolvePoolTokenInstructions)
+      .addInstruction(transferPoolTokenInstruction)
+      .addInstruction(withdrawInstruction)
+      .build();
   }
 }
