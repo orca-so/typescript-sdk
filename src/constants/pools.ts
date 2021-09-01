@@ -401,6 +401,7 @@ export const usdcUsdtPool: OrcaPoolParams = Object.freeze({
     },
   },
   curveType: CurveType.Stable,
+  amp: 100,
   feeStructure: {
     traderFee: Percentage.fromFraction(6, 10000),
     ownerFee: Percentage.fromFraction(1, 10000),
