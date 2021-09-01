@@ -8,12 +8,13 @@ import {
   createAssociatedTokenAccountInstruction,
   createWSOLAccountInstructions,
 } from "./instructions/token-instructions";
+import { Owner } from "./key-utils";
 
 export type ResolvedTokenAddressInstruction = { address: PublicKey } & Instruction;
 
 export async function resolveOrCreateAssociatedTokenAddress(
   connection: Connection,
-  owner: Keypair,
+  owner: Owner,
   tokenMint: PublicKey,
   amountIn = new u64(0)
 ): Promise<ResolvedTokenAddressInstruction> {

@@ -1,24 +1,28 @@
 import {
   Connection,
-  Keypair,
   PublicKey,
   sendAndConfirmTransaction,
   Transaction,
   TransactionCtorFields,
+  Signer,
+  Keypair,
   TransactionInstruction,
-  TransactionSignature,
 } from "@solana/web3.js";
-import { Instruction, TransactionPayload } from "../..";
+import { Instruction } from "../..";
+import { TransactionPayload } from "../../models";
+import { Owner } from "../key-utils";
 
 export class TransactionBuilder {
   private connection: Connection;
   private feePayer: PublicKey;
   private instructions: Instruction[];
+  private owner: Owner;
 
-  constructor(connection: Connection, feePayer: PublicKey) {
+  constructor(connection: Connection, feePayer: PublicKey, owner: Owner) {
     this.connection = connection;
     this.feePayer = feePayer;
     this.instructions = [];
+    this.owner = owner;
   }
 
   addInstruction(instruction: Instruction): TransactionBuilder {
@@ -26,7 +30,7 @@ export class TransactionBuilder {
     return this;
   }
 
-  async build() {
+  async build(): Promise<TransactionPayload> {
     const recentBlockHash = (await this.connection.getRecentBlockhash("singleGossip")).blockhash;
     const txFields: TransactionCtorFields = {
       recentBlockhash: recentBlockHash,
@@ -35,7 +39,7 @@ export class TransactionBuilder {
 
     let instructions: TransactionInstruction[] = [];
     let cleanupInstructions: TransactionInstruction[] = [];
-    let signers: Keypair[] = [];
+    let signers: Signer[] = [];
     this.instructions.forEach((curr) => {
       instructions = instructions.concat(curr.instructions);
       cleanupInstructions = cleanupInstructions.concat(curr.cleanupInstructions);
@@ -46,14 +50,18 @@ export class TransactionBuilder {
     transaction.add(...instructions.concat(cleanupInstructions));
     transaction.feePayer = this.feePayer;
 
-    const payload: TransactionPayload = {
+    return {
       transaction: transaction,
       signers: signers,
-      execute: async () => {
-        return sendAndConfirmTransaction(this.connection, transaction, signers);
-      },
+      execute: this.owner.isKeyPair
+        ? async () => {
+            return sendAndConfirmTransaction(this.connection, transaction, signers);
+          }
+        : async () => {
+            throw new Error(
+              "Please use a Keypair for the owner parameter to enable the execute function"
+            );
+          },
     };
-
-    return payload;
   }
 }

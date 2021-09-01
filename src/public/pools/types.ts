@@ -56,14 +56,14 @@ export type OrcaPool = {
    * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
-   * @param owner The keypair for the user's wallet
+   * @param owner The keypair for the user's wallet or just the user's public key
    * @param inputToken An Orca supported token in the user's wallet to swap from
    * @param amountIn The amount of inputToken to swap from
    * @param minimumAmountOut The minimum amount of outputToken to receive from this swap
    * @return The transaction signature of the swap instruction
    */
   swap: (
-    owner: Keypair,
+    owner: Keypair | PublicKey,
     inputToken: OrcaToken,
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64

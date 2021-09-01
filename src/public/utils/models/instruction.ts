@@ -1,5 +1,6 @@
 import {
   Keypair,
+  PublicKey,
   Signer,
   Transaction,
   TransactionInstruction,
@@ -15,7 +16,7 @@ export const emptyInstruction: Instruction = {
 export type Instruction = {
   instructions: TransactionInstruction[];
   cleanupInstructions: TransactionInstruction[];
-  signers: Keypair[];
+  signers: Signer[];
 };
 
 export type TransactionPayload = {
