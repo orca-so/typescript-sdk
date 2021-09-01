@@ -14,6 +14,7 @@ import {
   TransactionBuilder,
   OrcaPool,
   OrcaToken,
+  OrcaPoolToken,
   Quote,
   TransactionPayload,
   Percentage,
@@ -26,7 +27,7 @@ import {
   createWithdrawInstruction,
 } from "../../../public/utils/web3/instructions/pool-instructions";
 import { QuotePoolParams, QuoteBuilderFactory } from "../../quote/quote-builder";
-import { OrcaPoolParams, OrcaPoolToken } from "./pool-types";
+import { OrcaPoolParams } from "./pool-types";
 
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;

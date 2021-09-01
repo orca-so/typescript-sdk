@@ -1,8 +1,8 @@
 import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey } from "@solana/web3.js";
-import { OrcaPoolParams, OrcaPoolToken } from "../../../../model/orca/pool/pool-types";
-import { OrcaToken } from "../../../pools";
+import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
+import { OrcaPoolToken } from "../../../pools";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
 import { Instruction } from "../../models";
 

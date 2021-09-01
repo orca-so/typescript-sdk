@@ -1,4 +1,4 @@
-import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
@@ -11,13 +11,13 @@ export type OrcaPool = {
    * Query the token of tokenA in this pool.
    * @returns Returns the token id of tokenA in this pool
    */
-  getTokenA: () => OrcaToken;
+  getTokenA: () => OrcaPoolToken;
 
   /**
    * Query the token of tokenB in this pool.
    * @returns Returns the token id of tokenB in this pool
    */
-  getTokenB: () => OrcaToken;
+  getTokenB: () => OrcaPoolToken;
 
   /**
    * Query the balance for an user address
@@ -112,6 +112,14 @@ export type OrcaToken = {
   name: string;
   mint: PublicKey;
   scale: number;
+};
+
+/**
+ * An Orca Token within an OrcaPool
+ * @param addr The public key for this token for this Orca Pool
+ */
+export type OrcaPoolToken = OrcaToken & {
+  addr: PublicKey;
 };
 
 export type Quote = {

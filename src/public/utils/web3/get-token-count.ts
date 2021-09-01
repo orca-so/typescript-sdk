@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import { Connection } from "@solana/web3.js";
-import { OrcaPoolParams, OrcaPoolToken } from "../../../model/orca/pool/pool-types";
+import { OrcaPoolToken } from "../..";
+import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { deserializeAccount } from "./deserialize-account";
 
 export type PoolTokenCount = {
