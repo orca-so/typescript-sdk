@@ -104,6 +104,7 @@ export class OrcaPoolImpl implements OrcaPool {
       feeStructure: feeStructure,
       slippageTolerance: slippageTolerance,
       lamportsPerSignature: feeCalculator.lamportsPerSignature,
+      amp: this.poolParams.amp !== undefined ? new u64(this.poolParams.amp) : undefined,
     };
 
     const quoteBuilder = QuoteBuilderFactory.getBuilder(this.poolParams.curveType);
