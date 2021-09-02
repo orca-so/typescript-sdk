@@ -5,6 +5,7 @@ import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
 import { OrcaPoolToken } from "../../../pools";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
 import { Instruction } from "../../models";
+import { Owner } from "../key-utils";
 
 export const createApprovalInstruction = (
   ownerAddress: PublicKey,
@@ -40,7 +41,7 @@ export const createApprovalInstruction = (
 
 export const createSwapInstruction = async (
   poolParams: OrcaPoolParams,
-  owner: Keypair,
+  owner: Owner,
   inputToken: OrcaPoolToken,
   inputTokenUserAddress: PublicKey,
   outputToken: OrcaPoolToken,
@@ -77,7 +78,7 @@ export const createSwapInstruction = async (
   return {
     instructions: [swapInstruction],
     cleanupInstructions: [],
-    signers: [owner],
+    signers: owner.signer ? [owner.signer] : [],
   };
 };
 
