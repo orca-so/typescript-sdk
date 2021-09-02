@@ -70,12 +70,18 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
+   * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
+   * Fee for the transaction will be paid by the owner's wallet.
    *
-   * @param owner
-   * @param poolTokenAmount
-   * @param maximumTokenA
-   * @param maximumTokenB
-   * @return
+   * NOTE:
+   * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
+   * 2. OrcaU64 must have the same scale as the corresponding token scale value
+   *
+   * @param owner The keypair for the user's wallet
+   * @param poolTokenAmount The amount of poolToken to receive
+   * @param maximumTokenA The maximum amount of tokenA to send
+   * @param maximumTokenB The maximum amount of tokenB to send
+   * @return The transaction signature of the deposit instruction
    */
   deposit: (
     owner: Keypair,
@@ -85,12 +91,18 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
+   * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.
+   * Fee for the transaction will be paid by the owner's wallet.
    *
-   * @param owner
-   * @param poolTokenAmount
-   * @param minimumTokenA
-   * @param minimumTokenB
-   * @return
+   * NOTE:
+   * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
+   * 2. OrcaU64 must have the same scale as the corresponding token scale value
+   *
+   * @param owner The keypair for the user's wallet
+   * @param poolTokenAmount The amount of poolToken to send
+   * @param minimumTokenA The minimum amount of tokenA to receive
+   * @param minimumTokenB The minimum amount of tokenB to receive
+   * @return The transaction signature of the withdraw instruction
    */
   withdraw: (
     owner: Keypair,
