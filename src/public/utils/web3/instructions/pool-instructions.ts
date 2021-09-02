@@ -93,7 +93,7 @@ export const createDepositInstruction = async (
   maximumTokenB: u64,
   tokenAPublicKey: PublicKey,
   tokenBPublicKey: PublicKey,
-  owner: Keypair
+  owner: Owner
 ): Promise<Instruction> => {
   const depositInstruction = TokenSwap.depositAllTokenTypesInstruction(
     poolParams.address,
@@ -115,7 +115,7 @@ export const createDepositInstruction = async (
   return {
     instructions: [depositInstruction],
     cleanupInstructions: [],
-    signers: [owner],
+    signers: owner.signer ? [owner.signer] : [],
   };
 };
 
@@ -130,7 +130,7 @@ export const createWithdrawInstruction = async (
   minimumTokenB: u64,
   tokenAPublicKey: PublicKey,
   tokenBPublicKey: PublicKey,
-  owner: Keypair
+  owner: Owner
 ): Promise<Instruction> => {
   const withdrawInstruction = TokenSwap.withdrawAllTokenTypesInstruction(
     poolParams.address,
@@ -153,6 +153,6 @@ export const createWithdrawInstruction = async (
   return {
     instructions: [withdrawInstruction],
     cleanupInstructions: [],
-    signers: [owner],
+    signers: owner.signer ? [owner.signer] : [],
   };
 };

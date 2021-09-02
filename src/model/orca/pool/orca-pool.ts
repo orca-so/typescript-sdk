@@ -189,12 +189,14 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async deposit(
-    owner: Keypair,
+    owner: Keypair | PublicKey,
     maxTokenAIn: Decimal | OrcaU64,
     maxTokenBIn: Decimal | OrcaU64,
     minPoolTokenAmountOut: Decimal | OrcaU64
   ): Promise<TransactionPayload> {
-    const ownerAddress = owner.publicKey;
+    const _owner = new Owner(owner);
+    const ownerAddress = _owner.publicKey;
+
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
@@ -211,7 +213,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userTokenAPublicKey, ...resolveTokenAInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         tokenA.mint,
         tokenAmountA_U64
       );
@@ -221,7 +223,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         tokenB.mint,
         tokenAmountB_U64
       );
@@ -230,7 +232,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userPoolTokenPublicKey, ...resolvePoolTokenInstructions } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         this.poolParams.poolTokenMint
       );
 
@@ -259,10 +261,10 @@ export class OrcaPoolImpl implements OrcaPool {
       tokenAmountB_U64,
       tokenA.addr,
       tokenB.addr,
-      owner
+      _owner
     );
 
-    return await new TransactionBuilder(this.connection, ownerAddress)
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
       .addInstruction(resolveTokenAInstrucitons)
       .addInstruction(resolveTokenBInstrucitons)
       .addInstruction(resolvePoolTokenInstructions)
@@ -273,12 +275,14 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async withdraw(
-    owner: Keypair,
+    owner: Keypair | PublicKey,
     poolTokenAmountIn: Decimal | OrcaU64,
     minTokenAOut: Decimal | OrcaU64,
     minTokenBOut: Decimal | OrcaU64
   ): Promise<TransactionPayload> {
-    const ownerAddress = owner.publicKey;
+    const _owner = new Owner(owner);
+    const ownerAddress = _owner.publicKey;
+
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
@@ -294,7 +298,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userTokenAPublicKey, ...resolveTokenAInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         tokenA.mint,
         tokenAmountA_U64
       );
@@ -303,7 +307,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         tokenB.mint,
         tokenAmountB_U64
       );
@@ -312,7 +316,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const { address: userPoolTokenPublicKey, ...resolvePoolTokenInstructions } =
       await resolveOrCreateAssociatedTokenAddress(
         this.connection,
-        owner,
+        _owner,
         this.poolParams.poolTokenMint
       );
 
@@ -335,10 +339,10 @@ export class OrcaPoolImpl implements OrcaPool {
       tokenAmountB_U64,
       tokenA.addr,
       tokenB.addr,
-      owner
+      _owner
     );
 
-    return await new TransactionBuilder(this.connection, ownerAddress)
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
       .addInstruction(resolveTokenAInstrucitons)
       .addInstruction(resolveTokenBInstrucitons)
       .addInstruction(resolvePoolTokenInstructions)

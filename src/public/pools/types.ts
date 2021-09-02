@@ -77,14 +77,14 @@ export type OrcaPool = {
    * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
-   * @param owner The keypair for the user's wallet
+   * @param owner The keypair for the user's wallet or just the user's public key
    * @param maxTokenAIn The maximum amount of tokenA to send
    * @param maxTokenBIn The maximum amount of tokenB to send
    * @param minPoolTokenAmountOut The amount of poolToken to receive
    * @return The transaction signature of the deposit instruction
    */
   deposit: (
-    owner: Keypair,
+    owner: Keypair | PublicKey,
     maxTokenAIn: Decimal | OrcaU64,
     maxTokenBIn: Decimal | OrcaU64,
     minPoolTokenAmountOut: Decimal | OrcaU64
@@ -98,14 +98,14 @@ export type OrcaPool = {
    * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
-   * @param owner The keypair for the user's wallet
+   * @param owner The keypair for the user's wallet or just the user's public key
    * @param poolTokenAmountIn The amount of poolToken to send
    * @param minTokenAOut The minimum amount of tokenA to receive
    * @param minTokenBOut The minimum amount of tokenB to receive
    * @return The transaction signature of the withdraw instruction
    */
   withdraw: (
-    owner: Keypair,
+    owner: Keypair | PublicKey,
     poolTokenAmountIn: Decimal | OrcaU64,
     minTokenAOut: Decimal | OrcaU64,
     minTokenBOut: Decimal | OrcaU64
