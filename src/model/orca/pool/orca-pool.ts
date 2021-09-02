@@ -186,18 +186,18 @@ export class OrcaPoolImpl implements OrcaPool {
 
   public async deposit(
     owner: Keypair,
-    poolTokenAmount: Decimal | OrcaU64,
-    maximumTokenA: Decimal | OrcaU64,
-    maximumTokenB: Decimal | OrcaU64
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
+    minPoolTokenAmountOut: Decimal | OrcaU64
   ): Promise<TransactionPayload> {
     const ownerAddress = owner.publicKey;
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
-    const maximumTokenA_U64 = U64Utils.toTokenU64(maximumTokenA, tokenA, "maximumTokenA");
-    const maximumTokenB_U64 = U64Utils.toTokenU64(maximumTokenB, tokenB, "maximumTokenB");
+    const tokenAmountA_U64 = U64Utils.toTokenU64(maxTokenAIn, tokenA, "maxTokenAIn");
+    const tokenAmountB_U64 = U64Utils.toTokenU64(maxTokenBIn, tokenB, "maxTokenBIn");
     const poolTokenAmount_U64 = U64Utils.toPoolU64(
-      poolTokenAmount,
+      minPoolTokenAmountOut,
       this.poolParams,
       "poolTokenAmount"
     );
@@ -209,7 +209,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         owner,
         tokenA.mint,
-        maximumTokenA_U64
+        tokenAmountA_U64
       );
 
     // If tokenB is SOL, this will create a new wSOL account
@@ -219,7 +219,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         owner,
         tokenB.mint,
-        maximumTokenB_U64
+        tokenAmountB_U64
       );
 
     // If the user lacks the pool token account, create it
@@ -233,12 +233,12 @@ export class OrcaPoolImpl implements OrcaPool {
     // Approve transfer of the tokens being deposited
     const { userTransferAuthority, ...transferTokenAInstruction } = createApprovalInstruction(
       ownerAddress,
-      maximumTokenA_U64,
+      tokenAmountA_U64,
       userTokenAPublicKey
     );
     const { ...transferTokenBInstruction } = createApprovalInstruction(
       ownerAddress,
-      maximumTokenB_U64,
+      tokenAmountB_U64,
       userTokenBPublicKey,
       userTransferAuthority
     );
@@ -251,8 +251,8 @@ export class OrcaPoolImpl implements OrcaPool {
       userTokenBPublicKey,
       userPoolTokenPublicKey,
       poolTokenAmount_U64,
-      maximumTokenA_U64,
-      maximumTokenB_U64,
+      tokenAmountA_U64,
+      tokenAmountB_U64,
       tokenA.addr,
       tokenB.addr,
       owner
@@ -270,18 +270,18 @@ export class OrcaPoolImpl implements OrcaPool {
 
   public async withdraw(
     owner: Keypair,
-    poolTokenAmount: Decimal | OrcaU64,
-    minimumTokenA: Decimal | OrcaU64,
-    minimumTokenB: Decimal | OrcaU64
+    poolTokenAmountIn: Decimal | OrcaU64,
+    minTokenAOut: Decimal | OrcaU64,
+    minTokenBOut: Decimal | OrcaU64
   ): Promise<TransactionPayload> {
     const ownerAddress = owner.publicKey;
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
-    const minimumTokenA_U64 = U64Utils.toTokenU64(minimumTokenA, tokenA, "minimumTokenA");
-    const minimumTokenB_U64 = U64Utils.toTokenU64(minimumTokenB, tokenB, "minimumTokenB");
+    const tokenAmountA_U64 = U64Utils.toTokenU64(minTokenAOut, tokenA, "minTokenAOut");
+    const tokenAmountB_U64 = U64Utils.toTokenU64(minTokenBOut, tokenB, "minTokenBOut");
     const poolTokenAmount_U64 = U64Utils.toPoolU64(
-      poolTokenAmount,
+      poolTokenAmountIn,
       this.poolParams,
       "poolTokenAmount"
     );
@@ -292,7 +292,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         owner,
         tokenA.mint,
-        minimumTokenA_U64
+        tokenAmountA_U64
       );
 
     // Create a token account for tokenB, if necessary
@@ -301,7 +301,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         owner,
         tokenB.mint,
-        minimumTokenB_U64
+        tokenAmountB_U64
       );
 
     // Get user's poolToken token account
@@ -327,8 +327,8 @@ export class OrcaPoolImpl implements OrcaPool {
       userTokenBPublicKey,
       userPoolTokenPublicKey,
       poolTokenAmount_U64,
-      minimumTokenA_U64,
-      minimumTokenB_U64,
+      tokenAmountA_U64,
+      tokenAmountB_U64,
       tokenA.addr,
       tokenB.addr,
       owner

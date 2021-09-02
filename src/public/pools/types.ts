@@ -78,16 +78,16 @@ export type OrcaPool = {
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
    * @param owner The keypair for the user's wallet
-   * @param poolTokenAmount The amount of poolToken to receive
-   * @param maximumTokenA The maximum amount of tokenA to send
-   * @param maximumTokenB The maximum amount of tokenB to send
+   * @param maxTokenAIn The maximum amount of tokenA to send
+   * @param maxTokenBIn The maximum amount of tokenB to send
+   * @param minPoolTokenAmountOut The amount of poolToken to receive
    * @return The transaction signature of the deposit instruction
    */
   deposit: (
     owner: Keypair,
-    poolTokenAmount: Decimal | OrcaU64,
-    maximumTokenA: Decimal | OrcaU64,
-    maximumTokenB: Decimal | OrcaU64
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
+    minPoolTokenAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
 
   /**
@@ -99,16 +99,16 @@ export type OrcaPool = {
    * 2. OrcaU64 must have the same scale as the corresponding token scale value
    *
    * @param owner The keypair for the user's wallet
-   * @param poolTokenAmount The amount of poolToken to send
-   * @param minimumTokenA The minimum amount of tokenA to receive
-   * @param minimumTokenB The minimum amount of tokenB to receive
+   * @param poolTokenAmountIn The amount of poolToken to send
+   * @param minTokenAOut The minimum amount of tokenA to receive
+   * @param minTokenBOut The minimum amount of tokenB to receive
    * @return The transaction signature of the withdraw instruction
    */
   withdraw: (
     owner: Keypair,
-    poolTokenAmount: Decimal | OrcaU64,
-    minimumTokenA: Decimal | OrcaU64,
-    minimumTokenB: Decimal | OrcaU64
+    poolTokenAmountIn: Decimal | OrcaU64,
+    minTokenAOut: Decimal | OrcaU64,
+    minTokenBOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
 };
 
