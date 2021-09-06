@@ -5,11 +5,11 @@ import { QuotePoolParams } from "./quote-builder";
 import { DecimalUtil, OrcaU64, Quote, ZERO } from "../../public";
 import { solToken } from "../../constants/tokens";
 
-function _getInputAmountLessFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
+function getInputAmountLessFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   return inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
 }
 
-function _getOutputAmountWithNoSlippage(
+function getOutputAmountWithNoSlippage(
   inputTradeAmountLessFees: u64,
   params: QuotePoolParams
 ): u64 {
@@ -22,7 +22,7 @@ function _getOutputAmountWithNoSlippage(
   return computeBaseOutputAmount(inputTradeAmountLessFees, poolInputAmount, poolOutputAmount, amp);
 }
 
-function _getOutputAmount(inputTradeAmountLessFees: u64, params: QuotePoolParams): u64 {
+function getOutputAmount(inputTradeAmountLessFees: u64, params: QuotePoolParams): u64 {
   const [poolInputAmount, poolOutputAmount, amp] = [
     params.inputTokenCount,
     params.outputTokenCount,
@@ -32,19 +32,19 @@ function _getOutputAmount(inputTradeAmountLessFees: u64, params: QuotePoolParams
   return computeOutputAmount(inputTradeAmountLessFees, poolInputAmount, poolOutputAmount, amp);
 }
 
-function _getExpectedOutputAmountWithNoSlippage(
+function getExpectedOutputAmountWithNoSlippage(
   inputTradeAmount: u64,
   params: QuotePoolParams
 ): u64 {
-  const inputTradeAmountLessFees = _getInputAmountLessFees(inputTradeAmount, params);
+  const inputTradeAmountLessFees = getInputAmountLessFees(inputTradeAmount, params);
 
-  return _getOutputAmountWithNoSlippage(inputTradeAmountLessFees, params);
+  return getOutputAmountWithNoSlippage(inputTradeAmountLessFees, params);
 }
 
 function getExpectedOutputAmount(inputTradeAmount: u64, params: QuotePoolParams): u64 {
-  const inputTradeAmountLessFees = _getInputAmountLessFees(inputTradeAmount, params);
+  const inputTradeAmountLessFees = getInputAmountLessFees(inputTradeAmount, params);
 
-  return _getOutputAmount(inputTradeAmountLessFees, params);
+  return getOutputAmount(inputTradeAmountLessFees, params);
 }
 
 function getRate(inputTradeAmountU64: u64, params: QuotePoolParams): Decimal {
@@ -67,7 +67,7 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
     return new Decimal(0);
   }
 
-  const noSlippageOutputCountU64 = _getExpectedOutputAmountWithNoSlippage(inputTradeAmount, params);
+  const noSlippageOutputCountU64 = getExpectedOutputAmountWithNoSlippage(inputTradeAmount, params);
   const outputCountU64 = getExpectedOutputAmount(inputTradeAmount, params);
 
   const noSlippageOutputCount = DecimalUtil.fromU64(

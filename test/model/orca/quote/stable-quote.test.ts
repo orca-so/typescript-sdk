@@ -65,11 +65,16 @@ test("Input Token Count is zero", () => {
   expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("700000000"), params.inputToken.scale));
   expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
 
-  // Have to do it a different way due to errors with BN and u64 mismatch in the JSON object
-  expect(quote.getMinOutputAmount().toU64().toString()).toEqual("19558243405204");
-  expect(quote.getMinOutputAmount().scale).toEqual(params.outputToken.scale);
-  expect(quote.getExpectedOutputAmount().toU64().toString()).toEqual("19577821226431");
-  expect(quote.getExpectedOutputAmount().scale).toEqual(params.outputToken.scale);
+  // Recreating `OrcaU64` objects for the following checks to prevent the BN vs u64 mismatch error
+  const minOutputAmount = quote.getMinOutputAmount();
+  expect(new OrcaU64(minOutputAmount.toU64(), minOutputAmount.scale)).toEqual(
+    new OrcaU64(new u64("19558243405204"), params.outputToken.scale)
+  );
+
+  const expectedOutputAmount = quote.getExpectedOutputAmount();
+  expect(new OrcaU64(expectedOutputAmount.toU64(), expectedOutputAmount.scale)).toEqual(
+    new OrcaU64(new u64("19577821226431"), params.outputToken.scale)
+  );
 });
 
 test("Output Token Count is zero", () => {
