@@ -8,6 +8,7 @@ import {
 } from "@solana/web3.js";
 import { Instruction, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../..";
 import { ResolvedTokenAddressInstruction } from "../ata-utils";
+import { Owner } from "../key-utils";
 
 export const createWSOLAccountInstructions = (
   owner: PublicKey,
@@ -53,7 +54,7 @@ export function createAssociatedTokenAccountInstruction(
   fundSource: PublicKey,
   destination: PublicKey,
   tokenMint: PublicKey,
-  fundAddressOwner: Keypair
+  fundAddressOwner: Owner
 ): Instruction {
   const systemProgramId = new PublicKey("11111111111111111111111111111111");
   const keys = [
@@ -101,6 +102,6 @@ export function createAssociatedTokenAccountInstruction(
   return {
     instructions: [createATAInstruction],
     cleanupInstructions: [],
-    signers: [fundAddressOwner],
+    signers: fundAddressOwner.signer ? [fundAddressOwner.signer] : [],
   };
 }
