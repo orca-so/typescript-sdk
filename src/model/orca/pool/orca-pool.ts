@@ -200,9 +200,9 @@ export class OrcaPoolImpl implements OrcaPool {
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
-    const tokenAmountA_U64 = U64Utils.toTokenU64(maxTokenAIn, tokenA, "maxTokenAIn");
-    const tokenAmountB_U64 = U64Utils.toTokenU64(maxTokenBIn, tokenB, "maxTokenBIn");
-    const poolTokenAmount_U64 = U64Utils.toPoolU64(
+    const maxTokenAIn_U64 = U64Utils.toTokenU64(maxTokenAIn, tokenA, "maxTokenAIn");
+    const maxTokenBIn_U64 = U64Utils.toTokenU64(maxTokenBIn, tokenB, "maxTokenBIn");
+    const minPoolTokenAmountOut_U64 = U64Utils.toPoolU64(
       minPoolTokenAmountOut,
       this.poolParams,
       "poolTokenAmount"
@@ -215,7 +215,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         _owner,
         tokenA.mint,
-        tokenAmountA_U64
+        maxTokenAIn_U64
       );
 
     // If tokenB is SOL, this will create a new wSOL account
@@ -225,7 +225,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         _owner,
         tokenB.mint,
-        tokenAmountB_U64
+        maxTokenBIn_U64
       );
 
     // If the user lacks the pool token account, create it
@@ -239,12 +239,12 @@ export class OrcaPoolImpl implements OrcaPool {
     // Approve transfer of the tokens being deposited
     const { userTransferAuthority, ...transferTokenAInstruction } = createApprovalInstruction(
       ownerAddress,
-      tokenAmountA_U64,
+      maxTokenAIn_U64,
       userTokenAPublicKey
     );
     const { ...transferTokenBInstruction } = createApprovalInstruction(
       ownerAddress,
-      tokenAmountB_U64,
+      maxTokenBIn_U64,
       userTokenBPublicKey,
       userTransferAuthority
     );
@@ -256,9 +256,9 @@ export class OrcaPoolImpl implements OrcaPool {
       userTokenAPublicKey,
       userTokenBPublicKey,
       userPoolTokenPublicKey,
-      poolTokenAmount_U64,
-      tokenAmountA_U64,
-      tokenAmountB_U64,
+      minPoolTokenAmountOut_U64,
+      maxTokenAIn_U64,
+      maxTokenBIn_U64,
       tokenA.addr,
       tokenB.addr,
       _owner
@@ -286,9 +286,9 @@ export class OrcaPoolImpl implements OrcaPool {
     const tokenA = this.getTokenA();
     const tokenB = this.getTokenB();
 
-    const tokenAmountA_U64 = U64Utils.toTokenU64(minTokenAOut, tokenA, "minTokenAOut");
-    const tokenAmountB_U64 = U64Utils.toTokenU64(minTokenBOut, tokenB, "minTokenBOut");
-    const poolTokenAmount_U64 = U64Utils.toPoolU64(
+    const minTokenAOut_U64 = U64Utils.toTokenU64(minTokenAOut, tokenA, "minTokenAOut");
+    const minTokenBOut_U64 = U64Utils.toTokenU64(minTokenBOut, tokenB, "minTokenBOut");
+    const poolTokenAmountIn_U64 = U64Utils.toPoolU64(
       poolTokenAmountIn,
       this.poolParams,
       "poolTokenAmount"
@@ -300,7 +300,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         _owner,
         tokenA.mint,
-        tokenAmountA_U64
+        minTokenAOut_U64
       );
 
     // Create a token account for tokenB, if necessary
@@ -309,7 +309,7 @@ export class OrcaPoolImpl implements OrcaPool {
         this.connection,
         _owner,
         tokenB.mint,
-        tokenAmountB_U64
+        minTokenBOut_U64
       );
 
     // Get user's poolToken token account
@@ -323,7 +323,7 @@ export class OrcaPoolImpl implements OrcaPool {
     // Approve transfer of pool token
     const { userTransferAuthority, ...transferPoolTokenInstruction } = createApprovalInstruction(
       ownerAddress,
-      poolTokenAmount_U64,
+      poolTokenAmountIn_U64,
       userPoolTokenPublicKey
     );
 
@@ -334,9 +334,9 @@ export class OrcaPoolImpl implements OrcaPool {
       userTokenAPublicKey,
       userTokenBPublicKey,
       userPoolTokenPublicKey,
-      poolTokenAmount_U64,
-      tokenAmountA_U64,
-      tokenAmountB_U64,
+      poolTokenAmountIn_U64,
+      minTokenAOut_U64,
+      minTokenBOut_U64,
       tokenA.addr,
       tokenB.addr,
       _owner
