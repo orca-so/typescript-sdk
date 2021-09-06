@@ -82,6 +82,13 @@ export const oxyToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const portToken: OrcaToken = Object.freeze({
+  tag: "PORT",
+  name: "Port Finance",
+  mint: new PublicKey("PoRTjZMPXb9T7dyU7tpLEZRQj7e6ssfAE62j2oQuc6y"),
+  scale: 6,
+});
+
 export const rayToken: OrcaToken = Object.freeze({
   tag: "RAY",
   name: "Raydium",
@@ -101,6 +108,20 @@ export const samoToken: OrcaToken = Object.freeze({
   name: "Samoyedcoin",
   mint: new PublicKey("7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"),
   scale: 9,
+});
+
+export const slrsToken: OrcaToken = Object.freeze({
+  tag: "SLRS",
+  name: "Solrise Finance",
+  mint: new PublicKey("SLRSSpSLUTP7okbCUBYStWCo1vUgyt775faPqz8HUMr"),
+  scale: 6,
+});
+
+export const snyToken: OrcaToken = Object.freeze({
+  tag: "SNY",
+  name: "SNY",
+  mint: new PublicKey("4dmKkXNHdgYsXqBHCuMikNQWwVomZURhYvkkX5c4pQ7y"),
+  scale: 6,
 });
 
 export const solToken: OrcaToken = Object.freeze({
@@ -136,4 +157,11 @@ export const usdtToken: OrcaToken = Object.freeze({
   name: "Tether USD",
   mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
   scale: 6,
+});
+
+export const msolToken: OrcaToken = Object.freeze({
+  tag: "mSOL",
+  name: "Marinade.finance",
+  mint: new PublicKey("mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"),
+  scale: 9,
 });

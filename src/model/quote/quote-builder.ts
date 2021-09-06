@@ -3,6 +3,7 @@ import { OrcaToken, Quote } from "../..";
 import { PoolTokenCount, Percentage } from "../../public";
 import { FeeStructure, CurveType } from "../orca/pool/pool-types";
 import { ConstantProductPoolQuoteBuilder } from "./constant-product-quote";
+import { StablePoolQuoteBuilder } from "./stable-quote";
 
 export type QuotePoolParams = PoolTokenCount & {
   inputToken: OrcaToken;
@@ -10,6 +11,7 @@ export type QuotePoolParams = PoolTokenCount & {
   feeStructure: FeeStructure;
   slippageTolerance: Percentage;
   lamportsPerSignature: number;
+  amp?: u64;
 };
 
 export interface QuoteBuilder {
@@ -21,6 +23,8 @@ export class QuoteBuilderFactory {
     switch (curveType) {
       case CurveType.ConstantProduct:
         return new ConstantProductPoolQuoteBuilder();
+      case CurveType.Stable:
+        return new StablePoolQuoteBuilder();
       default:
         return undefined;
     }

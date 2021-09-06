@@ -20,6 +20,13 @@ export const defaultUsdcToken: OrcaToken = {
   scale: 6,
 };
 
+export const defaultUsdtToken: OrcaToken = {
+  tag: "USDT",
+  name: "Tether USD",
+  mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
+  scale: 6,
+};
+
 export const defaultEthToken: OrcaToken = {
   tag: "ETH",
   name: "Ethereum",
@@ -42,4 +49,18 @@ export const defaultQuotePoolParams: QuotePoolParams = {
   feeStructure: defaultFeeStructure,
   slippageTolerance: Percentage.fromDecimal(new Decimal(0.1)),
   lamportsPerSignature: defaultLamportsPerSignature,
+};
+
+export const stableQuotePoolParams: QuotePoolParams = {
+  inputTokenCount: new u64("19768621149413"),
+  outputTokenCount: new u64("19577821226623"),
+  inputToken: defaultUsdcToken,
+  outputToken: defaultUsdtToken,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(6, 10000),
+    ownerFee: Percentage.fromFraction(1, 10000),
+  },
+  slippageTolerance: Percentage.fromDecimal(new Decimal(0.1)),
+  lamportsPerSignature: defaultLamportsPerSignature,
+  amp: new u64(100),
 };

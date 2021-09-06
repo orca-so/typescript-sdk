@@ -12,8 +12,9 @@ import { Percentage } from "../../../public";
  * @param feeAccount Public address of the pool token fee account
  * @param tokenIds The ids of the tokens in this pool
  * @param tokens The id, token object of the tokens in this pool
- * @param curveType Trading curve type. 0 - ConstantProduct, 1 - ConstantPrice, 3 - Offset
+ * @param curveType Trading curve type. 0 - ConstantProduct, 1 - ConstantPrice, 2 - Stable, 3 - Offset
  * @param feeStructure The % of fees collected by this pool
+ * @param amp The amplification coefficient for a stable curve pool (defines how flat the AMM curve is when prices are similar)
  */
 export type OrcaPoolParams = {
   address: PublicKey;
@@ -26,6 +27,7 @@ export type OrcaPoolParams = {
   tokens: Record<string, OrcaPoolToken>;
   curveType: CurveType;
   feeStructure: FeeStructure;
+  amp?: number;
 };
 
 /**
