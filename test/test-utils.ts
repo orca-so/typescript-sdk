@@ -52,11 +52,14 @@ export const defaultQuotePoolParams: QuotePoolParams = {
 };
 
 export const stableQuotePoolParams: QuotePoolParams = {
-  inputTokenCount: new u64("670832580208"),
-  outputTokenCount: new u64("670432580208"),
+  inputTokenCount: new u64("19768621149413"),
+  outputTokenCount: new u64("19577821226623"),
   inputToken: defaultUsdcToken,
   outputToken: defaultUsdtToken,
-  feeStructure: defaultFeeStructure,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(6, 10000),
+    ownerFee: Percentage.fromFraction(1, 10000),
+  },
   slippageTolerance: Percentage.fromDecimal(new Decimal(0.1)),
   lamportsPerSignature: defaultLamportsPerSignature,
   amp: new u64(100),

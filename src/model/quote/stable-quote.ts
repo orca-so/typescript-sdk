@@ -1,10 +1,6 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import {
-  computeBaseOutputAmount,
-  computeOutputAmount,
-  computeInputAmount,
-} from "@orca-so/stablecurve";
+import { computeBaseOutputAmount, computeOutputAmount } from "@orca-so/stablecurve";
 import { QuotePoolParams } from "./quote-builder";
 import { DecimalUtil, OrcaU64, Quote, ZERO } from "../../public";
 import { solToken } from "../../constants/tokens";
@@ -63,7 +59,11 @@ function getRate(inputTradeAmountU64: u64, params: QuotePoolParams): Decimal {
 }
 
 function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal {
-  if (inputTradeAmount.eq(ZERO) || params.outputTokenCount.eq(ZERO)) {
+  if (
+    inputTradeAmount.eq(ZERO) ||
+    params.inputTokenCount.eq(ZERO) ||
+    params.outputTokenCount.eq(ZERO)
+  ) {
     return new Decimal(0);
   }
 
