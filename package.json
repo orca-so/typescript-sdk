@@ -1,6 +1,6 @@
 {
   "name": "@orca-so/sdk",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Typescript SDK for the Orca protocol.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
     "@orca-so/stablecurve": "^1.0.5",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-swap": "^0.1.2",
-    "@solana/web3.js": "^1.17.0",
+    "@solana/web3.js": "^1.24.1",
     "decimal.js": "^10.3.1"
   },
   "devDependencies": {
