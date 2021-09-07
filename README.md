@@ -15,7 +15,6 @@ Learn more Orca [here](https://docs.orca.so).
 
 **Features Coming Soon**
 - More trader information (APY, Volume)
-- Support @project-serum/sol-wallet-adapter to support browser use-case
 - Deposit/Withdraw from OrcaPools
 
 
