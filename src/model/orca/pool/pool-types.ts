@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
-import { OrcaToken } from "../../..";
+import { OrcaPoolToken } from "../../..";
 import { Percentage } from "../../../public";
 
 /**
@@ -28,14 +28,6 @@ export type OrcaPoolParams = {
   curveType: CurveType;
   feeStructure: FeeStructure;
   amp?: number;
-};
-
-/**
- * An Orca Token within an OrcaPool
- * @param addr The public key for this token for this Orca Pool
- */
-export type OrcaPoolToken = OrcaToken & {
-  addr: PublicKey;
 };
 
 export enum CurveType {

@@ -1,4 +1,4 @@
-import { Keypair, PublicKey, TransactionSignature } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
@@ -11,13 +11,13 @@ export type OrcaPool = {
    * Query the token of tokenA in this pool.
    * @returns Returns the token id of tokenA in this pool
    */
-  getTokenA: () => OrcaToken;
+  getTokenA: () => OrcaPoolToken;
 
   /**
    * Query the token of tokenB in this pool.
    * @returns Returns the token id of tokenB in this pool
    */
-  getTokenB: () => OrcaToken;
+  getTokenB: () => OrcaPoolToken;
 
   /**
    * Query the balance for an user address
@@ -68,6 +68,48 @@ export type OrcaPool = {
     amountIn: Decimal | OrcaU64,
     minimumAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
+
+  /**
+   * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
+   * Fee for the transaction will be paid by the owner's wallet.
+   *
+   * NOTE:
+   * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
+   * 2. OrcaU64 must have the same scale as the corresponding token scale value
+   *
+   * @param owner The keypair for the user's wallet or just the user's public key
+   * @param maxTokenAIn The maximum amount of tokenA to send
+   * @param maxTokenBIn The maximum amount of tokenB to send
+   * @param minPoolTokenAmountOut The amount of poolToken to receive
+   * @return The transaction signature of the deposit instruction
+   */
+  deposit: (
+    owner: Keypair | PublicKey,
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
+    minPoolTokenAmountOut: Decimal | OrcaU64
+  ) => Promise<TransactionPayload>;
+
+  /**
+   * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.
+   * Fee for the transaction will be paid by the owner's wallet.
+   *
+   * NOTE:
+   * 1. Associated Token Address initialization instructions will be appended if the ATA of the specified token does not exist in the user's wallet
+   * 2. OrcaU64 must have the same scale as the corresponding token scale value
+   *
+   * @param owner The keypair for the user's wallet or just the user's public key
+   * @param poolTokenAmountIn The amount of poolToken to send
+   * @param minTokenAOut The minimum amount of tokenA to receive
+   * @param minTokenBOut The minimum amount of tokenB to receive
+   * @return The transaction signature of the withdraw instruction
+   */
+  withdraw: (
+    owner: Keypair | PublicKey,
+    poolTokenAmountIn: Decimal | OrcaU64,
+    minTokenAOut: Decimal | OrcaU64,
+    minTokenBOut: Decimal | OrcaU64
+  ) => Promise<TransactionPayload>;
 };
 
 /**
@@ -82,6 +124,14 @@ export type OrcaToken = {
   name: string;
   mint: PublicKey;
   scale: number;
+};
+
+/**
+ * An Orca Token within an OrcaPool
+ * @param addr The public key for this token for this Orca Pool
+ */
+export type OrcaPoolToken = OrcaToken & {
+  addr: PublicKey;
 };
 
 export type Quote = {

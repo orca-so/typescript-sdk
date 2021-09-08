@@ -1,7 +1,8 @@
 import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey } from "@solana/web3.js";
-import { OrcaPoolParams, OrcaPoolToken } from "../../../../model/orca/pool/pool-types";
+import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
+import { OrcaPoolToken } from "../../../pools";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
 import { Instruction } from "../../models";
 import { Owner } from "../key-utils";
@@ -9,9 +10,10 @@ import { Owner } from "../key-utils";
 export const createApprovalInstruction = (
   ownerAddress: PublicKey,
   approveAmount: u64,
-  tokenUserAddress: PublicKey
+  tokenUserAddress: PublicKey,
+  userTransferAuthority?: Keypair
 ): { userTransferAuthority: Keypair } & Instruction => {
-  const userTransferAuthority = new Keypair();
+  userTransferAuthority = userTransferAuthority || new Keypair();
 
   const approvalInstruction = Token.createApproveInstruction(
     TOKEN_PROGRAM_ID,
@@ -75,6 +77,81 @@ export const createSwapInstruction = async (
 
   return {
     instructions: [swapInstruction],
+    cleanupInstructions: [],
+    signers: owner.signer ? [owner.signer] : [],
+  };
+};
+
+export const createDepositInstruction = async (
+  poolParams: OrcaPoolParams,
+  userTransferAuthorityPublicKey: PublicKey,
+  userTokenAPublicKey: PublicKey,
+  userTokenBPublicKey: PublicKey,
+  userPoolTokenPublicKey: PublicKey,
+  poolTokenAmount: u64,
+  maximumTokenA: u64,
+  maximumTokenB: u64,
+  tokenAPublicKey: PublicKey,
+  tokenBPublicKey: PublicKey,
+  owner: Owner
+): Promise<Instruction> => {
+  const depositInstruction = TokenSwap.depositAllTokenTypesInstruction(
+    poolParams.address,
+    poolParams.authority,
+    userTransferAuthorityPublicKey,
+    userTokenAPublicKey,
+    userTokenBPublicKey,
+    tokenAPublicKey,
+    tokenBPublicKey,
+    poolParams.poolTokenMint,
+    userPoolTokenPublicKey,
+    ORCA_TOKEN_SWAP_ID,
+    TOKEN_PROGRAM_ID,
+    poolTokenAmount,
+    maximumTokenA,
+    maximumTokenB
+  );
+
+  return {
+    instructions: [depositInstruction],
+    cleanupInstructions: [],
+    signers: owner.signer ? [owner.signer] : [],
+  };
+};
+
+export const createWithdrawInstruction = async (
+  poolParams: OrcaPoolParams,
+  userTransferAuthorityPublicKey: PublicKey,
+  userTokenAPublicKey: PublicKey,
+  userTokenBPublicKey: PublicKey,
+  userPoolTokenPublicKey: PublicKey,
+  poolTokenAmount: u64,
+  minimumTokenA: u64,
+  minimumTokenB: u64,
+  tokenAPublicKey: PublicKey,
+  tokenBPublicKey: PublicKey,
+  owner: Owner
+): Promise<Instruction> => {
+  const withdrawInstruction = TokenSwap.withdrawAllTokenTypesInstruction(
+    poolParams.address,
+    poolParams.authority,
+    userTransferAuthorityPublicKey,
+    poolParams.poolTokenMint,
+    poolParams.feeAccount,
+    userPoolTokenPublicKey,
+    tokenAPublicKey,
+    tokenBPublicKey,
+    userTokenAPublicKey,
+    userTokenBPublicKey,
+    ORCA_TOKEN_SWAP_ID,
+    TOKEN_PROGRAM_ID,
+    poolTokenAmount,
+    minimumTokenA,
+    minimumTokenB
+  );
+
+  return {
+    instructions: [withdrawInstruction],
     cleanupInstructions: [],
     signers: owner.signer ? [owner.signer] : [],
   };

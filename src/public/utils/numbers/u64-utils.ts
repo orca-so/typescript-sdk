@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaToken, OrcaU64 } from "../..";
+import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { DecimalUtil } from "./decimal-utils";
 
 export const ZERO = new u64(0);
@@ -18,6 +19,19 @@ export class U64Utils {
     }
 
     return DecimalUtil.toU64(input, token.scale);
+  }
+
+  public static toPoolU64(input: Decimal | OrcaU64, pool: OrcaPoolParams, varName: string) {
+    if (input instanceof OrcaU64) {
+      if (input.scale !== pool.poolTokenDecimals) {
+        throw new Error(
+          `${varName}'s scale of ${input.scale} does not match pool's decimal of ${pool.poolTokenDecimals}`
+        );
+      }
+      return input.toU64();
+    }
+
+    return DecimalUtil.toU64(input, pool.poolTokenDecimals);
   }
 
   // Note: divisor input variable modified in place
