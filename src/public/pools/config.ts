@@ -31,4 +31,11 @@ export enum OrcaPoolConfig {
   mSOL_USDC = "8PSfyiTVwPb6Rr2iZ8F3kNpbg65BCfJM9v8LfB916r44",
   SLRS_USDC = "AtB4nUmdyQfuWWJ9xAHw9xyVnJFfSjSuVWkiYan8y86w",
   PORT_USDC = "F8gPSpwVHj8FdAJAYULDuZBxFEJut87hUbARYYx3471w",
+  SBR_USDC = "CS7fA5n4c2D82dUoHrYzS3gAqgqaoVSfgsr18kitp2xo",
+  SOCN_USDC = "Dkr8B675PGnNwEr9vTKXznjjHke5454EQdz3iaSbparB",
+  pSOL_USDC = "C2YzN6MymD5HM2kPaH7bzcbqciyjfmpqyVaR3KA5V6z1",
+  mSOL_SOL = "29cdoMgu6MS2VXpcMo1sqRdWEzdUR9tjvoh8fcK8Z87R",
+  ORCA_PAI = "C7TH2jEJJaxVwwuvkbcDGfHUiZvEkkeYjyAcdTMi5ujb",
+  ORCA_mSOL = "CVapmQn7HaU1yMDW3q6oUV4hx6XoYv54T4zfGXkuJqkA",
+  SOCN_SOL = "APNpzQvR91v1THbsAyG3HHrUEwvexWYeNCFLQuVnxgMc",
 }
