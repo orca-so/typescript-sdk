@@ -12,6 +12,17 @@ import { Owner } from "./key-utils";
 
 export type ResolvedTokenAddressInstruction = { address: PublicKey } & Instruction;
 
+/**
+ * IMPORTANT: amountIn should only be used for input/source token that could be SOL.
+ *            This is because when SOL is output, it is the end destination, and thus
+ *            does not need to be wrapped.
+ *
+ * @param connection Solana connection class
+ * @param owner The keypair for the user's wallet or just the user's public key
+ * @param tokenMint Token mint address
+ * @param amountIn Optional. Only use for input/source token that could be SOL
+ * @returns
+ */
 export async function resolveOrCreateAssociatedTokenAddress(
   connection: Connection,
   owner: Owner,
