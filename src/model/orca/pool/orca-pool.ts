@@ -214,10 +214,15 @@ export class OrcaPoolImpl implements OrcaPool {
         maxTokenAIn_U64
       );
 
-    // If tokenB is SOL, this will create a new wSOL account
+    // If tokenB is SOL, this will create a new wSOL account with maxTokenBIn_U64
     // Otherwise, get tokenB's associated token account
     const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
-      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, tokenB.mint);
+      await resolveOrCreateAssociatedTokenAddress(
+        this.connection,
+        _owner,
+        tokenB.mint,
+        maxTokenBIn_U64
+      );
 
     // If the user lacks the pool token account, create it
     const { address: userPoolTokenPublicKey, ...resolvePoolTokenInstructions } =
