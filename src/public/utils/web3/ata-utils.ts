@@ -14,8 +14,8 @@ export type ResolvedTokenAddressInstruction = { address: PublicKey } & Instructi
 
 /**
  * IMPORTANT: wrappedSolAmountIn should only be used for input/source token that
- *            could be SOL. This is because when SOL is output, it is the end
- *            destination, and thus does not need to be wrapped.
+ *            could be SOL. This is because when SOL is the output, it is the end
+ *            destination, and thus does not need to be wrapped with an amount.
  *
  * @param connection Solana connection class
  * @param owner The keypair for the user's wallet or just the user's public key
