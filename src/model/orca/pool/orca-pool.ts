@@ -152,12 +152,7 @@ export class OrcaPoolImpl implements OrcaPool {
       );
 
     const { address: outputPoolTokenUserAddress, ...resolveOutputAddrInstructions } =
-      await resolveOrCreateAssociatedTokenAddress(
-        this.connection,
-        _owner,
-        outputPoolToken.mint,
-        amountInU64
-      );
+      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, outputPoolToken.mint);
 
     if (inputPoolTokenUserAddress === undefined || outputPoolTokenUserAddress === undefined) {
       throw new Error("Unable to derive input / output token associated address.");
@@ -209,7 +204,7 @@ export class OrcaPoolImpl implements OrcaPool {
       "poolTokenAmount"
     );
 
-    // If tokenA is SOL, this will create a new wSOL account
+    // If tokenA is SOL, this will create a new wSOL account with maxTokenAIn_U64
     // Otherwise, get tokenA's associated token account
     const { address: userTokenAPublicKey, ...resolveTokenAInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
@@ -219,7 +214,7 @@ export class OrcaPoolImpl implements OrcaPool {
         maxTokenAIn_U64
       );
 
-    // If tokenB is SOL, this will create a new wSOL account
+    // If tokenB is SOL, this will create a new wSOL account with maxTokenBIn_U64
     // Otherwise, get tokenB's associated token account
     const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
       await resolveOrCreateAssociatedTokenAddress(
@@ -297,21 +292,11 @@ export class OrcaPoolImpl implements OrcaPool {
 
     // Create a token account for tokenA, if necessary
     const { address: userTokenAPublicKey, ...resolveTokenAInstrucitons } =
-      await resolveOrCreateAssociatedTokenAddress(
-        this.connection,
-        _owner,
-        tokenA.mint,
-        minTokenAOut_U64
-      );
+      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, tokenA.mint);
 
     // Create a token account for tokenB, if necessary
     const { address: userTokenBPublicKey, ...resolveTokenBInstrucitons } =
-      await resolveOrCreateAssociatedTokenAddress(
-        this.connection,
-        _owner,
-        tokenB.mint,
-        minTokenBOut_U64
-      );
+      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, tokenB.mint);
 
     // Get user's poolToken token account
     const { address: userPoolTokenPublicKey, ...resolvePoolTokenInstructions } =

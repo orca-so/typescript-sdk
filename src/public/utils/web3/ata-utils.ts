@@ -12,11 +12,22 @@ import { Owner } from "./key-utils";
 
 export type ResolvedTokenAddressInstruction = { address: PublicKey } & Instruction;
 
+/**
+ * IMPORTANT: wrappedSolAmountIn should only be used for input/source token that
+ *            could be SOL. This is because when SOL is the output, it is the end
+ *            destination, and thus does not need to be wrapped with an amount.
+ *
+ * @param connection Solana connection class
+ * @param owner The keypair for the user's wallet or just the user's public key
+ * @param tokenMint Token mint address
+ * @param wrappedSolAmountIn Optional. Only use for input/source token that could be SOL
+ * @returns
+ */
 export async function resolveOrCreateAssociatedTokenAddress(
   connection: Connection,
   owner: Owner,
   tokenMint: PublicKey,
-  amountIn = new u64(0)
+  wrappedSolAmountIn = new u64(0)
 ): Promise<ResolvedTokenAddressInstruction> {
   if (tokenMint !== solToken.mint) {
     const derivedAddress = await deriveAssociatedTokenAddress(owner.publicKey, tokenMint);
@@ -52,7 +63,7 @@ export async function resolveOrCreateAssociatedTokenAddress(
     return createWSOLAccountInstructions(
       owner.publicKey,
       solToken.mint,
-      amountIn,
+      wrappedSolAmountIn,
       accountRentExempt
     );
   }
