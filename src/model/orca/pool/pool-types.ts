@@ -10,6 +10,7 @@ import { Percentage } from "../../../public";
  * @param poolTokenMint Mint address for the pool token
  * @param poolTokenDecimals Number of decimal places for the pool token
  * @param feeAccount Public address of the pool token fee account
+ * @param aquafarmParams Aquafarm configs for the pool if it exists
  * @param tokenIds The ids of the tokens in this pool
  * @param tokens The id, token object of the tokens in this pool
  * @param curveType Trading curve type. 0 - ConstantProduct, 1 - ConstantPrice, 2 - Stable, 3 - Offset
@@ -23,11 +24,24 @@ export type OrcaPoolParams = {
   poolTokenMint: PublicKey;
   poolTokenDecimals: number;
   feeAccount: PublicKey;
+  aquafarmParams?: AquafarmParams;
   tokenIds: string[];
   tokens: Record<string, OrcaPoolToken>;
   curveType: CurveType;
   feeStructure: FeeStructure;
   amp?: number;
+};
+
+/**
+ * An Aquafarm pool token
+ * @param address The pool aquafarm account address
+ * @param tokenMint Mint address for the farm token
+ * @param rewardTokenMint Mint address for the farm reward token
+ */
+export type AquafarmParams = {
+  address: PublicKey;
+  farmTokenMint: PublicKey;
+  rewardTokenMint: PublicKey;
 };
 
 export enum CurveType {

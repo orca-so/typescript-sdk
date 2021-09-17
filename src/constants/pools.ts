@@ -14,6 +14,11 @@ export const solUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("APDFRM3HMr8CAGXwKHiu2f5ePSpaiEJhaURwhsRrUUt9"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("8JnSiuvQq3BVuCU3n4DrSTw9chBSPvEMswrhtifVkr1o"),
+  aquafarmParams: {
+    address: new PublicKey("85HrPbJtrN82aeB74WTwoFxcNgmf5aDNP2ENngbDpd5G"),
+    farmTokenMint: new PublicKey("FFdjrSvNALfdgxANNpt3x85WpeVMdQSH5SEP2poM8fcK"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.solToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.solToken.mint.toString()]: {
@@ -39,6 +44,11 @@ export const solUsdtPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("FZthQCuYHhcfiDma7QrX7buDHwrZEd7vL8SjS6LQa3Tx"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("BBKgw75FivTYXj85D2AWyVdaTdTWuSuHVXRm1Xu7fipb"),
+  aquafarmParams: {
+    address: new PublicKey("4RRRJkscV2DmwJUxTQgRdYock75GfwYJn7LTxy9rGTmY"),
+    farmTokenMint: new PublicKey("71vZ7Jvu8fTyFzpX399dmoSovoz24rVbipLrRn2wBNzW"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.solToken.mint.toString(), Tokens.usdtToken.mint.toString()],
   tokens: {
     [Tokens.solToken.mint.toString()]: {
@@ -64,6 +74,11 @@ export const ethSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("71FymgN2ZUf7VvVTLE8jYEnjP3jSK1Frp2XT1nHs8Hob"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("unxKgWEc71ZiHwMqZs3VLqjcjmZhfTZEg94ZLGvjdMP"),
+  aquafarmParams: {
+    address: new PublicKey("3ARgavt1NhqLmJWj3wAJy6XBarG6pJbEKRv1wzzRbbaN"),
+    farmTokenMint: new PublicKey("CGFTRh4jKLPbS9r4hZtbDfaRuC7qcA8rZpbLnVTzJBer"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.ethToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.ethToken.mint.toString()]: {
@@ -89,6 +104,11 @@ export const ethUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("3e1W6Aqcbuk2DfHUwRiRcyzpyYRRjg6yhZZcyEARydUX"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("DLWewB12jzGn4wXJmFCddWDeof1Ma4cZYNRv9CP5hTvX"),
+  aquafarmParams: {
+    address: new PublicKey("FpezTR76RRjgpBb9HhR6ap8BgQfkHyNMQSqJDcoXpjAb"),
+    farmTokenMint: new PublicKey("HDP2AYFmvLz6sWpoSuNS62JjvW4HjMKp7doXucqpWN56"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.ethToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.ethToken.mint.toString()]: {
@@ -114,6 +134,11 @@ export const raySolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("5kimD5W6yJpHRHCyPtnEyDsQRdiiJKivu5AqN3si82Jc"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("65XNtnUsP1TMzKMGhMoD3GUFMNbmnZQwDaxDLE3jncUC"),
+  aquafarmParams: {
+    address: new PublicKey("B1aByG1fU5yUgQT2EtJrp96SC4tJhnipzdXqHx2CXRgj"),
+    farmTokenMint: new PublicKey("AUkn5f4N4TqPA5BiWirTDHWnG3SePfmeDpDqrFmhSgKb"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.rayToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.rayToken.mint.toString()]: {
@@ -139,6 +164,11 @@ export const ropeSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("ADrvfPBsRcJfGsN6Bs385zYddH52nuM5FA8UaAkX9o2V"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("88rKjeeDQYJxGVCG39znDvbxzjPc5H37XqHRQCSNJvED"),
+  aquafarmParams: {
+    address: new PublicKey("NFsHa28zxuLnncHme7iLx8TXWV8ypyxPvEPaQh29zDh"),
+    farmTokenMint: new PublicKey("xpPyQwQ1HXHyEpvFGyTQRLY6rmj6jtAdEgLMV5uoz4m"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.ropeToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.ropeToken.mint.toString()]: {
@@ -164,6 +194,11 @@ export const stepSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("8nTzqDXHriG2CXKbybeuEh1EqDQMtrbYMFWcP7AkiDaP"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("5FEmPmAk72NycwzMXLD3hc2f47zRXocv4mvd3HEUZ5io"),
+  aquafarmParams: {
+    address: new PublicKey("DGtiR1LWNPGV9A5byh7EjAoh9NC2cW5YDcmxCpUJosD2"),
+    farmTokenMint: new PublicKey("GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.stepToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.stepToken.mint.toString()]: {
@@ -189,6 +224,11 @@ export const srmSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("9tf8rBSEQYG7AqL896fN2nZi1iYPqpWaLEdpbeQaC1Vy"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("APyc1s8wES4Q2FTqHN8jXZtRuWQyRWZ82u7EFfras2iZ"),
+  aquafarmParams: {
+    address: new PublicKey("5CQVdPpaW95X1atyfqunZf7eBE1rhQBXMfgJ1wRVF1p1"),
+    farmTokenMint: new PublicKey("D659zwnbeTgquChbaWC3KDHrkYoqMuz1doGLHTFaqTtD"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.srmToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.srmToken.mint.toString()]: {
@@ -214,6 +254,11 @@ export const fttSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("EsYaDKJCmcJtJHFuJYwQZwqohvVMCrFzcg8yo3i328No"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("FWBCbjZnypLKz7uHGJXpBAEez2FurQXi9J3js7ZT1xDe"),
+  aquafarmParams: {
+    address: new PublicKey("GzZE2CEemaTGNtRSYs9sArAJFuJi5kwsPJFyz5puYhsj"),
+    farmTokenMint: new PublicKey("9r9BcPwCon96P5Y6JSdRAog7Uknz9p9GrnuHm4VzuB9k"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.fttToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.fttToken.mint.toString()]: {
@@ -239,6 +284,11 @@ export const copeSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("CzieDbGRdN1QGaGDNpSqzEA18bi881ccvkkGZi51pe1k"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("9X8VRnxk6EVKGA7TErdSZYFC8oLUM569pDbZTtycjvXw"),
+  aquafarmParams: {
+    address: new PublicKey("CXYEVaqtDs4R9Bpeu4xYf8KT8S6nYis6VWkDEh9Mu1FS"),
+    farmTokenMint: new PublicKey("7CT19h7n2YBKiCFCaxXqMM79jNM4cmUvjXhNMjJNRYa"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.copeToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.copeToken.mint.toString()]: {
@@ -264,6 +314,11 @@ export const oxySolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("7tYCdLN84EnTMkxM7HNamWJx7F4xgKe9KiiWvLyWjbgT"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("Ch8i2A1GAspivXYfdme7vSxh1mhRjmRgeiKN8KpWhVqo"),
+  aquafarmParams: {
+    address: new PublicKey("ALmRst1DksKXVfY64KXq7pJUUG5PP56kwY18ijVDGAsz"),
+    farmTokenMint: new PublicKey("G48RkwsNYd3A4rBfuQhCswr9YUE63fFmZGyhgH95dq3S"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.oxyToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.oxyToken.mint.toString()]: {
@@ -289,6 +344,11 @@ export const btcSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("Acxs19v6eUMTEfdvkvWkRB4bwFCHm3XV9jABCy7c1mXe"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("4yPG4A9jB3ibDMVXEN2aZW4oA1e1xzzA3z5VWjkZd18B"),
+  aquafarmParams: {
+    address: new PublicKey("EeG5AAnFS56AveUrKexzivQeUdWhm6zYq6ubn6fLMCQa"),
+    farmTokenMint: new PublicKey("GxmjQZvgwNCh3QSRNB8CPED81hzySem62PDDuMp4B379"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.btcToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.btcToken.mint.toString()]: {
@@ -314,6 +374,11 @@ export const merSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("HiwRobjfHZ4zsPtqCC4oBS24pSmy4t8GGkXRbQj4yU6L"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("3Fdj69449GhiDmqyvWWTSafjRphGdiDhZ5i5rqfHBdio"),
+  aquafarmParams: {
+    address: new PublicKey("8gJggSfM35JpfvXmEsuJoHPLB8D6br15MEWEWdQF81d6"),
+    farmTokenMint: new PublicKey("CrKVRnH6iGbFXxEnXMn3Emwv3Fe7VwxEqpA8zNbwsgkH"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.merToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.merToken.mint.toString()]: {
@@ -339,6 +404,11 @@ export const fidaSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("EYsNdtyu4gGTaGz8N5m5iQ3G1N6rDyMbR72B3CqbWW4W"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("J2s1GpduscTTvMYt3os8LdvT24uhr9bPnTbxSKZZhEma"),
+  aquafarmParams: {
+    address: new PublicKey("4X3U1tpfiwQ5zPPd4oQSPcu3UK7nMSUWyAXxCmcSA6qP"),
+    farmTokenMint: new PublicKey("4geGcEfgVjzJGZAaT8iTicPm1XLDPjdSpVhtA99sZ7jX"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.fidaToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.fidaToken.mint.toString()]: {
@@ -364,6 +434,11 @@ export const mapsSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("99pfC8fWymXgbq3CvrExhx3UxQDC1fMWEWLbNT83F45e"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("8w3gx1GQ1UN5sodEVP14qUwzCcgopHWUeWbT26hgK3xh"),
+  aquafarmParams: {
+    address: new PublicKey("Gobr8FhZDtn8yxkFQDND3KmfuwZseWEuyZ3xpD56hk1i"),
+    farmTokenMint: new PublicKey("7Dy84zJNHzEM9335BrtFjCuunt2VgxJ7KBT6PJarxKMq"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.mapsToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.mapsToken.mint.toString()]: {
@@ -389,6 +464,11 @@ export const usdcUsdtPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("H2uzgruPvonVpCRhwwdukcpXK8TG17swFNzYFr2rtPxy"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("B4RNxMJGRzKFQyTq2Uwkmpyjtew13n7KtdqZy6qgENTu"),
+  aquafarmParams: {
+    address: new PublicKey("5psKJrxWnPmoAbCxk3An2CGh7wHAX2cWddf5vZuYbbVw"),
+    farmTokenMint: new PublicKey("GjpXgKwn4VW4J2pZdS3dovM58hiXWLJtopTfqG83zY2f"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.usdcToken.mint.toString(), Tokens.usdtToken.mint.toString()],
   tokens: {
     [Tokens.usdcToken.mint.toString()]: {
@@ -415,6 +495,11 @@ export const orcaSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("2uVjAuRXavpM6h1scGQaxqb6HVaNRn6T2X7HHXTabz25"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("4Zc4kQZhRQeGztihvcGSWezJE1k44kKEgPCAkdeBfras"),
+  aquafarmParams: {
+    address: new PublicKey("F6pi7SyXWx56fP96mYQ4Yfh4yZ7oGNtDjwSYHT5Mz7Ld"),
+    farmTokenMint: new PublicKey("B5waaKnsmtqFawPspUwcuy1cRjAC7u2LrHSwxPSxK4sZ"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.orcaToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.orcaToken.mint.toString()]: {
@@ -440,6 +525,11 @@ export const orcaUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("n8Mpu28RjeYD7oUX3LG1tPxzhRZh3YYLRSHcHRdS3Zx"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("7CXZED4jfRp3qdHB9Py3up6v1C4UhHofFvfT6RXbJLRN"),
+  aquafarmParams: {
+    address: new PublicKey("9S1BsxbDNQXQccjFamVEGgxiYQHTeudvhEYwFr4oWeaf"),
+    farmTokenMint: new PublicKey("Gc7W5U66iuHQcC1cQyeX9hxkPF2QUVJPTf1NWbW8fNrt"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.orcaToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.orcaToken.mint.toString()]: {
@@ -465,6 +555,11 @@ export const kinSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("HEvnD66WcBfTajS9adUYnGRBMDehFtLySiFHSD6kEBWs"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("5bLeJU66qTopjZBa48BUd7EXWcj4UeCMfHjjrvt8Zcgs"),
+  aquafarmParams: {
+    address: new PublicKey("9XTA3t3X8KaeLgkv7XuDWATo4oDwBnTZqjnSPcE5ijYK"),
+    farmTokenMint: new PublicKey("7Ho3ht7krdFELBcPAsGXFfQMyG4PUvYSfpz4aNBRP3Ek"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.kinToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.kinToken.mint.toString()]: {
@@ -490,6 +585,11 @@ export const samoSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("D6N9j8F2DhtzDtrdpT74y3u2YmYAzcggiLc3nTjqux9M"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("BYAjG645fRRHZ5JFnZKnXc4dzK9WppcoVWDMYj3zm3KF"),
+  aquafarmParams: {
+    address: new PublicKey("98EDd1L47pdW1F7ne82dyFXpfhVdEcrCqUF1dYrWLFZi"),
+    farmTokenMint: new PublicKey("CNf8gZtLahBWxKe3YwsqywLHMTewGqvq6pJ5ecg3cTYU"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.samoToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.samoToken.mint.toString()]: {
@@ -515,6 +615,11 @@ export const liqUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("3PD9SZFwXKkXr4akLf4ofo37ZUMycwML89R2P3qxcbZG"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("FSVPcprrTkQLRtDACFEpa2rhEVx4kBvjPuQaxj572SaC"),
+  aquafarmParams: {
+    address: new PublicKey("z2WHNcBJTZqbK5wCuBPtswEq2614T6si1cJmog7vFAL"),
+    farmTokenMint: new PublicKey("57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.liqToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.liqToken.mint.toString()]: {
@@ -540,6 +645,11 @@ export const snyUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("AZpo4BJHHRetF96v6SGinFZBMXM4yWMo4RA8C4PriDLk"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("DiULDJAYXdbtX8CfFsU2jCgHvQWT7u3gwRwpvQxfEMvr"),
+  aquafarmParams: {
+    address: new PublicKey("7qAQZxYQRcmHmz3Wi9NeieujwLSd3N41M4dJipgSCNsB"),
+    farmTokenMint: new PublicKey("6Qw5Gzf1TkM3YRe7Dh6yMVMo2wnJxRiCUBP8abTTn9Yg"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.snyToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.snyToken.mint.toString()]: {
@@ -565,6 +675,11 @@ export const msolUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("8PSfyiTVwPb6Rr2iZ8F3kNpbg65BCfJM9v8LfB916r44"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("3W3Skj2vQsNEMhGRQprFXQy3Q8ZbM6ojdgiDCokVPWno"),
+  aquafarmParams: {
+    address: new PublicKey("EvtMzreDMq1U8ytV5fEmfoWNfPhrjZ87za835GuRvZCc"),
+    farmTokenMint: new PublicKey("5r3vDsNTGXXb9cGQfqyNuYD2bjhRPymGJBfDmKosR9Ev"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.msolToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.msolToken.mint.toString()]: {
@@ -590,6 +705,11 @@ export const slrsUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("AtB4nUmdyQfuWWJ9xAHw9xyVnJFfSjSuVWkiYan8y86w"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("CLxeBxNq42AtmD43F5BTqCHTnkVHX8sP9cVPdtRkTL7D"),
+  aquafarmParams: {
+    address: new PublicKey("5XXw91d4HoLjqhUhXmUcdkCDtQyXvQkLJMUcYJkKn5Dx"),
+    farmTokenMint: new PublicKey("66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.slrsToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.slrsToken.mint.toString()]: {
@@ -615,6 +735,11 @@ export const portUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("F8gPSpwVHj8FdAJAYULDuZBxFEJut87hUbARYYx3471w"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("5JZXUbCfaSo3y9PYq47Hj5Yc6hVFa4j7MkDzBJfMSRSN"),
+  aquafarmParams: {
+    address: new PublicKey("FpEb4eEqhnPBAA2RNvsSe8baCoev4mSNQjxKPGvx5Gjv"),
+    farmTokenMint: new PublicKey("4CGxvZdwiZgVMLXiTdJHTkJRUTpTSJCtmtCRbSkAxerE"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.portToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.portToken.mint.toString()]: {
@@ -640,6 +765,11 @@ export const sbrUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("CS7fA5n4c2D82dUoHrYzS3gAqgqaoVSfgsr18kitp2xo"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("7S3KKuvcHfcKWBGLDwmoTgtB97JE8LHruP8jbmQkGfH"),
+  aquafarmParams: {
+    address: new PublicKey("EWRNKpLc4Y8r6Aur9mo8GtBYatqfoML9A7bfEmDv2JD4"),
+    farmTokenMint: new PublicKey("Cum6sRPGpWYQHZapekDtMhbZ1BQ2QkYv9PAwQjypxMVo"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.sbrToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.sbrToken.mint.toString()]: {
@@ -665,6 +795,11 @@ export const socnUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("Dkr8B675PGnNwEr9vTKXznjjHke5454EQdz3iaSbparB"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("HsC1Jo38jK3EpoNAkxfoUJhQVPa28anewZpLfeouUNk7"),
+  aquafarmParams: {
+    address: new PublicKey("5MzBKRo6YqK1BKBz67sXd42jrb6gYzBuX6R5F8ywC33e"),
+    farmTokenMint: new PublicKey("7YFfqZGTxkj3Zeq3Et23kMznCaEYZ1WBZDt6CVrxwfqd"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.socnToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.socnToken.mint.toString()]: {
@@ -690,6 +825,11 @@ export const psolUsdcPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("C2YzN6MymD5HM2kPaH7bzcbqciyjfmpqyVaR3KA5V6z1"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("BhHd49JYH3Hk6TV5kCjmUgf7fQSQKDjaWTokMmBhTx9o"),
+  aquafarmParams: {
+    address: new PublicKey("4TK569s8SLgzmEcihyhrH8GmqFsufjZqsvHs8zrPEZYP"),
+    farmTokenMint: new PublicKey("8kWk6CuCAfaxhWQZvQva6qkB1DkWNHq9LRKKN6n9joUG"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.psolToken.mint.toString(), Tokens.usdcToken.mint.toString()],
   tokens: {
     [Tokens.psolToken.mint.toString()]: {
@@ -715,6 +855,11 @@ export const msolSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("29cdoMgu6MS2VXpcMo1sqRdWEzdUR9tjvoh8fcK8Z87R"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("6j2tt2UVYMQwqG3hRtyydW3odzBFwy3pN33tyB3xCKQ6"),
+  aquafarmParams: {
+    address: new PublicKey("JADWjBW1Xs8WhW8kj3GTCRQn3LR4gwvbFTEMwv9ZNxQh"),
+    farmTokenMint: new PublicKey("3RTGL7gPF4V1ns1AeGFApT7cBEGVDfmJ77DqQi9AC6uG"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.msolToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.msolToken.mint.toString()]: {
@@ -741,6 +886,11 @@ export const orcaPaiPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("C7TH2jEJJaxVwwuvkbcDGfHUiZvEkkeYjyAcdTMi5ujb"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("DrC2aGWrUmsnK6yAphSXEs8GW5nKUCkityaG8Bikn5Ne"),
+  aquafarmParams: {
+    address: new PublicKey("8KBSXu7zFjvbVXiwf1opGNBx3evVwdpaYHWR3uc4HVR6"),
+    farmTokenMint: new PublicKey("4aEi4A91hRbERJVDYxRWbbSrBrsxoM1Hm33KRoRzWMht"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.orcaToken.mint.toString(), Tokens.paiToken.mint.toString()],
   tokens: {
     [Tokens.orcaToken.mint.toString()]: {
@@ -766,6 +916,11 @@ export const orcaMsolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("CVapmQn7HaU1yMDW3q6oUV4hx6XoYv54T4zfGXkuJqkA"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("Hq9xxKdMavJd4teMZusF4PiGNGV3hxdcMZwAdngkHCg7"),
+  aquafarmParams: {
+    address: new PublicKey("7EVKT4iqfjiyzeVrafs23JrfhSoLd6XTanVuENNvisq7"),
+    farmTokenMint: new PublicKey("3Duk5b6fLztPmS4ryV48FM1Q9WXUSMwz9jehAT4UtqpE"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.orcaToken.mint.toString(), Tokens.msolToken.mint.toString()],
   tokens: {
     [Tokens.orcaToken.mint.toString()]: {
@@ -791,6 +946,11 @@ export const socnSolPool: OrcaPoolParams = Object.freeze({
   poolTokenMint: new PublicKey("APNpzQvR91v1THbsAyG3HHrUEwvexWYeNCFLQuVnxgMc"),
   poolTokenDecimals: 6,
   feeAccount: new PublicKey("42Xzazs9EvjtidvEDrj3JXbDtf6fpTq5XHh96mPctvBV"),
+  aquafarmParams: {
+    address: new PublicKey("5cE7V9D13k1P1qC23g5vcQEMsvrDzL5yFHhiesVUyn93"),
+    farmTokenMint: new PublicKey("CNqmEKGjZUUARVFHcz4w9CvX5pR8Ae2c6imHDNqsbxgj"),
+    rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  },
   tokenIds: [Tokens.socnToken.mint.toString(), Tokens.solToken.mint.toString()],
   tokens: {
     [Tokens.socnToken.mint.toString()]: {
