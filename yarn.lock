@@ -562,10 +562,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@orca-so/aquafarm@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@orca-so/aquafarm/-/aquafarm-0.0.11.tgz#3bc9f033e1cc908f618cf0526c772cfc7d0377e6"
-  integrity sha512-Er357y77tS39m9u1OWvyJ1wy7kjI2dY1hdyG5QC9rXtBguriaBElD4OmpyrnzizDUaK2N3YuRWpZWGFWDM9rhQ==
+"@orca-so/aquafarm@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@orca-so/aquafarm/-/aquafarm-0.0.12.tgz#255df50e9d8a408cebf600ee3507ff650484e94c"
+  integrity sha512-4vEkxeI5A5NHR9wre7Dtp9MYPCnke4v2PkaIv7933S490PErCYeqrlDPIEBTAKYWJpHFz5jR+h0bPFbmdMs3kw==
   dependencies:
     "@solana/spl-token" "^0.1.6"
     "@solana/web3.js" "^1.20.0"
