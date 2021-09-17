@@ -419,45 +419,43 @@ export class OrcaPoolImpl implements OrcaPool {
       }
       const aquafarm = new Aquafarm(globalFarms[0], ORCA_AQUAFARM_ID, userFarms && userFarms[0]);
 
-      if (!aquafarm.isUserFarmInitialized()) {
-        throw new Error("Failed to get userFarm information");
-      }
+      if (aquafarm.isUserFarmInitialized()) {
+        // If the user lacks the farm token account, create it
+        const { address: userFarmTokenPublicKey, ...resolveFarmTokenInstructions } =
+          await resolveOrCreateAssociatedTokenAddress(
+            this.connection,
+            _owner,
+            aquafarm.globalFarm.farmTokenMint
+          );
 
-      // If the user lacks the farm token account, create it
-      const { address: userFarmTokenPublicKey, ...resolveFarmTokenInstructions } =
-        await resolveOrCreateAssociatedTokenAddress(
-          this.connection,
-          _owner,
-          aquafarm.globalFarm.farmTokenMint
+        // If the user lacks the reward token account, create it
+        const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
+          await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
+
+        // Approve transfer of aquafarm tokens to be reverted to pool tokens
+        const { ...transferAquafarmTokenInstruction } = createApprovalInstruction(
+          ownerAddress,
+          poolTokenAmountIn_U64,
+          userFarmTokenPublicKey,
+          userTransferAuthority
         );
 
-      // If the user lacks the reward token account, create it
-      const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
-        await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
+        // Revert aquafarm tokens to pool tokens
+        const revertFromAquafarmTokens = await createAquafarmRevertTokensInstruction(
+          aquafarm,
+          userTransferAuthority.publicKey,
+          userPoolTokenPublicKey,
+          userFarmTokenPublicKey,
+          userRewardTokenPublicKey,
+          poolTokenAmountIn_U64,
+          _owner
+        );
 
-      // Approve transfer of aquafarm tokens to be reverted to pool tokens
-      const { ...transferAquafarmTokenInstruction } = createApprovalInstruction(
-        ownerAddress,
-        poolTokenAmountIn_U64,
-        userFarmTokenPublicKey,
-        userTransferAuthority
-      );
-
-      // Revert aquafarm tokens to pool tokens
-      const revertFromAquafarmTokens = await createAquafarmRevertTokensInstruction(
-        aquafarm,
-        userTransferAuthority.publicKey,
-        userPoolTokenPublicKey,
-        userFarmTokenPublicKey,
-        userRewardTokenPublicKey,
-        poolTokenAmountIn_U64,
-        _owner
-      );
-
-      transactionBuilder.addInstruction(resolveFarmTokenInstructions);
-      transactionBuilder.addInstruction(resolveRewardTokenInstructions);
-      transactionBuilder.addInstruction(transferAquafarmTokenInstruction);
-      transactionBuilder.addInstruction(revertFromAquafarmTokens);
+        transactionBuilder.addInstruction(resolveFarmTokenInstructions);
+        transactionBuilder.addInstruction(resolveRewardTokenInstructions);
+        transactionBuilder.addInstruction(transferAquafarmTokenInstruction);
+        transactionBuilder.addInstruction(revertFromAquafarmTokens);
+      }
     }
 
     // Create the withdraw instruction
