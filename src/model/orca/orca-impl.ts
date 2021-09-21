@@ -1,5 +1,5 @@
 import { Connection } from "@solana/web3.js";
-import { Orca, OrcaPool, OrcaPoolConfig } from "../../public";
+import { Orca, OrcaFarm, OrcaPool, OrcaPoolConfig, OrcaFarmConfig } from "../../public";
 import { OrcaFactory } from "../orca-factory";
 
 export class OrcaImpl implements Orca {
@@ -13,5 +13,9 @@ export class OrcaImpl implements Orca {
 
   getPool(pool: OrcaPoolConfig): OrcaPool {
     return this.factory.getPool(this.connection, pool);
+  }
+
+  getFarm(farm: OrcaFarmConfig): OrcaFarm {
+    return this.factory.getFarm(this.connection, farm);
   }
 }

@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { OrcaToken, OrcaU64 } from "../..";
+import { OrcaFarmParams } from "../../../model/orca/farm/farm-types";
 import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { DecimalUtil } from "./decimal-utils";
 
@@ -21,7 +22,11 @@ export class U64Utils {
     return DecimalUtil.toU64(input, token.scale);
   }
 
-  public static toPoolU64(input: Decimal | OrcaU64, pool: OrcaPoolParams, varName: string) {
+  public static toPoolU64(
+    input: Decimal | OrcaU64,
+    pool: OrcaPoolParams | OrcaFarmParams,
+    varName: string
+  ) {
     if (input instanceof OrcaU64) {
       if (input.scale !== pool.poolTokenDecimals) {
         throw new Error(

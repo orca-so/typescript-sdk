@@ -1,11 +1,10 @@
-import { Aquafarm } from "@orca-so/aquafarm";
 import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
 import { OrcaPoolToken } from "../../../pools";
 import { ORCA_TOKEN_SWAP_ID } from "../../constants";
-import { emptyInstruction, Instruction } from "../../models";
+import { Instruction } from "../../models";
 import { Owner } from "../key-utils";
 
 export const createApprovalInstruction = (
@@ -153,94 +152,6 @@ export const createWithdrawInstruction = async (
 
   return {
     instructions: [withdrawInstruction],
-    cleanupInstructions: [],
-    signers: owner.signer ? [owner.signer] : [],
-  };
-};
-
-export const createInitUserFarmInstruction = async (
-  aquafarm: Aquafarm,
-  userFarmPublicKey: PublicKey,
-  owner: Owner
-): Promise<Instruction> => {
-  if (aquafarm.isUserFarmInitialized()) {
-    return emptyInstruction;
-  }
-
-  const initUserFarmIx = aquafarm.constructInitUserFarmIx(owner.publicKey, userFarmPublicKey);
-
-  return {
-    instructions: [initUserFarmIx],
-    cleanupInstructions: [],
-    signers: owner.signer ? [owner.signer] : [],
-  };
-};
-
-export const createAquafarmConvertTokensInstruction = async (
-  aquafarm: Aquafarm,
-  userTransferAuthorityPublicKey: PublicKey,
-  userPoolTokenPublicKey: PublicKey,
-  userFarmTokenPublicKey: PublicKey,
-  userRewardTokenPublicKey: PublicKey,
-  poolTokenAmount: u64,
-  userFarmPublicKey: PublicKey,
-  owner: Owner
-): Promise<Instruction> => {
-  let convertIx;
-  if (!aquafarm.userFarm) {
-    convertIx = aquafarm.constructConvertTokensIx(
-      userTransferAuthorityPublicKey,
-      userPoolTokenPublicKey,
-      userFarmTokenPublicKey,
-      userRewardTokenPublicKey,
-      poolTokenAmount,
-      userFarmPublicKey,
-      owner.publicKey
-    );
-  } else {
-    convertIx = aquafarm.constructConvertTokensIx(
-      userTransferAuthorityPublicKey,
-      userPoolTokenPublicKey,
-      userFarmTokenPublicKey,
-      userRewardTokenPublicKey,
-      poolTokenAmount
-    );
-  }
-
-  if (!convertIx) {
-    throw new Error("constructConvertTokensIx returned null");
-  }
-
-  return {
-    instructions: [convertIx],
-    cleanupInstructions: [],
-    signers: owner.signer ? [owner.signer] : [],
-  };
-};
-
-export const createAquafarmRevertTokensInstruction = async (
-  aquafarm: Aquafarm,
-  userBurnAuthorityPublicKey: PublicKey,
-  userPoolTokenPublicKey: PublicKey,
-  userFarmTokenPublicKey: PublicKey,
-  userRewardTokenPublicKey: PublicKey,
-  poolTokenAmount: u64,
-  owner: Owner
-): Promise<Instruction> => {
-  const revertIx = aquafarm.constructRevertTokensIx(
-    userBurnAuthorityPublicKey,
-    userPoolTokenPublicKey,
-    userFarmTokenPublicKey,
-    userRewardTokenPublicKey,
-    poolTokenAmount
-  );
-
-  if (!revertIx) {
-    throw new Error("constructRevertTokensIx returned null");
-  }
-
-  return {
-    instructions: [revertIx],
     cleanupInstructions: [],
     signers: owner.signer ? [owner.signer] : [],
   };

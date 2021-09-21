@@ -1,5 +1,4 @@
-import { Aquafarm, fetchGlobalFarms, fetchUserFarms, getUserFarmAddress } from "@orca-so/aquafarm";
-import { TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
+import { u64 } from "@solana/spl-token";
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { defaultSlippagePercentage } from "../../../constants/orca-defaults";
@@ -20,14 +19,10 @@ import {
   TransactionPayload,
   Percentage,
   resolveOrCreateAssociatedTokenAddress,
-  ORCA_AQUAFARM_ID,
 } from "../../../public";
 import {
   createApprovalInstruction,
-  createAquafarmConvertTokensInstruction,
-  createAquafarmRevertTokensInstruction,
   createDepositInstruction,
-  createInitUserFarmInstruction,
   createSwapInstruction,
   createWithdrawInstruction,
 } from "../../../public/utils/web3/instructions/pool-instructions";
@@ -55,10 +50,7 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getLPBalance(owner: PublicKey): Promise<OrcaU64> {
-    // Use farm balance if aquafarm exists for this pool, default to pool balance
-    const mintAddress =
-      this.poolParams.aquafarmParams?.farmTokenMint || this.poolParams.poolTokenMint;
-    const address = await deriveAssociatedTokenAddress(owner, mintAddress);
+    const address = await deriveAssociatedTokenAddress(owner, this.poolParams.poolTokenMint);
 
     const accountInfo = await this.connection.getAccountInfo(address);
 
@@ -75,10 +67,7 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getLPSupply(): Promise<OrcaU64> {
-    // Use farm supply if aquafarm exists for this pool, default to pool supply
-    const mintAddress =
-      this.poolParams.aquafarmParams?.farmTokenMint || this.poolParams.poolTokenMint;
-    const context = await this.connection.getTokenSupply(mintAddress);
+    const context = await this.connection.getTokenSupply(this.poolParams.poolTokenMint);
 
     const amt = new u64(context.value.amount);
 
@@ -271,84 +260,14 @@ export class OrcaPoolImpl implements OrcaPool {
       _owner
     );
 
-    const transactionBuilder = new TransactionBuilder(this.connection, ownerAddress, _owner)
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
       .addInstruction(resolveTokenAInstrucitons)
       .addInstruction(resolveTokenBInstrucitons)
       .addInstruction(resolvePoolTokenInstructions)
       .addInstruction(transferTokenAInstruction)
       .addInstruction(transferTokenBInstruction)
-      .addInstruction(depositInstruction);
-
-    if (this.poolParams.aquafarmParams) {
-      const { address: aquafarmAddress, rewardTokenMint } = this.poolParams.aquafarmParams;
-      const userFarmPublicKey = (
-        await getUserFarmAddress(aquafarmAddress, ownerAddress, TOKEN_PROGRAM_ID, ORCA_AQUAFARM_ID)
-      )[0];
-
-      const globalFarms = await fetchGlobalFarms(
-        this.connection,
-        [aquafarmAddress],
-        ORCA_AQUAFARM_ID
-      );
-      const userFarms = await fetchUserFarms(
-        this.connection,
-        ownerAddress,
-        [aquafarmAddress],
-        ORCA_AQUAFARM_ID
-      );
-
-      if (!globalFarms) {
-        throw new Error("Failed to get globalFarms information");
-      }
-      const aquafarm = new Aquafarm(globalFarms[0], ORCA_AQUAFARM_ID, userFarms && userFarms[0]);
-
-      // If the user lacks the user farm, create it
-      const initUserFarmInstruction = await createInitUserFarmInstruction(
-        aquafarm,
-        userFarmPublicKey,
-        _owner
-      );
-
-      // If the user lacks the farm token account, create it
-      const { address: userFarmTokenPublicKey, ...resolveFarmTokenInstructions } =
-        await resolveOrCreateAssociatedTokenAddress(
-          this.connection,
-          _owner,
-          aquafarm.globalFarm.farmTokenMint
-        );
-
-      // If the user lacks the reward token account, create it
-      const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
-        await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
-
-      // Approve transfer of pool token to be converted to aquafarm tokens
-      const { ...transferPoolTokenInstruction } = createApprovalInstruction(
-        ownerAddress,
-        minPoolTokenAmountOut_U64,
-        userPoolTokenPublicKey,
-        userTransferAuthority
-      );
-
-      // Convert pool tokens to aquafarm tokens
-      const convertToAquafarmTokens = await createAquafarmConvertTokensInstruction(
-        aquafarm,
-        userTransferAuthority.publicKey,
-        userPoolTokenPublicKey,
-        userFarmTokenPublicKey,
-        userRewardTokenPublicKey,
-        minPoolTokenAmountOut_U64,
-        userFarmPublicKey,
-        _owner
-      );
-
-      transactionBuilder.addInstruction(initUserFarmInstruction);
-      transactionBuilder.addInstruction(resolveFarmTokenInstructions);
-      transactionBuilder.addInstruction(resolveRewardTokenInstructions);
-      transactionBuilder.addInstruction(transferPoolTokenInstruction);
-      transactionBuilder.addInstruction(convertToAquafarmTokens);
-    }
-
-    return await transactionBuilder.build();
+      .addInstruction(depositInstruction)
+      .build();
   }
 
   public async withdraw(
@@ -394,70 +313,6 @@ export class OrcaPoolImpl implements OrcaPool {
       userPoolTokenPublicKey
     );
 
-    const transactionBuilder = new TransactionBuilder(this.connection, ownerAddress, _owner)
-      .addInstruction(resolveTokenAInstrucitons)
-      .addInstruction(resolveTokenBInstrucitons)
-      .addInstruction(resolvePoolTokenInstructions)
-      .addInstruction(transferPoolTokenInstruction);
-
-    if (this.poolParams.aquafarmParams) {
-      const { address: aquafarmAddress, rewardTokenMint } = this.poolParams.aquafarmParams;
-      const globalFarms = await fetchGlobalFarms(
-        this.connection,
-        [aquafarmAddress],
-        ORCA_AQUAFARM_ID
-      );
-      const userFarms = await fetchUserFarms(
-        this.connection,
-        ownerAddress,
-        [aquafarmAddress],
-        ORCA_AQUAFARM_ID
-      );
-
-      if (!globalFarms) {
-        throw new Error("Failed to get globalFarms information");
-      }
-      const aquafarm = new Aquafarm(globalFarms[0], ORCA_AQUAFARM_ID, userFarms && userFarms[0]);
-
-      if (aquafarm.isUserFarmInitialized()) {
-        // If the user lacks the farm token account, create it
-        const { address: userFarmTokenPublicKey, ...resolveFarmTokenInstructions } =
-          await resolveOrCreateAssociatedTokenAddress(
-            this.connection,
-            _owner,
-            aquafarm.globalFarm.farmTokenMint
-          );
-
-        // If the user lacks the reward token account, create it
-        const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
-          await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
-
-        // Approve transfer of aquafarm tokens to be reverted to pool tokens
-        const { ...transferAquafarmTokenInstruction } = createApprovalInstruction(
-          ownerAddress,
-          poolTokenAmountIn_U64,
-          userFarmTokenPublicKey,
-          userTransferAuthority
-        );
-
-        // Revert aquafarm tokens to pool tokens
-        const revertFromAquafarmTokens = await createAquafarmRevertTokensInstruction(
-          aquafarm,
-          userTransferAuthority.publicKey,
-          userPoolTokenPublicKey,
-          userFarmTokenPublicKey,
-          userRewardTokenPublicKey,
-          poolTokenAmountIn_U64,
-          _owner
-        );
-
-        transactionBuilder.addInstruction(resolveFarmTokenInstructions);
-        transactionBuilder.addInstruction(resolveRewardTokenInstructions);
-        transactionBuilder.addInstruction(transferAquafarmTokenInstruction);
-        transactionBuilder.addInstruction(revertFromAquafarmTokens);
-      }
-    }
-
     // Create the withdraw instruction
     const withdrawInstruction = await createWithdrawInstruction(
       this.poolParams,
@@ -472,8 +327,13 @@ export class OrcaPoolImpl implements OrcaPool {
       tokenB.addr,
       _owner
     );
-    transactionBuilder.addInstruction(withdrawInstruction);
 
-    return await transactionBuilder.build();
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
+      .addInstruction(resolveTokenAInstrucitons)
+      .addInstruction(resolveTokenBInstrucitons)
+      .addInstruction(resolvePoolTokenInstructions)
+      .addInstruction(transferPoolTokenInstruction)
+      .addInstruction(withdrawInstruction)
+      .build();
   }
 }

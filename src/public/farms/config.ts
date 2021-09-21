@@ -1,0 +1,41 @@
+/**
+ * The following content is auto-generated.
+ */
+
+/**
+ * A list of supported Orca farms in this SDK.
+ */
+export enum OrcaFarmConfig {
+  SOL_USDC = "APDFRM3HMr8CAGXwKHiu2f5ePSpaiEJhaURwhsRrUUt9",
+  SOL_USDT = "FZthQCuYHhcfiDma7QrX7buDHwrZEd7vL8SjS6LQa3Tx",
+  ETH_SOL = "71FymgN2ZUf7VvVTLE8jYEnjP3jSK1Frp2XT1nHs8Hob",
+  ETH_USDC = "3e1W6Aqcbuk2DfHUwRiRcyzpyYRRjg6yhZZcyEARydUX",
+  RAY_SOL = "5kimD5W6yJpHRHCyPtnEyDsQRdiiJKivu5AqN3si82Jc",
+  ROPE_SOL = "ADrvfPBsRcJfGsN6Bs385zYddH52nuM5FA8UaAkX9o2V",
+  STEP_SOL = "8nTzqDXHriG2CXKbybeuEh1EqDQMtrbYMFWcP7AkiDaP",
+  SRM_SOL = "9tf8rBSEQYG7AqL896fN2nZi1iYPqpWaLEdpbeQaC1Vy",
+  FTT_SOL = "EsYaDKJCmcJtJHFuJYwQZwqohvVMCrFzcg8yo3i328No",
+  COPE_SOL = "CzieDbGRdN1QGaGDNpSqzEA18bi881ccvkkGZi51pe1k",
+  OXY_SOL = "7tYCdLN84EnTMkxM7HNamWJx7F4xgKe9KiiWvLyWjbgT",
+  BTC_SOL = "Acxs19v6eUMTEfdvkvWkRB4bwFCHm3XV9jABCy7c1mXe",
+  MER_SOL = "HiwRobjfHZ4zsPtqCC4oBS24pSmy4t8GGkXRbQj4yU6L",
+  FIDA_SOL = "EYsNdtyu4gGTaGz8N5m5iQ3G1N6rDyMbR72B3CqbWW4W",
+  MAPS_SOL = "99pfC8fWymXgbq3CvrExhx3UxQDC1fMWEWLbNT83F45e",
+  USDC_USDT = "H2uzgruPvonVpCRhwwdukcpXK8TG17swFNzYFr2rtPxy",
+  ORCA_SOL = "2uVjAuRXavpM6h1scGQaxqb6HVaNRn6T2X7HHXTabz25",
+  ORCA_USDC = "n8Mpu28RjeYD7oUX3LG1tPxzhRZh3YYLRSHcHRdS3Zx",
+  KIN_SOL = "HEvnD66WcBfTajS9adUYnGRBMDehFtLySiFHSD6kEBWs",
+  SAMO_SOL = "D6N9j8F2DhtzDtrdpT74y3u2YmYAzcggiLc3nTjqux9M",
+  LIQ_USDC = "3PD9SZFwXKkXr4akLf4ofo37ZUMycwML89R2P3qxcbZG",
+  SNY_USDC = "AZpo4BJHHRetF96v6SGinFZBMXM4yWMo4RA8C4PriDLk",
+  mSOL_USDC = "8PSfyiTVwPb6Rr2iZ8F3kNpbg65BCfJM9v8LfB916r44",
+  SLRS_USDC = "AtB4nUmdyQfuWWJ9xAHw9xyVnJFfSjSuVWkiYan8y86w",
+  PORT_USDC = "F8gPSpwVHj8FdAJAYULDuZBxFEJut87hUbARYYx3471w",
+  SBR_USDC = "CS7fA5n4c2D82dUoHrYzS3gAqgqaoVSfgsr18kitp2xo",
+  SOCN_USDC = "Dkr8B675PGnNwEr9vTKXznjjHke5454EQdz3iaSbparB",
+  pSOL_USDC = "C2YzN6MymD5HM2kPaH7bzcbqciyjfmpqyVaR3KA5V6z1",
+  mSOL_SOL = "29cdoMgu6MS2VXpcMo1sqRdWEzdUR9tjvoh8fcK8Z87R",
+  ORCA_PAI = "C7TH2jEJJaxVwwuvkbcDGfHUiZvEkkeYjyAcdTMi5ujb",
+  ORCA_mSOL = "CVapmQn7HaU1yMDW3q6oUV4hx6XoYv54T4zfGXkuJqkA",
+  SOCN_SOL = "APNpzQvR91v1THbsAyG3HHrUEwvexWYeNCFLQuVnxgMc",
+}
