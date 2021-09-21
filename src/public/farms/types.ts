@@ -16,11 +16,17 @@ export type OrcaFarm = {
    */
   getFarmSupply: () => Promise<OrcaU64>;
 
+  /**
+   * TODO add comments
+   */
   deposit: (
     owner: Keypair | PublicKey,
     poolTokenAmount: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
 
+  /**
+   * TODO add comments
+   */
   withdraw: (
     owner: Keypair | PublicKey,
     poolTokenAmount: Decimal | OrcaU64
