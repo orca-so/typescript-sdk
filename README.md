@@ -52,9 +52,9 @@ try {
 
   // Get a quote of exchanging 1.1 ETH to USDC with a slippage tolerance of 0.1%
   // From the quote, you can get the current rate, fees, expected output amount and minimum output amount
-  let usdcToken = pool.getTokenB();
+  let ethToken = pool.getTokenA();
   let tradeValue = new Decimal(1.1);
-  let quote = await pool.getQuote(usdcToken, tradeValue, new Decimal(0.1));
+  let quote = await pool.getQuote(ethToken, tradeValue, new Decimal(0.1));
 
   // Perform a swap for 1USDC to the quoted minimum amount of ETH
   // If the user does not have the Associated Token Address(ATA) to receive the output token, the ATA 
