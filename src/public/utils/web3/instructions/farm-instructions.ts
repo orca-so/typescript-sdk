@@ -5,15 +5,15 @@ import { Instruction, emptyInstruction } from "../..";
 import { Owner } from "../key-utils";
 
 export const createInitUserFarmInstruction = async (
-  aquafarm: Aquafarm,
+  farm: Aquafarm,
   userFarmPublicKey: PublicKey,
   owner: Owner
 ): Promise<Instruction> => {
-  if (aquafarm.isUserFarmInitialized()) {
+  if (farm.isUserFarmInitialized()) {
     return emptyInstruction;
   }
 
-  const initUserFarmIx = aquafarm.constructInitUserFarmIx(owner.publicKey, userFarmPublicKey);
+  const initUserFarmIx = farm.constructInitUserFarmIx(owner.publicKey, userFarmPublicKey);
 
   return {
     instructions: [initUserFarmIx],
@@ -22,34 +22,34 @@ export const createInitUserFarmInstruction = async (
   };
 };
 
-export const createAquafarmConvertTokensInstruction = async (
-  aquafarm: Aquafarm,
+export const createFarmConvertTokensInstruction = async (
+  farm: Aquafarm,
   userTransferAuthorityPublicKey: PublicKey,
-  userPoolTokenPublicKey: PublicKey,
+  userBaseTokenPublicKey: PublicKey,
   userFarmTokenPublicKey: PublicKey,
   userRewardTokenPublicKey: PublicKey,
-  poolTokenAmount: u64,
+  baseTokenAmount: u64,
   userFarmPublicKey: PublicKey,
   owner: Owner
 ): Promise<Instruction> => {
   let convertIx;
-  if (!aquafarm.userFarm) {
-    convertIx = aquafarm.constructConvertTokensIx(
+  if (!farm.userFarm) {
+    convertIx = farm.constructConvertTokensIx(
       userTransferAuthorityPublicKey,
-      userPoolTokenPublicKey,
+      userBaseTokenPublicKey,
       userFarmTokenPublicKey,
       userRewardTokenPublicKey,
-      poolTokenAmount,
+      baseTokenAmount,
       userFarmPublicKey,
       owner.publicKey
     );
   } else {
-    convertIx = aquafarm.constructConvertTokensIx(
+    convertIx = farm.constructConvertTokensIx(
       userTransferAuthorityPublicKey,
-      userPoolTokenPublicKey,
+      userBaseTokenPublicKey,
       userFarmTokenPublicKey,
       userRewardTokenPublicKey,
-      poolTokenAmount
+      baseTokenAmount
     );
   }
 
@@ -64,21 +64,21 @@ export const createAquafarmConvertTokensInstruction = async (
   };
 };
 
-export const createAquafarmRevertTokensInstruction = async (
-  aquafarm: Aquafarm,
+export const createFarmRevertTokensInstruction = async (
+  farm: Aquafarm,
   userBurnAuthorityPublicKey: PublicKey,
-  userPoolTokenPublicKey: PublicKey,
+  userBaseTokenPublicKey: PublicKey,
   userFarmTokenPublicKey: PublicKey,
   userRewardTokenPublicKey: PublicKey,
-  poolTokenAmount: u64,
+  baseTokenAmount: u64,
   owner: Owner
 ): Promise<Instruction> => {
-  const revertIx = aquafarm.constructRevertTokensIx(
+  const revertIx = farm.constructRevertTokensIx(
     userBurnAuthorityPublicKey,
-    userPoolTokenPublicKey,
+    userBaseTokenPublicKey,
     userFarmTokenPublicKey,
     userRewardTokenPublicKey,
-    poolTokenAmount
+    baseTokenAmount
   );
 
   if (!revertIx) {
