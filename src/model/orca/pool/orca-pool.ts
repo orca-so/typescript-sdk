@@ -287,7 +287,7 @@ export class OrcaPoolImpl implements OrcaPool {
     const poolTokenAmountIn_U64 = U64Utils.toPoolU64(
       poolTokenAmountIn,
       this.poolParams,
-      "poolTokenAmount"
+      "poolTokenAmountIn"
     );
 
     // Create a token account for tokenA, if necessary
