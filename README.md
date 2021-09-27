@@ -13,10 +13,23 @@ Learn more Orca [here](https://docs.orca.so).
 
 - The SDK supports all pools currently listed on [Orca](https://www.orca.so/pools)
 
-**Features Coming Soon**
-- More trader information (APY, Volume)
-- Deposit/Withdraw from OrcaPools
+### Provide Liquidity to Orca Pools
 
+- Deposit liquidity to supported Orca Pools
+  - Deposit a trading pair, and receive LP token
+- Withdraw liquidity from supported Orca Pools
+  - Withdraw a trading pair in exchange for LP token
+
+**Aquafarm Support**
+
+- After depositing liquidtiy to a pool, the LP token can be deposited into
+  the corresponding farm to receive an equivalent amount of farm token
+- Remember to withdraw the LP token in exchange for farm token before
+  withdrawing liquidity from Orca Pool
+
+**Features Coming Soon**
+
+- More trader information (APY, Volume)
 
 # Installation
 
@@ -57,7 +70,7 @@ try {
   let quote = await pool.getQuote(ethToken, tradeValue, new Decimal(0.1));
 
   // Perform a swap for 1USDC to the quoted minimum amount of ETH
-  // If the user does not have the Associated Token Address(ATA) to receive the output token, the ATA 
+  // If the user does not have the Associated Token Address(ATA) to receive the output token, the ATA
   // instructions will be appended in the transaction.
   const txId = await pool.swap(owner, usdcToken, tradeValue, quote.getMinOutputAmount()).execute();
 } catch (err) {
