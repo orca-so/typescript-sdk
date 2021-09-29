@@ -13,10 +13,23 @@ Learn more Orca [here](https://docs.orca.so).
 
 - The SDK supports all pools currently listed on [Orca](https://www.orca.so/pools)
 
+### Provide Liquidity to Orca Pools
+
+- Deposit liquidity to supported Orca Pools
+  - Deposit a trading pair, and receive LP token
+- Withdraw liquidity from supported Orca Pools
+  - Withdraw a trading pair in exchange for LP token
+
+**Aquafarm Support**
+
+- After depositing liquidtiy to a pool, the LP token can be deposited into
+  the corresponding farm to receive an equivalent amount of farm token
+- Remember to withdraw the LP token in exchange for farm token before
+  withdrawing liquidity from Orca Pool
+
 **Features Coming Soon**
 
 - More trader information (APY, Volume)
-- Deposit/Withdraw from OrcaPools
 
 # Installation
 
