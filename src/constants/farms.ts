@@ -437,62 +437,6 @@ export const polisUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
-export const guppySingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("A98kWmVMHzKPNtZTH3FFSotw1od4gof3JZXHP2boQDAc"),
-  farmTokenMint: new PublicKey("BeLwBTKxTJ4VM7mCheexXjWeJyBKZSPNBTNn6RhZALaq"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("guppyrZyEX9iTPSu92pi8T71Zka7xd6PrsTJrXRW6u1"),
-  baseTokenDecimals: 0,
-});
-
-export const whaleSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("7RW9sT14PqrpQxW3uKhgAfqYwzzi8XauDB4QNXVreUcM"),
-  farmTokenMint: new PublicKey("8w7Xfcqt5HteHHEh3cq6hq1oCxepm7kc4QJ4T1Y6MPD3"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("whaLeHav12EhGK19u6kKbLRwC9E1EATGnm6MWbBCcUW"),
-  baseTokenDecimals: 0,
-});
-
-export const killerwhaleSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("EGtuDUonFju5JEo4JG3RUQ3Gfmc1uurouJeEoTeH1urw"),
-  farmTokenMint: new PublicKey("kguF4a3x1EnotG13U8iYSYfQyZfXs9YX1KZ2sPG6ns9"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("kLwhLkZRt6CadPHRBsgfhRCKXX426WMBnhoGozTduvk"),
-  baseTokenDecimals: 0,
-});
-
-export const starfishSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("G7phRhXEnYmnE54AjrhnFRvtwe5jgiLxUdzqvVwGJbJt"),
-  farmTokenMint: new PublicKey("DTAAgfHSPvKxQYEiJhqNNPQhJBMY9Qn8DwhNtoFVxofs"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("star2pH7rVWscs743JGdCAL8Lc9nyJeqx7YQXkGUnWf"),
-  baseTokenDecimals: 6,
-});
-
-export const clownfishSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("CePErXJ5qo1fpzHN8HeoBW89zkKGUga7yW93yzPnwKrW"),
-  farmTokenMint: new PublicKey("2hHKsbJJRs4zkXUmA84V3PskNCat1pa2weZehnTzCXaT"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("cLownTTaiiQMoyMmFjfmSGowi8HyNhCtTLFcrNKnqX6"),
-  baseTokenDecimals: 0,
-});
-
-export const porpoiseSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("9t3Di8kqLJWMda3FWbPaeQ25xcqLNA6b4tsSFsagyVzn"),
-  farmTokenMint: new PublicKey("6J4uaGJmP2s8WG2Eft5X6oVzo4S8km1t8uGf5rDNw67i"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("porpKs9ZZERXKkg55f1GRXCiXZK89Uz6VKS8Bv9qWqM"),
-  baseTokenDecimals: 6,
-});
-
-export const orcaSingleAsset: OrcaFarmParams = Object.freeze({
-  address: new PublicKey("3HQ44Uru1xRfsrSj5TUNdu4Pq84trGiFzsHxJu1MyFrF"),
-  farmTokenMint: new PublicKey("DJseRvvLM53GrowUcjjCRYXJSzMH7dN5jrkGWaFAU3fm"),
-  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
-  baseTokenDecimals: 6,
-});
-
 /**
  * Mapping for OrcaFarm parameters
  * Key: baseTokenMint : OrcaFarmParams
@@ -552,11 +496,4 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   "7YyhptkxY81HPzFVfyCzA5UXxWdsNRD41ofLva3TuSpd": ninjaSolDoubleDip,
   HFmY1ggCsCky1zJ1sfdkNR4zb3u5n38YNRdf4vsGu17t: atlasUsdcDoubleDip,
   "63JUKLnCAuNMPSPioEgbjjzp9Qk8qSEEM8eZqEtPqfLU": polisUsdcDoubleDip,
-  guppyrZyEX9iTPSu92pi8T71Zka7xd6PrsTJrXRW6u1: guppySingleAsset,
-  whaLeHav12EhGK19u6kKbLRwC9E1EATGnm6MWbBCcUW: whaleSingleAsset,
-  kLwhLkZRt6CadPHRBsgfhRCKXX426WMBnhoGozTduvk: killerwhaleSingleAsset,
-  star2pH7rVWscs743JGdCAL8Lc9nyJeqx7YQXkGUnWf: starfishSingleAsset,
-  cLownTTaiiQMoyMmFjfmSGowi8HyNhCtTLFcrNKnqX6: clownfishSingleAsset,
-  porpKs9ZZERXKkg55f1GRXCiXZK89Uz6VKS8Bv9qWqM: porpoiseSingleAsset,
-  orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE: orcaSingleAsset,
 };
