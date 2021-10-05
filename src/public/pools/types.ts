@@ -70,6 +70,19 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
+   * Get minPoolTokenAmountOut to be used for deposit.
+   *
+   * @param maxTokenAIn The amount of token to deposit for token A
+   * @param maxTokenBIn The amount of token to deposit for token B
+   * @param slippage The slippage in percentage you are willing to take in deposit
+   */
+  getDepositQuote: (
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
+    slippage?: Decimal
+  ) => Promise<OrcaU64>;
+
+  /**
    * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
    * Fee for the transaction will be paid by the owner's wallet.
    *
@@ -89,6 +102,17 @@ export type OrcaPool = {
     maxTokenBIn: Decimal | OrcaU64,
     minPoolTokenAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
+
+  /**
+   * Get minTokenAOut and mintTokenBOut amounts to be used for withdraw.
+   *
+   * @param poolTokenIn The amount of pool tokens to send in
+   * @param slippage The slippage in percentage you are willing to take in withdraw
+   */
+  getWithdrawQuote: (
+    poolTokenIn: Decimal | OrcaU64,
+    slippage?: Decimal
+  ) => Promise<{ minTokenAOut: OrcaU64; minTokenBOut: OrcaU64 }>;
 
   /**
    * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.

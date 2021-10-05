@@ -9,6 +9,25 @@ export type PoolTokenCount = {
   outputTokenCount: u64;
 };
 
+export async function getSingleTokenCount(
+  connection: Connection,
+  poolParams: OrcaPoolParams,
+  token: OrcaPoolToken
+): Promise<u64> {
+  if (poolParams.tokens[token.mint.toString()] == undefined) {
+    throw new Error("Token not part of pool");
+  }
+
+  const accountInfo = await connection.getAccountInfo(token.addr);
+  const tokenAccount = accountInfo && deserializeAccount(accountInfo.data);
+
+  if (!tokenAccount) {
+    throw new Error("Unable to fetch account for the token");
+  }
+
+  return new u64(tokenAccount.amount);
+}
+
 export async function getTokenCount(
   connection: Connection,
   poolParams: OrcaPoolParams,
