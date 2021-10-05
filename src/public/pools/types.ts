@@ -45,7 +45,7 @@ export type OrcaPool = {
   getQuote: (
     inputToken: OrcaToken,
     inputAmount: Decimal | OrcaU64,
-    slippage: Decimal
+    slippage?: Decimal
   ) => Promise<Quote>;
 
   /**
