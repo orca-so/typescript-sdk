@@ -224,4 +224,38 @@ export class OrcaFarmImpl implements OrcaFarm {
       .addInstruction(revertFromFarmTokens)
       .build();
   }
+
+  public async getHarvestableAmount(owner: Keypair | PublicKey): Promise<OrcaU64> {
+    const _owner = new Owner(owner);
+    const ownerAddress = _owner.publicKey;
+
+    const { address: farmAddress } = this.farmParams;
+
+    const globalFarms = await fetchGlobalFarms(this.connection, [farmAddress], ORCA_FARM_ID);
+    const userFarms = await fetchUserFarms(
+      this.connection,
+      ownerAddress,
+      [farmAddress],
+      ORCA_FARM_ID
+    );
+
+    if (!globalFarms) {
+      throw new Error("Failed to get globalFarms information");
+    }
+
+    const farm = new Aquafarm(globalFarms[0], ORCA_FARM_ID, userFarms && userFarms[0]);
+
+    if (!farm.isUserFarmInitialized()) {
+      throw new Error("Failed to get userFarm information");
+    }
+  }
+
+  public async harvest(owner: Keypair | PublicKey): Promise<TransactionPayload> {
+    const _owner = new Owner(owner);
+    const ownerAddress = _owner.publicKey;
+
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
+      .addInstruction()
+      .build();
+  }
 }

@@ -52,4 +52,16 @@ export type OrcaFarm = {
     owner: Keypair | PublicKey,
     baseTokenAmount: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
+
+  /**
+   *
+   * @param owner The keypair for the user's wallet or just the user's public key
+   */
+  getHarvestableAmount: (owner: Keypair | PublicKey) => Promise<OrcaU64>;
+
+  /**
+   *
+   * @param owner The keypair for the user's wallet or just the user's public key
+   */
+  harvest: (owner: Keypair | PublicKey) => Promise<TransactionPayload>;
 };
