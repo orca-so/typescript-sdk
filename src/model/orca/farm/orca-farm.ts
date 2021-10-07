@@ -12,9 +12,10 @@ import {
   TransactionPayload,
   U64Utils,
 } from "../../..";
-import { OrcaFarm } from "../../../public/";
+import { OrcaFarm, ZERO } from "../../../public/";
 import {
   createFarmConvertTokensInstruction,
+  createFarmHarvestRewardInstruction,
   createFarmRevertTokensInstruction,
   createInitUserFarmInstruction,
 } from "../../../public/utils/web3/instructions/farm-instructions";
@@ -222,6 +223,72 @@ export class OrcaFarmImpl implements OrcaFarm {
       .addInstruction(resolveBaseTokenInstructions)
       .addInstruction(transferFarmTokenInstruction)
       .addInstruction(revertFromFarmTokens)
+      .build();
+  }
+
+  public async getHarvestableAmount(ownerPublicKey: PublicKey): Promise<OrcaU64> {
+    const { address: farmAddress, baseTokenDecimals } = this.farmParams;
+
+    const globalFarms = await fetchGlobalFarms(this.connection, [farmAddress], ORCA_FARM_ID);
+    const userFarms = await fetchUserFarms(
+      this.connection,
+      ownerPublicKey,
+      [farmAddress],
+      ORCA_FARM_ID
+    );
+
+    if (!globalFarms) {
+      throw new Error("Failed to get globalFarms information");
+    }
+
+    const farm = new Aquafarm(globalFarms[0], ORCA_FARM_ID, userFarms && userFarms[0]);
+
+    if (!farm.isUserFarmInitialized()) {
+      return OrcaU64.fromU64(ZERO, baseTokenDecimals);
+    }
+
+    const farmSupply = await this.getFarmSupply();
+    const harvestableAmount = farm.getCurrentHarvestableAmount(farmSupply.toU64()) ?? ZERO;
+    return OrcaU64.fromU64(harvestableAmount, baseTokenDecimals);
+  }
+
+  public async harvest(owner: Keypair | PublicKey): Promise<TransactionPayload> {
+    const _owner = new Owner(owner);
+    const ownerAddress = _owner.publicKey;
+
+    const { address: farmAddress, rewardTokenMint } = this.farmParams;
+
+    const globalFarms = await fetchGlobalFarms(this.connection, [farmAddress], ORCA_FARM_ID);
+    const userFarms = await fetchUserFarms(
+      this.connection,
+      ownerAddress,
+      [farmAddress],
+      ORCA_FARM_ID
+    );
+
+    if (!globalFarms) {
+      throw new Error("Failed to get globalFarms information");
+    }
+
+    const farm = new Aquafarm(globalFarms[0], ORCA_FARM_ID, userFarms && userFarms[0]);
+
+    if (!farm.isUserFarmInitialized()) {
+      throw new Error("Failed to get userFarm information");
+    }
+
+    // If the user lacks the reward token account, create it
+    const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
+      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
+
+    const harvestRewardInstruction = await createFarmHarvestRewardInstruction(
+      farm,
+      userRewardTokenPublicKey,
+      _owner
+    );
+
+    return await new TransactionBuilder(this.connection, ownerAddress, _owner)
+      .addInstruction(resolveRewardTokenInstructions)
+      .addInstruction(harvestRewardInstruction)
       .build();
   }
 }
