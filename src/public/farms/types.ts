@@ -56,6 +56,10 @@ export type OrcaFarm = {
   /**
    * Get the total amount of rewards that has accumulated in the user's farm.
    *
+   * Returns 0 if:
+   *   1. the user does not have a farm initialized (by calling deposit)
+   *   2. the user's farm balance is empty
+   *
    * @param ownerPublicKey The public key of the user
    * @return The amount of reward that can be harvestable by the user
    */
@@ -63,6 +67,8 @@ export type OrcaFarm = {
 
   /**
    * Harvest all of the rewards that has accumulated in the user's farm.
+   *
+   * Throws error if the user does not have a farm initialized (by calling deposit)
    *
    * @param owner The keypair for the user's wallet or just the user's public key
    * @returnThe transaction signature of the harvest instruction
