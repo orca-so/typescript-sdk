@@ -4,17 +4,17 @@ import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
 
 /* TokenInAmount types */
-export type TokenInAmount = PercentInAmount<"percent"> | CountInAmount<"count">;
+export type TokenInAmount = PercentInAmount | CountInAmount;
 
-export type PercentInAmount<T> = {
+export type PercentInAmount = {
   value: Decimal | OrcaU64;
   ownerPublicKey: PublicKey;
-  type: T;
+  type: "percent";
 };
 
-export type CountInAmount<T> = {
+export type CountInAmount = {
   value: Decimal | OrcaU64;
-  type: T;
+  type: "count";
 };
 
 /* DepositQuote types  */
@@ -25,19 +25,17 @@ export type DepositQuoteOutput = {
 };
 
 /* WithdrawQuote types */
-export type WithdrawQuoteAmount =
-  | PoolTokenInAmount<"poolToken">
-  | ConstraintTokenInAmount<"constraintToken">;
+export type WithdrawQuoteAmount = PoolTokenInAmount | ConstraintTokenInAmount;
 
-export type PoolTokenInAmount<T> = {
+export type PoolTokenInAmount = {
   poolTokenAmountIn: TokenInAmount;
-  type: T;
+  type: "poolToken";
 };
 
-export type ConstraintTokenInAmount<T> = {
+export type ConstraintTokenInAmount = {
   constraintTokenAmountIn: TokenInAmount;
   constraintTokenMint: PublicKey;
-  type: T;
+  type: "constraintToken";
 };
 
 export type WithdrawQuoteOutput = {
