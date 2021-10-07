@@ -3,6 +3,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { DecimalUtil, OrcaU64, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, U64Utils } from "..";
 import { OrcaPoolToken, TokenInAmount } from "../..";
+import { solToken } from "../../../constants/tokens";
 import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { deserializeAccount } from "./deserialize-account";
 
@@ -52,6 +53,12 @@ async function getUserTokenCount(
   ownerPublicKey: PublicKey,
   tokenMint: PublicKey
 ): Promise<Decimal> {
+  // Special case: SOL doesn't have ATA
+  if (tokenMint === solToken.mint) {
+    const balance = await connection.getBalance(ownerPublicKey);
+    return DecimalUtil.fromU64(new u64(balance), solToken.scale);
+  }
+
   const ownerATAPublicKey = (
     await PublicKey.findProgramAddress(
       [ownerPublicKey.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), tokenMint.toBuffer()],
