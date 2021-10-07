@@ -118,7 +118,7 @@ export type OrcaPool = {
    * @param maxTokenAIn The amount of token to deposit for token A (either raw count or percentage of owned)
    * @param maxTokenBIn The amount of token to deposit for token B (either raw count or percentgae of owned)
    * @param slippage An optional slippage in percentage you are willing to take in deposit (default: 0.1%)
-   * @return
+   * @return Input for deposit
    */
   getDepositQuote: (
     maxTokenAIn: TokenInAmount,
@@ -150,9 +150,9 @@ export type OrcaPool = {
   /**
    * Get minTokenAOut and mintTokenBOut amounts to be used for withdraw.
    *
-   * @param
+   * @param amountIn The amount of pool tokens to withdraw, amount expressed either directly in pool token or in one of the paired tokens
    * @param slippage An optional slippage in percentage you are willing to take in withdraw (default: 0.1%)
-   * @return
+   * @return Input for withdraw
    */
   getWithdrawQuote: (
     amountIn: WithdrawQuoteAmount,
