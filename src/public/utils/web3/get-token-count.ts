@@ -51,7 +51,8 @@ export async function getTokenCount(
 async function getUserTokenCount(
   connection: Connection,
   ownerPublicKey: PublicKey,
-  tokenMint: PublicKey
+  tokenMint: PublicKey,
+  tokenScale: number
 ): Promise<Decimal> {
   // Special case: SOL doesn't have ATA
   if (tokenMint === solToken.mint) {
@@ -72,7 +73,7 @@ async function getUserTokenCount(
     throw new Error(`Unable to fetch user account for token with mint ${tokenMint}`);
   }
 
-  return DecimalUtil.fromU64(tokenAccount.amount);
+  return DecimalUtil.fromU64(tokenAccount.amount, tokenScale);
 }
 
 export async function getTokenInAmount(
@@ -87,11 +88,13 @@ export async function getTokenInAmount(
   const totalUserTokenCount = await getUserTokenCount(
     connection,
     tokenInAmount.ownerPublicKey,
-    token.mint
+    token.mint,
+    token.scale
   );
   const percentage =
     tokenInAmount.value instanceof OrcaU64 ? tokenInAmount.value.toDecimal() : tokenInAmount.value;
-  return DecimalUtil.toU64(totalUserTokenCount.mul(percentage));
+  const amount = totalUserTokenCount.mul(percentage);
+  return U64Utils.toTokenU64(amount, token, `tokenInAmount-${token.name}`);
 }
 
 export async function getPoolTokenInAmount(
@@ -100,15 +103,17 @@ export async function getPoolTokenInAmount(
   tokenInAmount: TokenInAmount
 ): Promise<u64> {
   if (tokenInAmount.type === "count") {
-    return U64Utils.toPoolU64(tokenInAmount.value, pool, `tokenInAmount`);
+    return U64Utils.toPoolU64(tokenInAmount.value, pool, "tokenInAmount");
   }
 
   const totalUserTokenCount = await getUserTokenCount(
     connection,
     tokenInAmount.ownerPublicKey,
-    pool.poolTokenMint
+    pool.poolTokenMint,
+    pool.poolTokenDecimals
   );
   const percentage =
     tokenInAmount.value instanceof OrcaU64 ? tokenInAmount.value.toDecimal() : tokenInAmount.value;
-  return DecimalUtil.toU64(totalUserTokenCount.mul(percentage));
+  const amount = totalUserTokenCount.mul(percentage);
+  return U64Utils.toPoolU64(amount, pool, "tokenInAmount");
 }
