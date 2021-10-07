@@ -12,7 +12,7 @@ import {
   TransactionPayload,
   U64Utils,
 } from "../../..";
-import { OrcaFarm } from "../../../public/";
+import { OrcaFarm, ZERO } from "../../../public/";
 import {
   createFarmConvertTokensInstruction,
   createFarmHarvestRewardInstruction,
@@ -244,11 +244,12 @@ export class OrcaFarmImpl implements OrcaFarm {
     const farm = new Aquafarm(globalFarms[0], ORCA_FARM_ID, userFarms && userFarms[0]);
 
     if (!farm.isUserFarmInitialized()) {
-      return OrcaU64.fromNumber(0, baseTokenDecimals);
+      return OrcaU64.fromU64(ZERO, baseTokenDecimals);
     }
 
-    const amount = farm.getHarvestableAmount() ?? new u64(0);
-    return OrcaU64.fromU64(amount, baseTokenDecimals);
+    const farmSupply = await this.getFarmSupply();
+    const harvestableAmount = farm.getCurrentHarvestableAmount(farmSupply.toU64()) ?? ZERO;
+    return OrcaU64.fromU64(harvestableAmount, baseTokenDecimals);
   }
 
   public async harvest(owner: Keypair | PublicKey): Promise<TransactionPayload> {
