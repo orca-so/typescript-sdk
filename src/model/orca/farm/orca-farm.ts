@@ -15,6 +15,7 @@ import {
 import { OrcaFarm } from "../../../public/";
 import {
   createFarmConvertTokensInstruction,
+  createFarmHarvestRewardInstruction,
   createFarmRevertTokensInstruction,
   createInitUserFarmInstruction,
 } from "../../../public/utils/web3/instructions/farm-instructions";
@@ -225,11 +226,36 @@ export class OrcaFarmImpl implements OrcaFarm {
       .build();
   }
 
-  public async getHarvestableAmount(owner: Keypair | PublicKey): Promise<OrcaU64> {
+  public async getHarvestableAmount(ownerPublicKey: PublicKey): Promise<OrcaU64> {
+    const { address: farmAddress, baseTokenDecimals } = this.farmParams;
+
+    const globalFarms = await fetchGlobalFarms(this.connection, [farmAddress], ORCA_FARM_ID);
+    const userFarms = await fetchUserFarms(
+      this.connection,
+      ownerPublicKey,
+      [farmAddress],
+      ORCA_FARM_ID
+    );
+
+    if (!globalFarms) {
+      throw new Error("Failed to get globalFarms information");
+    }
+
+    const farm = new Aquafarm(globalFarms[0], ORCA_FARM_ID, userFarms && userFarms[0]);
+
+    if (!farm.isUserFarmInitialized()) {
+      return OrcaU64.fromNumber(0, baseTokenDecimals);
+    }
+
+    const amount = farm.getHarvestableAmount() ?? new u64(0);
+    return OrcaU64.fromU64(amount, baseTokenDecimals);
+  }
+
+  public async harvest(owner: Keypair | PublicKey): Promise<TransactionPayload> {
     const _owner = new Owner(owner);
     const ownerAddress = _owner.publicKey;
 
-    const { address: farmAddress } = this.farmParams;
+    const { address: farmAddress, rewardTokenMint } = this.farmParams;
 
     const globalFarms = await fetchGlobalFarms(this.connection, [farmAddress], ORCA_FARM_ID);
     const userFarms = await fetchUserFarms(
@@ -248,14 +274,20 @@ export class OrcaFarmImpl implements OrcaFarm {
     if (!farm.isUserFarmInitialized()) {
       throw new Error("Failed to get userFarm information");
     }
-  }
 
-  public async harvest(owner: Keypair | PublicKey): Promise<TransactionPayload> {
-    const _owner = new Owner(owner);
-    const ownerAddress = _owner.publicKey;
+    // If the user lacks the reward token account, create it
+    const { address: userRewardTokenPublicKey, ...resolveRewardTokenInstructions } =
+      await resolveOrCreateAssociatedTokenAddress(this.connection, _owner, rewardTokenMint);
+
+    const harvestRewardInstruction = await createFarmHarvestRewardInstruction(
+      farm,
+      userRewardTokenPublicKey,
+      _owner
+    );
 
     return await new TransactionBuilder(this.connection, ownerAddress, _owner)
-      .addInstruction()
+      .addInstruction(resolveRewardTokenInstructions)
+      .addInstruction(harvestRewardInstruction)
       .build();
   }
 }

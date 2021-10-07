@@ -54,14 +54,18 @@ export type OrcaFarm = {
   ) => Promise<TransactionPayload>;
 
   /**
+   * Get the total amount of rewards that has accumulated in the user's farm.
    *
-   * @param owner The keypair for the user's wallet or just the user's public key
+   * @param ownerPublicKey The public key of the user
+   * @return The amount of reward that can be harvestable by the user
    */
-  getHarvestableAmount: (owner: Keypair | PublicKey) => Promise<OrcaU64>;
+  getHarvestableAmount: (ownerPublicKey: PublicKey) => Promise<OrcaU64>;
 
   /**
+   * Harvest all of the rewards that has accumulated in the user's farm.
    *
    * @param owner The keypair for the user's wallet or just the user's public key
+   * @returnThe transaction signature of the harvest instruction
    */
   harvest: (owner: Keypair | PublicKey) => Promise<TransactionPayload>;
 };

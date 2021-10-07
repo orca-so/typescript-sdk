@@ -91,3 +91,17 @@ export const createFarmRevertTokensInstruction = async (
     signers: owner.signer ? [owner.signer] : [],
   };
 };
+
+export const createFarmHarvestRewardInstruction = async (
+  farm: Aquafarm,
+  userRewardTokenPublicKey: PublicKey,
+  owner: Owner
+): Promise<Instruction> => {
+  const harvestIx = farm.constructHarvestIx(userRewardTokenPublicKey);
+
+  return {
+    instructions: [harvestIx],
+    cleanupInstructions: [],
+    signers: owner.signer ? [owner.signer] : [],
+  };
+};
