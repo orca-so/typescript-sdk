@@ -85,28 +85,33 @@ const main = async () => {
 
     /*** Pool Deposit ***/
     // 4. Deposit SOL and ORCA for LP token
-    const poolTokenAmount = await orcaSolPool.getDepositQuote(orcaAmount, solAmount);
-    //                                                        ^ the order of parameters matters
+    const { maxTokenAIn, maxTokenBIn, minPoolTokenAmountOut } = await orcaSolPool.getDepositQuote(
+      orcaAmount,
+      solAmount
+    );
 
     console.log(
-      `Deposit at most ${solAmount.toString()} SOL and ${orcaAmount.toNumber()} ORCA, for at least ${poolTokenAmount.toNumber()} LP tokens`
+      `Deposit at most ${maxTokenBIn.toNumber()} SOL and ${maxTokenAIn.toNumber()} ORCA, for at least ${minPoolTokenAmountOut.toNumber()} LP tokens`
     );
     const poolDepositPayload = await orcaSolPool.deposit(
       owner,
-      orcaAmount,
-      solAmount,
-      poolTokenAmount
+      maxTokenAIn,
+      maxTokenBIn,
+      minPoolTokenAmountOut
     );
     const poolDepositTxId = await poolDepositPayload.execute();
     console.log("Pool deposited:", poolDepositTxId, "\n");
 
     /*** Farm Deposit ***/
     // 5. Deposit some ORCA_SOL LP token for farm token
+    const lpBalance = await orcaSolPool.getLPBalance(owner.publicKey);
     const orcaSolFarm = orca.getFarm(OrcaFarmConfig.ORCA_SOL_AQ);
-    const farmDepositPayload = await orcaSolFarm.deposit(owner, poolTokenAmount);
+    const farmDepositPayload = await orcaSolFarm.deposit(owner, lpBalance);
     const farmDepositTxId = await farmDepositPayload.execute();
     console.log("Farm deposited:", farmDepositTxId, "\n");
-    // Note: for double dip, repeat step 5 but with the double dip farm
+    // Note 1: for double dip, repeat step 5 but with the double dip farm
+    // Note 2: to harvest reward, orcaSolFarm.harvest(owner)
+    // Note 3: to get harvestable reward amount, orcaSolFarm.getHarvestableAmount(owner.publicKey)
 
     /*** Farm Withdraw ***/
     // 6. Withdraw ORCA_SOL LP token, in exchange for farm token
@@ -117,15 +122,19 @@ const main = async () => {
 
     /*** Pool Withdraw ***/
     // 6. Withdraw SOL and ORCA, in exchange for ORCA_SOL LP token
-    const lpBalance = await orcaSolPool.getLPBalance(owner.publicKey); // withdraw the entire balance
-    const { minTokenAOut, minTokenBOut } = await orcaSolPool.getWithdrawQuote(lpBalance);
+    const withdrawTokenAmount = await orcaSolPool.getLPBalance(owner.publicKey);
+    const withdrawTokenMint = orcaSolPool.getPoolTokenMint();
+    const { maxPoolTokenAmountIn, minTokenAOut, minTokenBOut } = await orcaSolPool.getWithdrawQuote(
+      withdrawTokenAmount,
+      withdrawTokenMint
+    );
 
     console.log(
-      `Withdraw at most ${lpBalance.toNumber()} ORCA_SOL LP token for at least ${minTokenAOut.toNumber()} ORCA and ${minTokenBOut.toNumber()} SOL`
+      `Withdraw at most ${maxPoolTokenAmountIn.toNumber()} ORCA_SOL LP token for at least ${minTokenAOut.toNumber()} ORCA and ${minTokenBOut.toNumber()} SOL`
     );
     const poolWithdrawPayload = await orcaSolPool.withdraw(
       owner,
-      lpBalance,
+      maxPoolTokenAmountIn,
       minTokenAOut,
       minTokenBOut
     );
