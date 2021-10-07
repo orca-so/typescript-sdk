@@ -1,9 +1,6 @@
-import { TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
-import { Connection, PublicKey } from "@solana/web3.js";
-import Decimal from "decimal.js";
-import { DecimalUtil, OrcaU64, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, U64Utils } from "..";
-import { OrcaPoolToken, TokenInAmount } from "../..";
-import { solToken } from "../../../constants/tokens";
+import { u64 } from "@solana/spl-token";
+import { Connection } from "@solana/web3.js";
+import { OrcaPoolToken } from "../..";
 import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { deserializeAccount } from "./deserialize-account";
 
@@ -46,74 +43,4 @@ export async function getTokenCount(
     inputTokenCount: new u64(inputTokenAccount.amount),
     outputTokenCount: new u64(outputTokenAccount.amount),
   };
-}
-
-async function getUserTokenCount(
-  connection: Connection,
-  ownerPublicKey: PublicKey,
-  tokenMint: PublicKey,
-  tokenScale: number
-): Promise<Decimal> {
-  // Special case: SOL doesn't have ATA
-  if (tokenMint === solToken.mint) {
-    const balance = await connection.getBalance(ownerPublicKey);
-    return DecimalUtil.fromU64(new u64(balance), solToken.scale);
-  }
-
-  const ownerATAPublicKey = (
-    await PublicKey.findProgramAddress(
-      [ownerPublicKey.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), tokenMint.toBuffer()],
-      SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
-    )
-  )[0];
-  const accountInfo = await connection.getAccountInfo(ownerATAPublicKey);
-  const tokenAccount = accountInfo && deserializeAccount(accountInfo.data);
-
-  if (!tokenAccount) {
-    throw new Error(`Unable to fetch user account for token with mint ${tokenMint}`);
-  }
-
-  return DecimalUtil.fromU64(tokenAccount.amount, tokenScale);
-}
-
-export async function getTokenInAmount(
-  connection: Connection,
-  token: OrcaPoolToken,
-  tokenInAmount: TokenInAmount
-): Promise<u64> {
-  if (tokenInAmount.type === "count") {
-    return U64Utils.toTokenU64(tokenInAmount.value, token, `tokenInAmount-${token.name}`);
-  }
-
-  const totalUserTokenCount = await getUserTokenCount(
-    connection,
-    tokenInAmount.ownerPublicKey,
-    token.mint,
-    token.scale
-  );
-  const percentage =
-    tokenInAmount.value instanceof OrcaU64 ? tokenInAmount.value.toDecimal() : tokenInAmount.value;
-  const amount = totalUserTokenCount.mul(percentage);
-  return U64Utils.toTokenU64(amount, token, `tokenInAmount-${token.name}`);
-}
-
-export async function getPoolTokenInAmount(
-  connection: Connection,
-  pool: OrcaPoolParams,
-  tokenInAmount: TokenInAmount
-): Promise<u64> {
-  if (tokenInAmount.type === "count") {
-    return U64Utils.toPoolU64(tokenInAmount.value, pool, "tokenInAmount");
-  }
-
-  const totalUserTokenCount = await getUserTokenCount(
-    connection,
-    tokenInAmount.ownerPublicKey,
-    pool.poolTokenMint,
-    pool.poolTokenDecimals
-  );
-  const percentage =
-    tokenInAmount.value instanceof OrcaU64 ? tokenInAmount.value.toDecimal() : tokenInAmount.value;
-  const amount = totalUserTokenCount.mul(percentage);
-  return U64Utils.toPoolU64(amount, pool, "tokenInAmount");
 }

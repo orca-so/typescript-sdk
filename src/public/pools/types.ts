@@ -3,42 +3,13 @@ import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
 
-/* TokenInAmount types */
-export type TokenInAmount = PercentInAmount | CountInAmount;
-
-export type PercentInAmount = {
-  value: Decimal | OrcaU64;
-  ownerPublicKey: PublicKey;
-  type: "percent";
-};
-
-export type CountInAmount = {
-  value: Decimal | OrcaU64;
-  type: "count";
-};
-
-/* DepositQuote types  */
-export type DepositQuoteOutput = {
+export type DepositQuote = {
   minPoolTokenAmountOut: OrcaU64;
   maxTokenAIn: OrcaU64;
   maxTokenBIn: OrcaU64;
 };
 
-/* WithdrawQuote types */
-export type WithdrawQuoteAmount = PoolTokenInAmount | ConstraintTokenInAmount;
-
-export type PoolTokenInAmount = {
-  poolTokenAmountIn: TokenInAmount;
-  type: "poolToken";
-};
-
-export type ConstraintTokenInAmount = {
-  constraintTokenAmountIn: TokenInAmount;
-  constraintTokenMint: PublicKey;
-  type: "constraintToken";
-};
-
-export type WithdrawQuoteOutput = {
+export type WithdrawQuote = {
   minTokenAOut: OrcaU64;
   minTokenBOut: OrcaU64;
   maxPoolTokenAmountIn: OrcaU64;
@@ -59,6 +30,12 @@ export type OrcaPool = {
    * @returns Returns the token id of tokenB in this pool
    */
   getTokenB: () => OrcaPoolToken;
+
+  /**
+   * Query the tokenMint public key of this pool.
+   * @returns Returns the tokenMint public key of this pool
+   */
+  getPoolTokenMint: () => PublicKey;
 
   /**
    * Query the balance for an user address
@@ -111,18 +88,18 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
-   * Get minPoolTokenAmountOut to be used for deposit.
+   * Get suggested pool token deposit amount based on required constraints on maximum tokenA amount and maximum tokenB amount
    *
-   * @param maxTokenAIn The amount of token to deposit for token A (either raw count or percentage of owned)
-   * @param maxTokenBIn The amount of token to deposit for token B (either raw count or percentgae of owned)
+   * @param maxTokenAIn The maximum amount of tokenA to deposit in exchange for pool token
+   * @param maxTokenBIn The maximum amount of tokenB to deposit in exchange for pool token
    * @param slippage An optional slippage in percentage you are willing to take in deposit (default: 0.1%)
-   * @return Input for deposit
+   * @return Returns the input for deposit
    */
   getDepositQuote: (
-    maxTokenAIn: TokenInAmount,
-    maxTokenBIn: TokenInAmount,
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
     slippage?: Decimal
-  ) => Promise<DepositQuoteOutput>;
+  ) => Promise<DepositQuote>;
 
   /**
    * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
@@ -146,16 +123,20 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
-   * Get minTokenAOut and mintTokenBOut amounts to be used for withdraw.
+   * Get suggested withdraw token amounts based on required withdraw amount of the pool token / one of the paired tokens
    *
-   * @param amountIn The amount of pool tokens to withdraw, amount expressed either directly in pool token or in one of the paired tokens
+   * Throws error if withdrawTokenMint does not equal tokenMint of tokenA, tokenB, or poolToken of this pool
+   *
+   * @param withdrawTokenAmount The amount of tokens to withdraw in terms of tokenA amount, tokenB amount, or poolToken amount
+   * @param withdrawTokenMint The token mint public key of tied to withdrawTokenAmount. It should be the mint of tokenA, tokenB, or poolToken
    * @param slippage An optional slippage in percentage you are willing to take in withdraw (default: 0.1%)
-   * @return Input for withdraw
+   * @return Returns the input for withdraw
    */
   getWithdrawQuote: (
-    amountIn: WithdrawQuoteAmount,
+    withdrawTokenAmount: Decimal | OrcaU64,
+    withdrawTokenMint: PublicKey,
     slippage?: Decimal
-  ) => Promise<WithdrawQuoteOutput>;
+  ) => Promise<WithdrawQuote>;
 
   /**
    * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.
