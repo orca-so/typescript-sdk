@@ -20,6 +20,13 @@ import {
   Percentage,
   resolveOrCreateAssociatedTokenAddress,
   ZERO,
+  TokenInAmount,
+  getTokenInAmount,
+  DepositQuoteOutput,
+  WithdrawQuoteAmount,
+  WithdrawQuoteOutput,
+  getPoolTokenInAmount,
+  DecimalUtil,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -186,14 +193,15 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getDepositQuote(
-    maxTokenAIn: Decimal | OrcaU64,
-    maxTokenBIn: Decimal | OrcaU64,
+    maxTokenAIn: TokenInAmount,
+    maxTokenBIn: TokenInAmount,
     slippage?: Decimal
-  ): Promise<OrcaU64> {
+  ): Promise<DepositQuoteOutput> {
     const slippageTolerance =
       slippage === undefined ? defaultSlippagePercentage : Percentage.fromDecimal(slippage);
-    const maxTokenAIn_U64 = U64Utils.toTokenU64(maxTokenAIn, this.getTokenA(), "maxTokenAIn");
-    const maxTokenBIn_U64 = U64Utils.toTokenU64(maxTokenBIn, this.getTokenB(), "maxTokenBIn");
+
+    const maxTokenAIn_U64 = await getTokenInAmount(this.connection, this.getTokenA(), maxTokenAIn);
+    const maxTokenBIn_U64 = await getTokenInAmount(this.connection, this.getTokenB(), maxTokenBIn);
 
     const { inputTokenCount: tokenAAmount, outputTokenCount: tokenBAmount } = await getTokenCount(
       this.connection,
@@ -204,7 +212,11 @@ export class OrcaPoolImpl implements OrcaPool {
     const lpSupply = await this.getLPSupply();
 
     if (tokenAAmount.eq(ZERO) || tokenBAmount.eq(ZERO)) {
-      return new OrcaU64(ZERO, lpSupply.scale);
+      return {
+        minPoolTokenAmountOut: OrcaU64.fromU64(ZERO, lpSupply.scale),
+        maxTokenAIn: OrcaU64.fromU64(maxTokenAIn_U64, this.getTokenA().scale),
+        maxTokenBIn: OrcaU64.fromU64(maxTokenBIn_U64, this.getTokenB().scale),
+      };
     }
 
     const poolTokenAmountWithA = maxTokenAIn_U64
@@ -220,11 +232,15 @@ export class OrcaPoolImpl implements OrcaPool {
       .div(slippageTolerance.numerator.add(slippageTolerance.denominator));
 
     // Pick the smaller value of the two to calculate the minimum poolTokenAmount out
-    const minPoolTokenAmountOut = poolTokenAmountWithA.gt(poolTokenAmountWithB)
+    const minPoolTokenAmountOut_U64 = poolTokenAmountWithA.gt(poolTokenAmountWithB)
       ? poolTokenAmountWithB
       : poolTokenAmountWithA;
 
-    return new OrcaU64(minPoolTokenAmountOut, lpSupply.scale);
+    return {
+      minPoolTokenAmountOut: OrcaU64.fromU64(minPoolTokenAmountOut_U64, lpSupply.scale),
+      maxTokenAIn: OrcaU64.fromU64(maxTokenAIn_U64, this.getTokenA().scale),
+      maxTokenBIn: OrcaU64.fromU64(maxTokenBIn_U64, this.getTokenB().scale),
+    };
   }
 
   public async deposit(
@@ -314,12 +330,11 @@ export class OrcaPoolImpl implements OrcaPool {
   }
 
   public async getWithdrawQuote(
-    poolTokenIn: Decimal | OrcaU64,
+    amountIn: WithdrawQuoteAmount,
     slippage?: Decimal
-  ): Promise<{ minTokenAOut: OrcaU64; minTokenBOut: OrcaU64 }> {
+  ): Promise<WithdrawQuoteOutput> {
     const slippageTolerance =
       slippage === undefined ? defaultSlippagePercentage : Percentage.fromDecimal(slippage);
-    const poolTokenIn_U64 = U64Utils.toPoolU64(poolTokenIn, this.poolParams, "poolTokenIn");
 
     const lpSupply = await this.getLPSupply();
     const { inputTokenCount: tokenAAmount, outputTokenCount: tokenBAmount } = await getTokenCount(
@@ -329,10 +344,39 @@ export class OrcaPoolImpl implements OrcaPool {
       this.getTokenB()
     );
 
+    let poolTokenIn_U64 = ZERO;
+    if (amountIn.type === "constraintToken") {
+      const constraintToken = this.getTokenA().mint.equals(amountIn.constraintTokenMint)
+        ? this.getTokenA()
+        : this.getTokenB();
+      const constraintTokenAmount = this.getTokenA().mint.equals(amountIn.constraintTokenMint)
+        ? tokenAAmount
+        : tokenBAmount;
+      const constraintTokenIn_U64 = await getTokenInAmount(
+        this.connection,
+        constraintToken,
+        amountIn.constraintTokenAmountIn
+      );
+      const constraintRatio = DecimalUtil.fromU64(constraintTokenIn_U64, constraintToken.scale).div(
+        DecimalUtil.fromU64(constraintTokenAmount, constraintToken.scale)
+      );
+      poolTokenIn_U64 = DecimalUtil.toU64(
+        constraintRatio.mul(lpSupply.toDecimal()),
+        lpSupply.scale
+      );
+    } else {
+      poolTokenIn_U64 = await getPoolTokenInAmount(
+        this.connection,
+        this.poolParams,
+        amountIn.poolTokenAmountIn
+      );
+    }
+
     if (poolTokenIn_U64.eq(ZERO)) {
       return {
-        minTokenAOut: new OrcaU64(ZERO, lpSupply.scale),
-        minTokenBOut: new OrcaU64(ZERO, lpSupply.scale),
+        maxPoolTokenAmountIn: OrcaU64.fromU64(poolTokenIn_U64, lpSupply.scale),
+        minTokenAOut: OrcaU64.fromU64(ZERO, this.getTokenA().scale),
+        minTokenBOut: OrcaU64.fromU64(ZERO, this.getTokenB().scale),
       };
     }
 
@@ -354,7 +398,11 @@ export class OrcaPoolImpl implements OrcaPool {
       this.getTokenB().scale
     );
 
-    return { minTokenAOut, minTokenBOut };
+    return {
+      maxPoolTokenAmountIn: OrcaU64.fromU64(poolTokenIn_U64, lpSupply.scale),
+      minTokenAOut,
+      minTokenBOut,
+    };
   }
 
   public async withdraw(

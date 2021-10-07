@@ -3,6 +3,49 @@ import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
 
+/* TokenInAmount types */
+export type TokenInAmount = PercentInAmount<"percent"> | CountInAmount<"count">;
+
+export type PercentInAmount<T> = {
+  value: Decimal | OrcaU64;
+  ownerPublicKey: PublicKey;
+  type: T;
+};
+
+export type CountInAmount<T> = {
+  value: Decimal | OrcaU64;
+  type: T;
+};
+
+/* DepositQuote types  */
+export type DepositQuoteOutput = {
+  minPoolTokenAmountOut: OrcaU64;
+  maxTokenAIn: OrcaU64;
+  maxTokenBIn: OrcaU64;
+};
+
+/* WithdrawQuote types */
+export type WithdrawQuoteAmount =
+  | PoolTokenInAmount<"poolToken">
+  | ConstraintTokenInAmount<"constraintToken">;
+
+export type PoolTokenInAmount<T> = {
+  poolTokenAmountIn: TokenInAmount;
+  type: T;
+};
+
+export type ConstraintTokenInAmount<T> = {
+  constraintTokenAmountIn: TokenInAmount;
+  constraintTokenMint: PublicKey;
+  type: T;
+};
+
+export type WithdrawQuoteOutput = {
+  minTokenAOut: OrcaU64;
+  minTokenBOut: OrcaU64;
+  maxPoolTokenAmountIn: OrcaU64;
+};
+
 /**
  * Allows interactions with an Orca liquidity pool.
  */
@@ -39,7 +82,7 @@ export type OrcaPool = {
    *
    * @param inputTokenId The token you want to trade from
    * @param inputAmount The amount of token you would to trade
-   * @param slippage The slippage in percentage you are willing to take in this trade
+   * @param slippage An optional slippage in percentage you are willing to take in this trade (default: 0.1%)
    * @return Returns a quote on the exchanged token based on the input token amount
    */
   getQuote: (
@@ -72,15 +115,16 @@ export type OrcaPool = {
   /**
    * Get minPoolTokenAmountOut to be used for deposit.
    *
-   * @param maxTokenAIn The amount of token to deposit for token A
-   * @param maxTokenBIn The amount of token to deposit for token B
-   * @param slippage The slippage in percentage you are willing to take in deposit
+   * @param maxTokenAIn The amount of token to deposit for token A (either raw count or percentage of owned)
+   * @param maxTokenBIn The amount of token to deposit for token B (either raw count or percentgae of owned)
+   * @param slippage An optional slippage in percentage you are willing to take in deposit (default: 0.1%)
+   * @return
    */
   getDepositQuote: (
-    maxTokenAIn: Decimal | OrcaU64,
-    maxTokenBIn: Decimal | OrcaU64,
+    maxTokenAIn: TokenInAmount,
+    maxTokenBIn: TokenInAmount,
     slippage?: Decimal
-  ) => Promise<OrcaU64>;
+  ) => Promise<DepositQuoteOutput>;
 
   /**
    * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
@@ -106,13 +150,14 @@ export type OrcaPool = {
   /**
    * Get minTokenAOut and mintTokenBOut amounts to be used for withdraw.
    *
-   * @param poolTokenIn The amount of pool tokens to send in
-   * @param slippage The slippage in percentage you are willing to take in withdraw
+   * @param
+   * @param slippage An optional slippage in percentage you are willing to take in withdraw (default: 0.1%)
+   * @return
    */
   getWithdrawQuote: (
-    poolTokenIn: Decimal | OrcaU64,
+    amountIn: WithdrawQuoteAmount,
     slippage?: Decimal
-  ) => Promise<{ minTokenAOut: OrcaU64; minTokenBOut: OrcaU64 }>;
+  ) => Promise<WithdrawQuoteOutput>;
 
   /**
    * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.
