@@ -32,7 +32,7 @@ export type OrcaPool = {
   getTokenB: () => OrcaPoolToken;
 
   /**
-   * Query the tokenMint public key of this pool.
+   * Query the mint public key for the pool token of this pool.
    * @returns Returns the tokenMint public key of this pool
    */
   getPoolTokenMint: () => PublicKey;
