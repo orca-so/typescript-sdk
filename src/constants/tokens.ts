@@ -5,6 +5,13 @@ import { OrcaToken } from "..";
  * The following content is auto-generated.
  */
 
+export const abrToken: OrcaToken = Object.freeze({
+  tag: "ABR",
+  name: "Allbridge",
+  mint: new PublicKey("a11bdAAuV8iB2fu7X6AxAvDTo1QZ8FXB3kk5eecdasp"),
+  scale: 9,
+});
+
 export const atlasToken: OrcaToken = Object.freeze({
   tag: "ATLAS",
   name: "Star Atlas",
@@ -68,6 +75,13 @@ export const kinToken: OrcaToken = Object.freeze({
   scale: 5,
 });
 
+export const kuroToken: OrcaToken = Object.freeze({
+  tag: "KURO",
+  name: "Kurobi",
+  mint: new PublicKey("2Kc38rfQ49DFaKHQaWbijkE7fcymUMLY5guUiUsDmFfn"),
+  scale: 6,
+});
+
 export const liqToken: OrcaToken = Object.freeze({
   tag: "LIQ",
   name: "LIQ Protocol",
@@ -82,10 +96,31 @@ export const mapsToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const mediaToken: OrcaToken = Object.freeze({
+  tag: "MEDIA",
+  name: "Media Network",
+  mint: new PublicKey("ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs"),
+  scale: 6,
+});
+
 export const merToken: OrcaToken = Object.freeze({
   tag: "MER",
   name: "Mercurial",
   mint: new PublicKey("MERt85fc5boKw3BW1eYdxonEuJNvXbiMbs6hvheau5K"),
+  scale: 6,
+});
+
+export const mndeToken: OrcaToken = Object.freeze({
+  tag: "MNDE",
+  name: "Marinade Governance",
+  mint: new PublicKey("MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey"),
+  scale: 9,
+});
+
+export const mngoToken: OrcaToken = Object.freeze({
+  tag: "MNGO",
+  name: "Mango Markets",
+  mint: new PublicKey("MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"),
   scale: 6,
 });
 
@@ -215,6 +250,20 @@ export const sunnyToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const sypToken: OrcaToken = Object.freeze({
+  tag: "SYP",
+  name: "Sypool",
+  mint: new PublicKey("FnKE9n6aGjQoNWRBZXy4RW6LZVao7qwBonUbiD7edUmZ"),
+  scale: 9,
+});
+
+export const tulipToken: OrcaToken = Object.freeze({
+  tag: "TULIP",
+  name: "SolFarm",
+  mint: new PublicKey("TuLipcqtGVXP9XR62wM8WWCm6a9vhLs7T1uoWBk6FDs"),
+  scale: 6,
+});
+
 export const usdcToken: OrcaToken = Object.freeze({
   tag: "USDC",
   name: "USD Coin",
@@ -227,6 +276,13 @@ export const usdtToken: OrcaToken = Object.freeze({
   name: "Tether USD",
   mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
   scale: 6,
+});
+
+export const wagToken: OrcaToken = Object.freeze({
+  tag: "WAG",
+  name: "Waggle",
+  mint: new PublicKey("5tN42n9vMi6ubp67Uy4NnmM5DMZYN8aS8GeB3bEDHr6E"),
+  scale: 9,
 });
 
 export const msolToken: OrcaToken = Object.freeze({
@@ -243,9 +299,37 @@ export const psolToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const stsolToken: OrcaToken = Object.freeze({
+  tag: "stSOL",
+  name: "Lido Staked SOL",
+  mint: new PublicKey("7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj"),
+  scale: 9,
+});
+
 export const whapiToken: OrcaToken = Object.freeze({
   tag: "wHAPI",
   name: "HAPI",
   mint: new PublicKey("6VNKqgz9hk7zRShTFdg5AnkfKwZUcojzwAkzxSH3bnUm"),
   scale: 9,
+});
+
+export const wldoToken: OrcaToken = Object.freeze({
+  tag: "wLDO",
+  name: "Lido DAO",
+  mint: new PublicKey("HZRCwxP2Vq9PCpPXooayhJ2bxTpo5xfpQrwB1svh332p"),
+  scale: 8,
+});
+
+export const whethToken: OrcaToken = Object.freeze({
+  tag: "whETH",
+  name: "Ethereum",
+  mint: new PublicKey("7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs"),
+  scale: 8,
+});
+
+export const wstethToken: OrcaToken = Object.freeze({
+  tag: "wstETH",
+  name: "Lido Staked Ether",
+  mint: new PublicKey("ZScHuTtqZukUrtZS43teTKGs2VqkKL8k4QCouR2n6Uo"),
+  scale: 8,
 });
