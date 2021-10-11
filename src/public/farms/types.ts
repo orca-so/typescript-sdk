@@ -71,7 +71,7 @@ export type OrcaFarm = {
    * Throws error if the user does not have a farm initialized (by calling deposit)
    *
    * @param owner The keypair for the user's wallet or just the user's public key
-   * @returnThe transaction signature of the harvest instruction
+   * @return The transaction signature of the harvest instruction
    */
   harvest: (owner: Keypair | PublicKey) => Promise<TransactionPayload>;
 };
