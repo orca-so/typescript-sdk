@@ -291,4 +291,23 @@ export class OrcaFarmImpl implements OrcaFarm {
       .addInstruction(harvestRewardInstruction)
       .build();
   }
+
+  public async getWeeklyEmissions(): Promise<OrcaU64> {
+    const { address } = this.farmParams;
+
+    const rewardTokenDecimals = 6;
+
+    const globalFarms = await fetchGlobalFarms(this.connection, [address], ORCA_FARM_ID);
+
+    if (!globalFarms) {
+      throw new Error("Failed to get globalFarms information");
+    }
+
+    const value = new Decimal(globalFarms[0].emissionsPerSecondNumerator.toString())
+      .mul(60 * 60 * 24 * 7)
+      .div(globalFarms[0].emissionsPerSecondDenominator.toString())
+      .div(new Decimal(10).pow(rewardTokenDecimals));
+
+    return OrcaU64.fromDecimal(value); // TODO scale
+  }
 }

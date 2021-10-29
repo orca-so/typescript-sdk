@@ -74,4 +74,9 @@ export type OrcaFarm = {
    * @return The transaction signature of the harvest instruction
    */
   harvest: (owner: Keypair | PublicKey) => Promise<TransactionPayload>;
+
+  /**
+   * Get amount of reward token that will be earned by a farmer weekly
+   */
+  getWeeklyEmissions: () => Promise<OrcaU64>;
 };
