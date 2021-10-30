@@ -76,7 +76,7 @@ export type OrcaFarm = {
   harvest: (owner: Keypair | PublicKey) => Promise<TransactionPayload>;
 
   /**
-   * Get amount of reward token that will be earned by a farmer weekly
+   * Get amount of reward token that will be earned by a farmer in a day
    */
-  getWeeklyEmissions: () => Promise<OrcaU64>;
+  getDailyEmissions: () => Promise<OrcaU64>;
 };

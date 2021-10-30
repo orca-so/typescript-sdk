@@ -292,7 +292,7 @@ export class OrcaFarmImpl implements OrcaFarm {
       .build();
   }
 
-  public async getWeeklyEmissions(): Promise<OrcaU64> {
+  public async getDailyEmissions(): Promise<OrcaU64> {
     const { address, rewardTokenDecimals } = this.farmParams;
 
     const globalFarms = await fetchGlobalFarms(this.connection, [address], ORCA_FARM_ID);
@@ -302,7 +302,7 @@ export class OrcaFarmImpl implements OrcaFarm {
     }
 
     const value = new Decimal(globalFarms[0].emissionsPerSecondNumerator.toString())
-      .mul(60 * 60 * 24 * 7)
+      .mul(60 * 60 * 24)
       .div(globalFarms[0].emissionsPerSecondDenominator.toString())
       .div(new Decimal(10).pow(rewardTokenDecimals));
 
