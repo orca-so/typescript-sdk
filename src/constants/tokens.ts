@@ -243,6 +243,13 @@ export const slimToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const slndToken: OrcaToken = Object.freeze({
+  tag: "SLND",
+  name: "Solend",
+  mint: new PublicKey("SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp"),
+  scale: 6,
+});
+
 export const slrsToken: OrcaToken = Object.freeze({
   tag: "SLRS",
   name: "Solrise Finance",
