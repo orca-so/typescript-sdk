@@ -590,6 +590,33 @@ export const avaxUsdcAqFarm: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const fttUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("2FtSDVRmYq4x6NeTidpZVuLzgN2APzr3zHxpHx8zdgbr"),
+  farmTokenMint: new PublicKey("2AAzmhZ9Kh9mFcQtHJVTafu69tc5GCGpi6CTgafYta1S"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("FwCombynV2fTVizxPCNA2oZKoWXLZgdJThjE4Xv9sjxc"),
+  baseTokenDecimals: 6,
+});
+
+export const rayUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("GCcVYpBCPcPjb11LeeoVhLNJQzS5GXEEd6Dmo5eejBTx"),
+  farmTokenMint: new PublicKey("9MaXcCERB4DzedPNSBwyHM2P6Yo6jCFLjnatuWCtR3WF"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("4cXw2MYj94TFBXLL73fEpMCr8DPrW68JvrV8mzWgktbD"),
+  baseTokenDecimals: 6,
+});
+
+export const slndUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("5NrUSiG134QLY4JkmX82n4hdZQnmqsWMrBapQwfAtpeu"),
+  farmTokenMint: new PublicKey("GdySZb2nbeEjCLBg65veC5kzfMCfCWgtgqwH9YWDtDXr"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("F59gkD7NnsdJbFKrRZsiBC8PAooN4c56T8QmahfW1iXN"),
+  baseTokenDecimals: 6,
+});
+
 export const liqUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   address: new PublicKey("AraZDjfmkqzDJ3CdbjjYbtpujUYivgTEKKM2TPf6hJ27"),
   farmTokenMint: new PublicKey("5rGtJDiJhD5Mx2fvdEYuLrCiWaMD9z3wpmJSxwGHmo4u"),
@@ -885,6 +912,9 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   "5a6Y1ephcbKSoyLMQyD1JWbtqawCy8p2FtRL9v3zhaG5": wstethUsdcAqFarm,
   "6mJqqT5TMgveDvxzBt3hrjGkPV5VAj7tacxFCT3GebXh": auryUsdcAqFarm,
   Hmfrtmo93DpSDmVNLQKcBS5D1ia5JatiRSok9ososubz: avaxUsdcAqFarm,
+  FwCombynV2fTVizxPCNA2oZKoWXLZgdJThjE4Xv9sjxc: fttUsdcAqFarm,
+  "4cXw2MYj94TFBXLL73fEpMCr8DPrW68JvrV8mzWgktbD": rayUsdcAqFarm,
+  F59gkD7NnsdJbFKrRZsiBC8PAooN4c56T8QmahfW1iXN: slndUsdcAqFarm,
   "57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT": liqUsdcDoubleDip,
   GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL: stepSolDoubleDip,
   "66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7": slrsUsdcDoubleDip,

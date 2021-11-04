@@ -73,4 +73,7 @@ export enum OrcaPoolConfig {
   wstETH_USDC = "5a6Y1ephcbKSoyLMQyD1JWbtqawCy8p2FtRL9v3zhaG5",
   AURY_USDC = "6mJqqT5TMgveDvxzBt3hrjGkPV5VAj7tacxFCT3GebXh",
   AVAX_USDC = "Hmfrtmo93DpSDmVNLQKcBS5D1ia5JatiRSok9ososubz",
+  FTT_USDC = "FwCombynV2fTVizxPCNA2oZKoWXLZgdJThjE4Xv9sjxc",
+  RAY_USDC = "4cXw2MYj94TFBXLL73fEpMCr8DPrW68JvrV8mzWgktbD",
+  SLND_USDC = "F59gkD7NnsdJbFKrRZsiBC8PAooN4c56T8QmahfW1iXN",
 }
