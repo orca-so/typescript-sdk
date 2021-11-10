@@ -75,6 +75,13 @@ export const fttToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const gofxToken: OrcaToken = Object.freeze({
+  tag: "GOFX",
+  name: "GooseFX",
+  mint: new PublicKey("GFX1ZjR2P15tmrSwow6FjyDYcEkoFb4p4gJCpLBjaxHD"),
+  scale: 9,
+});
+
 export const grapeToken: OrcaToken = Object.freeze({
   tag: "GRAPE",
   name: "Grape",

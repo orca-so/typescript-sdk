@@ -617,6 +617,15 @@ export const slndUsdcAqFarm: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const gofxUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("GmyMx4JtRrkjmxNn4WQCmVNuLfwRjkAmCfMv2AXag5se"),
+  farmTokenMint: new PublicKey("B95rdqSY4dqPwmt295XwBZZqZJYLmqDNXU6NvBpT4ep4"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("7vnps4VE5RTGAr5fmPZu7fSrk2VnM4Up838grZfqmxqE"),
+  baseTokenDecimals: 6,
+});
+
 export const liqUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   address: new PublicKey("AraZDjfmkqzDJ3CdbjjYbtpujUYivgTEKKM2TPf6hJ27"),
   farmTokenMint: new PublicKey("5rGtJDiJhD5Mx2fvdEYuLrCiWaMD9z3wpmJSxwGHmo4u"),
@@ -842,6 +851,15 @@ export const larixUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const gofxUsdcDoubleDip: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("EVDvbsD5f1qz7FpVyknrzB3bLK86FHfqVbcH9WqpWZtK"),
+  farmTokenMint: new PublicKey("BzZ3mLyXEaGt1Na1zxfZYjRJBFDbDckurc2LDq46irUx"),
+  rewardTokenMint: new PublicKey("GFX1ZjR2P15tmrSwow6FjyDYcEkoFb4p4gJCpLBjaxHD"),
+  rewardTokenDecimals: 9,
+  baseTokenMint: new PublicKey("B95rdqSY4dqPwmt295XwBZZqZJYLmqDNXU6NvBpT4ep4"),
+  baseTokenDecimals: 6,
+});
+
 /**
  * Mapping for OrcaFarm parameters
  * Key: baseTokenMint : OrcaFarmParams
@@ -915,6 +933,7 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   FwCombynV2fTVizxPCNA2oZKoWXLZgdJThjE4Xv9sjxc: fttUsdcAqFarm,
   "4cXw2MYj94TFBXLL73fEpMCr8DPrW68JvrV8mzWgktbD": rayUsdcAqFarm,
   F59gkD7NnsdJbFKrRZsiBC8PAooN4c56T8QmahfW1iXN: slndUsdcAqFarm,
+  "7vnps4VE5RTGAr5fmPZu7fSrk2VnM4Up838grZfqmxqE": gofxUsdcAqFarm,
   "57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT": liqUsdcDoubleDip,
   GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL: stepSolDoubleDip,
   "66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7": slrsUsdcDoubleDip,
@@ -940,4 +959,5 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   DzpLz78wuwyFsQToin8iDv6YK6aBEymRqQq82swiFh7r: btcMsolDoubleDip,
   HqajzzbGMST3yCCVBJuXvNVsWkY2DXqiBz9cTRmmyBMy: ivnSolDoubleDip,
   DNAGfa7tK8csprRQmiDUwDaFfhw6ueHhVFHTCgTJ8HGs: larixUsdcDoubleDip,
+  B95rdqSY4dqPwmt295XwBZZqZJYLmqDNXU6NvBpT4ep4: gofxUsdcDoubleDip,
 };

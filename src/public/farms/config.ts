@@ -76,6 +76,7 @@ export enum OrcaFarmConfig {
   FTT_USDC_AQ = "FwCombynV2fTVizxPCNA2oZKoWXLZgdJThjE4Xv9sjxc",
   RAY_USDC_AQ = "4cXw2MYj94TFBXLL73fEpMCr8DPrW68JvrV8mzWgktbD",
   SLND_USDC_AQ = "F59gkD7NnsdJbFKrRZsiBC8PAooN4c56T8QmahfW1iXN",
+  GOFX_USDC_AQ = "7vnps4VE5RTGAr5fmPZu7fSrk2VnM4Up838grZfqmxqE",
   LIQ_USDC_DD = "57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT",
   STEP_SOL_DD = "GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL",
   SLRS_USDC_DD = "66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7",
@@ -101,4 +102,5 @@ export enum OrcaFarmConfig {
   BTC_mSOL_DD = "DzpLz78wuwyFsQToin8iDv6YK6aBEymRqQq82swiFh7r",
   IVN_SOL_DD = "HqajzzbGMST3yCCVBJuXvNVsWkY2DXqiBz9cTRmmyBMy",
   LARIX_USDC_DD = "DNAGfa7tK8csprRQmiDUwDaFfhw6ueHhVFHTCgTJ8HGs",
+  GOFX_USDC_DD = "B95rdqSY4dqPwmt295XwBZZqZJYLmqDNXU6NvBpT4ep4",
 }
