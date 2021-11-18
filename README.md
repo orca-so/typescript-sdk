@@ -154,6 +154,18 @@ main()
   });
 ```
 
+# Devnet Testing
+
+The example code above can be run on devnet by changing two lines of code like so:
+
+```typescript
+const connection = new Connection("https://api.devnet.solana.com", "singleGossip");
+const orca = getOrca(connection, Network.DEVNET);
+```
+
+One caveat to note is that there are only a few devnet pools avaialble, so if you try to access pools that are only
+available on mainnet, the code will throw an error. The example code uses ORCA_SOL, which exists on the devnet.
+
 # Technical Notes
 
 **Decimals & OrcaU64**

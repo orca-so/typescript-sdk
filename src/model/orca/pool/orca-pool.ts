@@ -23,6 +23,9 @@ import {
   DepositQuote,
   WithdrawQuote,
   DecimalUtil,
+  Network,
+  ORCA_TOKEN_SWAP_ID_DEVNET,
+  ORCA_TOKEN_SWAP_ID,
 } from "../../../public";
 import {
   createApprovalInstruction,
@@ -37,10 +40,14 @@ import { OrcaPoolParams } from "./pool-types";
 export class OrcaPoolImpl implements OrcaPool {
   private connection: Connection;
   private poolParams: OrcaPoolParams;
+  private orcaTokenSwapId: PublicKey;
 
-  constructor(connection: Connection, config: OrcaPoolParams) {
+  constructor(connection: Connection, network: Network, config: OrcaPoolParams) {
     this.connection = connection;
     this.poolParams = config;
+
+    this.orcaTokenSwapId =
+      network === Network.MAINNET ? ORCA_TOKEN_SWAP_ID : ORCA_TOKEN_SWAP_ID_DEVNET;
   }
 
   public getTokenA(): OrcaPoolToken {
@@ -181,7 +188,8 @@ export class OrcaPoolImpl implements OrcaPool {
       outputPoolTokenUserAddress,
       amountInU64,
       minimumAmountOutU64,
-      userTransferAuthority.publicKey
+      userTransferAuthority.publicKey,
+      this.orcaTokenSwapId
     );
 
     return await new TransactionBuilder(this.connection, ownerAddress, _owner)
@@ -316,6 +324,7 @@ export class OrcaPoolImpl implements OrcaPool {
       maxTokenBIn_U64,
       tokenA.addr,
       tokenB.addr,
+      this.orcaTokenSwapId,
       _owner
     );
 
@@ -464,6 +473,7 @@ export class OrcaPoolImpl implements OrcaPool {
       minTokenBOut_U64,
       tokenA.addr,
       tokenB.addr,
+      this.orcaTokenSwapId,
       _owner
     );
 
