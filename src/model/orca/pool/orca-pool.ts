@@ -94,6 +94,34 @@ export class OrcaPoolImpl implements OrcaPool {
     inputAmount: Decimal | OrcaU64,
     slippage?: Decimal
   ): Promise<Quote> {
+    const { inputPoolToken, outputPoolToken } = getTokens(
+      this.poolParams,
+      inputToken.mint.toString()
+    );
+
+    const { inputTokenCount, outputTokenCount } = await getTokenCount(
+      this.connection,
+      this.poolParams,
+      inputPoolToken,
+      outputPoolToken
+    );
+
+    return this.getQuoteWithPoolAmounts(
+      inputToken,
+      inputAmount,
+      inputTokenCount,
+      outputTokenCount,
+      slippage
+    );
+  }
+
+  public async getQuoteWithPoolAmounts(
+    inputToken: OrcaToken,
+    inputAmount: Decimal | OrcaU64,
+    inputTokenPoolAmount: u64,
+    outputTokenPoolAmount: u64,
+    slippage?: Decimal
+  ): Promise<Quote> {
     const slippageTolerance =
       slippage === undefined ? defaultSlippagePercentage : Percentage.fromDecimal(slippage);
 
@@ -105,21 +133,15 @@ export class OrcaPoolImpl implements OrcaPool {
     );
     const inputAmountU64 = U64Utils.toTokenU64(inputAmount, inputPoolToken, "inputAmount");
 
-    const poolTokenCount: PoolTokenCount = await getTokenCount(
-      this.connection,
-      this.poolParams,
-      inputPoolToken,
-      outputPoolToken
-    );
-
     const {
       value: { feeCalculator },
     } = await this.connection.getRecentBlockhashAndContext("singleGossip");
 
     const quoteParams: QuotePoolParams = {
-      ...poolTokenCount,
       inputToken: inputPoolToken,
       outputToken: outputPoolToken,
+      inputTokenCount: inputTokenPoolAmount,
+      outputTokenCount: outputTokenPoolAmount,
       feeStructure: feeStructure,
       slippageTolerance: slippageTolerance,
       lamportsPerSignature: feeCalculator.lamportsPerSignature,
