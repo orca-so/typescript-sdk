@@ -81,4 +81,5 @@ export enum OrcaPoolConfig {
   SDOGE_USDC = "CHTKUJGYRtBDqnxCFjxe5KEkZgxV98udbhuYYyzGxup5",
   CATO_USDC = "55r9txzQtmjTykmTXmBYZCVMg5z9squB8b5cSw2AhxA4",
   OOGI_USDC = "DSiHyHDn96bUQSZtizyCRLcQzrwohZeMpVu8rYJN1HzG",
+  SONAR_USDC = "5MvQHx8eftU39JTucFsT315JFnQASuDQg3FqxTw7xcvN",
 }
