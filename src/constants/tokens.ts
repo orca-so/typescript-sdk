@@ -299,6 +299,13 @@ export const solToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const sonarToken: OrcaToken = Object.freeze({
+  tag: "SONAR",
+  name: "SonarWatch",
+  mint: new PublicKey("sonarX4VtVkQemriJeLm6CKeW3GDMyiBnnAEMw1MRAE"),
+  scale: 9,
+});
+
 export const srmToken: OrcaToken = Object.freeze({
   tag: "SRM",
   name: "Serum",
