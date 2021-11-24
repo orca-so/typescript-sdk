@@ -12,6 +12,13 @@ export const abrToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const aptToken: OrcaToken = Object.freeze({
+  tag: "APT",
+  name: "Apricot",
+  mint: new PublicKey("APTtJyaRX5yGTsJU522N4VYWg3vCvSb65eam5GrPT5Rt"),
+  scale: 6,
+});
+
 export const atlasToken: OrcaToken = Object.freeze({
   tag: "ATLAS",
   name: "Star Atlas",
