@@ -68,6 +68,13 @@ export const copeToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const dflToken: OrcaToken = Object.freeze({
+  tag: "DFL",
+  name: "DeFi Land",
+  mint: new PublicKey("DFL1zNkaGPWm1BqAVqRjCZvHmwTFrEaJtbzJWgseoNJh"),
+  scale: 9,
+});
+
 export const ethToken: OrcaToken = Object.freeze({
   tag: "ETH",
   name: "Ethereum",
