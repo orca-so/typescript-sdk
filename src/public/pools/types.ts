@@ -5,7 +5,7 @@ import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
 
 export type DepositQuote = {
-  minPoolTokenAmountOut: OrcaU64;
+  minPoolTokenAmountOut: OrcaU64; // MISNOMER - this value represents the exact poolTokenAmountOut
   maxTokenAIn: OrcaU64;
   maxTokenBIn: OrcaU64;
 };
@@ -13,7 +13,7 @@ export type DepositQuote = {
 export type WithdrawQuote = {
   minTokenAOut: OrcaU64;
   minTokenBOut: OrcaU64;
-  maxPoolTokenAmountIn: OrcaU64;
+  maxPoolTokenAmountIn: OrcaU64; // MISNOMER - this value represents the exact poolTokenAmountIn
 };
 
 /**
@@ -111,6 +111,9 @@ export type OrcaPool = {
   /**
    * Get suggested pool token deposit amount based on required constraints on maximum tokenA amount and maximum tokenB amount
    *
+   * Note:
+   * 1. minPoolTokenAmountOut in the output type is a misnomer, and it represents the _exact_ poolTokenAmountOut value
+   *
    * @param maxTokenAIn The maximum amount of tokenA to deposit in exchange for pool token
    * @param maxTokenBIn The maximum amount of tokenB to deposit in exchange for pool token
    * @param slippage An optional slippage in percentage you are willing to take in deposit (default: 0.1%)
@@ -147,6 +150,9 @@ export type OrcaPool = {
    * Get suggested withdraw token amounts based on required withdraw amount of the pool token / one of the paired tokens
    *
    * Throws error if withdrawTokenMint does not equal tokenMint of tokenA, tokenB, or poolToken of this pool
+   *
+   * Note:
+   * 1. maxPoolTokenAmountIn in the output type is a misnomer, and it represents the _exact_ poolTokenAmountIn value
    *
    * @param withdrawTokenAmount The amount of tokens to withdraw in terms of tokenA amount, tokenB amount, or poolToken amount
    * @param withdrawTokenMint The token mint public key of tied to withdrawTokenAmount. It should be the mint of tokenA, tokenB, or poolToken
