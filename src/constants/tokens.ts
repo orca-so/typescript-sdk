@@ -89,6 +89,13 @@ export const fidaToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const frktToken: OrcaToken = Object.freeze({
+  tag: "FRKT",
+  name: "FRAKT Token",
+  mint: new PublicKey("ErGB9xa24Szxbk1M28u2Tx8rKPqzL6BroNkkzk5rG4zj"),
+  scale: 8,
+});
+
 export const fttToken: OrcaToken = Object.freeze({
   tag: "FTT",
   name: "FTX Token",

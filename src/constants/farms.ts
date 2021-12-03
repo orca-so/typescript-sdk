@@ -689,6 +689,24 @@ export const dflUsdcAqFarm: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const dflSolAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("HTEe4r3YDRqDbA2dwQNMnMBAToV7rHvpyMBe6EjZmXyz"),
+  farmTokenMint: new PublicKey("E3omuGbZSksAdbiyvtpdfGsUGhptA26Enwe5Y5jJKnbK"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("9Y1vPaAsMz8X65DebMMnmBjbMo8i4jh4mcgiggZUUS3M"),
+  baseTokenDecimals: 6,
+});
+
+export const frktUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("EUgwcVQhm1BDHWeMThNRx143RRay1byP6gmca9dp8HMe"),
+  farmTokenMint: new PublicKey("Bc4CvPm15iLRopgLmU17RJicBgjykiMwVzYxa7Wnujdh"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("FnDxJPNk7pPmGHUbR4XUHmHevrkXHdna5D3sQKcAtjBL"),
+  baseTokenDecimals: 6,
+});
+
 export const liqUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   address: new PublicKey("AraZDjfmkqzDJ3CdbjjYbtpujUYivgTEKKM2TPf6hJ27"),
   farmTokenMint: new PublicKey("5rGtJDiJhD5Mx2fvdEYuLrCiWaMD9z3wpmJSxwGHmo4u"),
@@ -1049,6 +1067,8 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   "5MvQHx8eftU39JTucFsT315JFnQASuDQg3FqxTw7xcvN": sonarUsdcAqFarm,
   HNrYngS1eoqkjWro9D3Y5Z9sWBDzPNK2tX4rfV2Up177: aptUsdcAqFarm,
   AWrtTWG4Zgxw8D92bb3L3sQtGLD3zDztMPWsXSph8iBP: dflUsdcAqFarm,
+  "9Y1vPaAsMz8X65DebMMnmBjbMo8i4jh4mcgiggZUUS3M": dflSolAqFarm,
+  FnDxJPNk7pPmGHUbR4XUHmHevrkXHdna5D3sQKcAtjBL: frktUsdcAqFarm,
   "57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT": liqUsdcDoubleDip,
   GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL: stepSolDoubleDip,
   "66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7": slrsUsdcDoubleDip,
