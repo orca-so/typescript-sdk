@@ -84,4 +84,6 @@ export enum OrcaPoolConfig {
   SONAR_USDC = "5MvQHx8eftU39JTucFsT315JFnQASuDQg3FqxTw7xcvN",
   APT_USDC = "HNrYngS1eoqkjWro9D3Y5Z9sWBDzPNK2tX4rfV2Up177",
   DFL_USDC = "AWrtTWG4Zgxw8D92bb3L3sQtGLD3zDztMPWsXSph8iBP",
+  DFL_SOL = "9Y1vPaAsMz8X65DebMMnmBjbMo8i4jh4mcgiggZUUS3M",
+  FRKT_USDC = "FnDxJPNk7pPmGHUbR4XUHmHevrkXHdna5D3sQKcAtjBL",
 }
