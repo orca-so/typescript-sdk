@@ -355,6 +355,13 @@ export const sypToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const tttToken: OrcaToken = Object.freeze({
+  tag: "TTT",
+  name: "TabTrader",
+  mint: new PublicKey("FNFKRV3V8DtA3gVJN6UshMiLGYA8izxFwkNWmJbFjmRj"),
+  scale: 6,
+});
+
 export const tulipToken: OrcaToken = Object.freeze({
   tag: "TULIP",
   name: "Tulip Protocol",
