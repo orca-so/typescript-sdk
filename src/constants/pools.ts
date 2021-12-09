@@ -1960,6 +1960,31 @@ export const frktUsdcPool: OrcaPoolParams = Object.freeze({
   },
 });
 
+export const tttUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("HD6pqxyqj4S7eS3orAyQyan5RpwpMPjKEDWgTyYXcfr1"),
+  nonce: 254,
+  authority: new PublicKey("Gh1QqgpKGd6zhicNvBh1VLbycpoq6P7QBCZT8MdhWzN1"),
+  poolTokenMint: new PublicKey("FGgP1npQTsC5Q4xBmQtNYSh51NKqNwdxBZy8JCo3igcu"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("AFjaSrdgNJsFDSQTDbkBoBMLHt2qCt5GuPHWDTUV4nHt"),
+  tokenIds: [Tokens.tttToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.tttToken.mint.toString()]: {
+      ...Tokens.tttToken,
+      addr: new PublicKey("HbrvwSnL11K5EALN21FdjmWvG16VNcq5iyHEKjdHtyJe"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("CQvyngoqxCdgFQYjbT8EKved6hTDzmzdp8Xxxv5FkXmd"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
 /**
  * Mapping for OrcaPool parameters
  * Key: poolTokenMint : OrcaPoolParams
@@ -2043,4 +2068,5 @@ export const orcaPoolConfigs: Record<string, OrcaPoolParams> = {
   AWrtTWG4Zgxw8D92bb3L3sQtGLD3zDztMPWsXSph8iBP: dflUsdcPool,
   "9Y1vPaAsMz8X65DebMMnmBjbMo8i4jh4mcgiggZUUS3M": dflSolPool,
   FnDxJPNk7pPmGHUbR4XUHmHevrkXHdna5D3sQKcAtjBL: frktUsdcPool,
+  FGgP1npQTsC5Q4xBmQtNYSh51NKqNwdxBZy8JCo3igcu: tttUsdcPool,
 };
