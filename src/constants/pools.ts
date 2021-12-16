@@ -1985,6 +1985,206 @@ export const tttUsdcPool: OrcaPoolParams = Object.freeze({
   },
 });
 
+export const upsUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("G67ZSkxE5N67x6A1WhcTaHiFHqRtRQUb3QHwjtPge1Xr"),
+  nonce: 250,
+  authority: new PublicKey("Hj3vg6P2DBfJ6hhvCoucaGvL9cwsvUgeJWZRzuXTZ6hi"),
+  poolTokenMint: new PublicKey("E1U63VXhNiWoUkVvjrfLDdV1oJrwE6zLde3bohr6jCqz"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("Cu8SFyZKsHcUYhxECpt5Wr97CeHSXeDyNjs9kyDWtVJm"),
+  tokenIds: [Tokens.upsToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.upsToken.mint.toString()]: {
+      ...Tokens.upsToken,
+      addr: new PublicKey("CNw37MJdV6gBChtEtUgGrx3zWXz8t3bYxD7u5axPrwdJ"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("5iLVx3LwhWiqjaRyLaiVNsLbYBqy48fvs2sTY6q96nNy"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const fantUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("95aDcNzL8tL17jzHAUQXnRwuCmYBWKUr4xfjV6AMVJY1"),
+  nonce: 255,
+  authority: new PublicKey("GeTZHdp1sYgX6J73CBeqS5pjb7xfY8D9Rzf4E615oGMt"),
+  poolTokenMint: new PublicKey("GjG7JjTQfQpDxw4hWx4etP9oTaYCuCbPjsU8WaUT3xHB"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("AdSQYnzmJ4j2hbqT5aumXAf4a3T2AxmGHbCgHER8rf6K"),
+  tokenIds: [Tokens.fantToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.fantToken.mint.toString()]: {
+      ...Tokens.fantToken,
+      addr: new PublicKey("CyLaJ6Y382czGE75yFDg2fneKni6PjZHH9Jh4GZN2Nyo"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("7wHMKRPVsacb3JcBsUxLKLZkAPbX81VNc6Z6J9uvJ2J8"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const blockUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("ExeW62iy4xEUo5b5XnDru5oQCDRDUmBaFNqE4V4u7uvm"),
+  nonce: 255,
+  authority: new PublicKey("2fSbre92FnmkeUP5iT7jdFKNB3nfx5yQ5GEW2mjVigMi"),
+  poolTokenMint: new PublicKey("D8WjqtwC9CzBrQKfSf2ccCHFQuPYwyLv5KAy8WjT5vnf"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("BGSDZoQyH8QGJDvQ8toms4Pk4HWHaFEXSUvJ3AAYXxmF"),
+  tokenIds: [Tokens.blockToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.blockToken.mint.toString()]: {
+      ...Tokens.blockToken,
+      addr: new PublicKey("7uJ5SFRGzrnbspUThix8M2wFJNnS8vvSKbCEhKmqMjNm"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("4e5ZVp7u6YWEibveHscZmbmHpujtbJNUHFj14tqtAZKv"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const runUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("9j4FdbK68xUDQVynTWHbNzBRAj7Q7Lywiqb82en4JzZs"),
+  nonce: 253,
+  authority: new PublicKey("9RUMuXequVtf9UVYHoKJxwWfqyod478nBfX8H3DvSaKV"),
+  poolTokenMint: new PublicKey("34Ppq6R8NfYBwWwPY4cBK4Afyb8hHaASQFukCzH6cV4n"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("pPH4mFHFu1c3ZR59Zaun5jSCBRn6pU1GWSoVHD4LKUs"),
+  tokenIds: [Tokens.runToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.runToken.mint.toString()]: {
+      ...Tokens.runToken,
+      addr: new PublicKey("tg7YMVac4S2ZpVrbaDqrZgURyTBBrZCQUkQ6Fn6nnrX"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("G2fZDZKa5Y599xzqP1jVQ3EMCfiG6f4dMS6G1f7BKoQe"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const uxpUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("eKuTPdMHmnVzLP63oWwdUH6bBAVcdvBfg4zvH2nWWCj"),
+  nonce: 255,
+  authority: new PublicKey("DYwCP16u5pmLMspCb8tdTQaaF2rBvM2qvgzm5uYvPUHT"),
+  poolTokenMint: new PublicKey("HjR8JgqNKQVMvdryqJw5RJ4PCE9WGk8sgbEF7S9S3obv"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("HoaPae92LswzSbvnVbdkBAYFNanrvK3kFvWtYyUhpC2o"),
+  tokenIds: [Tokens.uxpToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.uxpToken.mint.toString()]: {
+      ...Tokens.uxpToken,
+      addr: new PublicKey("BWL9ocg8VEBSfrS7zjUBUidE9T8p95J3p5wF6C4Vaqrs"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("GQC4fM5E6dr9MsXvtMzAR4Z8iCduhyFvYCLdMAAHGCM2"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const btcUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("2dwHmCoAGxCXvTbLTMjqAhvEFAHWUt9kZaroJJJdmoD4"),
+  nonce: 253,
+  authority: new PublicKey("BwJ1vMtJiBy7dJaVToR1KUwVbBsGUTNN4QdKVSf8EEh1"),
+  poolTokenMint: new PublicKey("J3kvcay3N16FBdawgnqoJ9v9p6XCvyCLE2Z9F5RLvGkj"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("HR7c67SkeLvCpHrVSu7MiiAERQh6iD1NrCJsj3kWiZnK"),
+  tokenIds: [Tokens.btcToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.btcToken.mint.toString()]: {
+      ...Tokens.btcToken,
+      addr: new PublicKey("D3Wv78j9STkfJx3vhzoCzpMZ4RqCg8oaTNGzi1rZpdJg"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("HMFLg2GtbWSSEe92Vuf2LQdUpCacGj2m2PwvMqzwQFNi"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const mndeUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("2yNwARmTmc3NzYMETCZQjAE5GGCPgviH6hiBsxaeikTK"),
+  nonce: 253,
+  authority: new PublicKey("2ZzxuHxvPQtPU48Tffs8LD8sy17rgjBRQviRVxQ54fR6"),
+  poolTokenMint: new PublicKey("12Uj74zgUUoBe4yeackwQ4qYtFMr9fk1xL6q5Nha6t2N"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("6AvWhLSuAqTWUdpo4jF84s4gfgAjbRQv5vLf7mYNCgd8"),
+  tokenIds: [Tokens.mndeToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.mndeToken.mint.toString()]: {
+      ...Tokens.mndeToken,
+      addr: new PublicKey("AfF3SJFpyfU7iw9KtrwPyi6corJbyiC24JyVis7oxNVr"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("FT4GQqs5sEvqhsWm845VF1vmHjdQkrB1jdsGPJbzB4oB"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const chicksUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("3abwmh8LDUsXMoDgNzZLq9QvKqKbhYND9N5aXh9yz7Dm"),
+  nonce: 255,
+  authority: new PublicKey("HmNqp8F5Bp16dUTUihhL3TnyQxfzJ2GtTo9VEQx6bjB3"),
+  poolTokenMint: new PublicKey("71CBZeJ4tw38L9pSPoCz4fRsuWE64Fipyzotte7haoCS"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("4zRJg9Kod7bd9tR3mxQhxzAQUPqQmUGJbmrWpQ4XDGT4"),
+  tokenIds: [Tokens.chicksToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.chicksToken.mint.toString()]: {
+      ...Tokens.chicksToken,
+      addr: new PublicKey("84Ha1dXH8YAWXt3AC15RstnUCoWT3hg24tUGD1GtqGSm"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("GkonWV6urvzsnKwVmPXe89fTX1zBfv4xrAhx9JnxV9Nq"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
 /**
  * Mapping for OrcaPool parameters
  * Key: poolTokenMint : OrcaPoolParams
@@ -2069,4 +2269,12 @@ export const orcaPoolConfigs: Record<string, OrcaPoolParams> = {
   "9Y1vPaAsMz8X65DebMMnmBjbMo8i4jh4mcgiggZUUS3M": dflSolPool,
   FnDxJPNk7pPmGHUbR4XUHmHevrkXHdna5D3sQKcAtjBL: frktUsdcPool,
   FGgP1npQTsC5Q4xBmQtNYSh51NKqNwdxBZy8JCo3igcu: tttUsdcPool,
+  E1U63VXhNiWoUkVvjrfLDdV1oJrwE6zLde3bohr6jCqz: upsUsdcPool,
+  GjG7JjTQfQpDxw4hWx4etP9oTaYCuCbPjsU8WaUT3xHB: fantUsdcPool,
+  D8WjqtwC9CzBrQKfSf2ccCHFQuPYwyLv5KAy8WjT5vnf: blockUsdcPool,
+  "34Ppq6R8NfYBwWwPY4cBK4Afyb8hHaASQFukCzH6cV4n": runUsdcPool,
+  HjR8JgqNKQVMvdryqJw5RJ4PCE9WGk8sgbEF7S9S3obv: uxpUsdcPool,
+  J3kvcay3N16FBdawgnqoJ9v9p6XCvyCLE2Z9F5RLvGkj: btcUsdcPool,
+  "12Uj74zgUUoBe4yeackwQ4qYtFMr9fk1xL6q5Nha6t2N": mndeUsdcPool,
+  "71CBZeJ4tw38L9pSPoCz4fRsuWE64Fipyzotte7haoCS": chicksUsdcPool,
 };
