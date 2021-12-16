@@ -40,6 +40,13 @@ export const avaxToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const blockToken: OrcaToken = Object.freeze({
+  tag: "BLOCK",
+  name: "Blockasset",
+  mint: new PublicKey("NFTUkR4u7wKxy9QLaX2TGvd9oZSWoMo4jqSJqdMb7Nk"),
+  scale: 6,
+});
+
 export const bopToken: OrcaToken = Object.freeze({
   tag: "BOP",
   name: "Boring Protocol",
@@ -61,6 +68,13 @@ export const catoToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const chicksToken: OrcaToken = Object.freeze({
+  tag: "CHICKS",
+  name: "SolChicks Token",
+  mint: new PublicKey("cxxShYRVcepDudXhe7U62QHvw8uBJoKFifmzggGKVC2"),
+  scale: 9,
+});
+
 export const copeToken: OrcaToken = Object.freeze({
   tag: "COPE",
   name: "Cope",
@@ -79,6 +93,13 @@ export const ethToken: OrcaToken = Object.freeze({
   tag: "ETH",
   name: "Ethereum",
   mint: new PublicKey("2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk"),
+  scale: 6,
+});
+
+export const fantToken: OrcaToken = Object.freeze({
+  tag: "FANT",
+  name: "Phantasia",
+  mint: new PublicKey("FANTafPFBAt93BNJVpdu25pGPmca3RfwdsDsRrT3LX1r"),
   scale: 6,
 });
 
@@ -264,6 +285,13 @@ export const ropeToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const runToken: OrcaToken = Object.freeze({
+  tag: "RUN",
+  name: "Run",
+  mint: new PublicKey("6F9XriABHfWhit6zmMUYAQBSy6XK5VF1cHXuW5LDpRtC"),
+  scale: 9,
+});
+
 export const samoToken: OrcaToken = Object.freeze({
   tag: "SAMO",
   name: "Samoyedcoin",
@@ -369,6 +397,13 @@ export const tulipToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const upsToken: OrcaToken = Object.freeze({
+  tag: "UPS",
+  name: "UPFI Network",
+  mint: new PublicKey("EwJN2GqUGXXzYmoAciwuABtorHczTA5LqbukKXV1viH7"),
+  scale: 6,
+});
+
 export const usdcToken: OrcaToken = Object.freeze({
   tag: "USDC",
   name: "USD Coin",
@@ -381,6 +416,13 @@ export const usdtToken: OrcaToken = Object.freeze({
   name: "Tether USD",
   mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
   scale: 6,
+});
+
+export const uxpToken: OrcaToken = Object.freeze({
+  tag: "UXP",
+  name: "UXD Protocol Token",
+  mint: new PublicKey("UXPhBoR3qG4UCiGNJfV7MqhHyFqKN68g45GoYvAeL2M"),
+  scale: 9,
 });
 
 export const wagToken: OrcaToken = Object.freeze({
