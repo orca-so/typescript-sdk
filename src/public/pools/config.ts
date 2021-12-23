@@ -95,4 +95,6 @@ export enum OrcaPoolConfig {
   BTC_USDC = "J3kvcay3N16FBdawgnqoJ9v9p6XCvyCLE2Z9F5RLvGkj",
   MNDE_USDC = "12Uj74zgUUoBe4yeackwQ4qYtFMr9fk1xL6q5Nha6t2N",
   CHICKS_USDC = "71CBZeJ4tw38L9pSPoCz4fRsuWE64Fipyzotte7haoCS",
+  ONESOL_USDC = "6MF5CHWAj5mS7FhpxiKz37CzR2eYTu236XpBKKMXCrGg",
+  WMP_USDC = "HDgxKmiA8Pv82fNguhVeMkZqQkos2YksFPoP1KttWxX8",
 }
