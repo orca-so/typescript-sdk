@@ -5,6 +5,13 @@ import { OrcaToken } from "..";
  * The following content is auto-generated.
  */
 
+export const onesolToken: OrcaToken = Object.freeze({
+  tag: "ONESOL",
+  name: "1Sol",
+  mint: new PublicKey("4ThReWAbAVZjNVgs5Ui9Pk3cZ5TYaD9u6Y89fp6EFzoF"),
+  scale: 8,
+});
+
 export const abrToken: OrcaToken = Object.freeze({
   tag: "ABR",
   name: "Allbridge",
@@ -429,6 +436,13 @@ export const wagToken: OrcaToken = Object.freeze({
   tag: "WAG",
   name: "Waggle",
   mint: new PublicKey("5tN42n9vMi6ubp67Uy4NnmM5DMZYN8aS8GeB3bEDHr6E"),
+  scale: 9,
+});
+
+export const wmpToken: OrcaToken = Object.freeze({
+  tag: "WMP",
+  name: "Whalemap",
+  mint: new PublicKey("BygDd5LURoqztD3xETc99WCxLUbTi6WYSht9XiBgZ4HW"),
   scale: 9,
 });
 

@@ -2185,6 +2185,56 @@ export const chicksUsdcPool: OrcaPoolParams = Object.freeze({
   },
 });
 
+export const onesolUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("CKKuMECwW75NBNRKtYJz1svCycRHt4KpXmcNnHXiHY73"),
+  nonce: 253,
+  authority: new PublicKey("2TSCMpjN6ToLJy8baiFTc9UdB1PuHFsr24mos98Zp57v"),
+  poolTokenMint: new PublicKey("6MF5CHWAj5mS7FhpxiKz37CzR2eYTu236XpBKKMXCrGg"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("9Rw29Mvx6b2RMAbdZoqs3gBRMcfYjBYRyiegNZoaYrWS"),
+  tokenIds: [Tokens.onesolToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.onesolToken.mint.toString()]: {
+      ...Tokens.onesolToken,
+      addr: new PublicKey("2meoejmWQno2q6cbFMRytu7UMqMA8FTx651feSUHfTtC"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("n5CtiZDLm2xNxVU1o4KC98dNGiFb1sbuCazDihahbMy"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
+export const wmpUsdcPool: OrcaPoolParams = Object.freeze({
+  address: new PublicKey("Cqy7PRGRx2QeTLZM3QmLGN68uHxEd9euj2eEeeZWnuvQ"),
+  nonce: 255,
+  authority: new PublicKey("9vkbzRnjd9qpmunBUHqS8Fnt9DUEX5akJPm9movtfNxZ"),
+  poolTokenMint: new PublicKey("HDgxKmiA8Pv82fNguhVeMkZqQkos2YksFPoP1KttWxX8"),
+  poolTokenDecimals: 6,
+  feeAccount: new PublicKey("Bfr66xExhYijJzc732abX7znkFnj4v3otQDFbHaz7RkK"),
+  tokenIds: [Tokens.wmpToken.mint.toString(), Tokens.usdcToken.mint.toString()],
+  tokens: {
+    [Tokens.wmpToken.mint.toString()]: {
+      ...Tokens.wmpToken,
+      addr: new PublicKey("3WubbpV7W82H6FERR62Bd8Z4fXFGaihtBNqnT1zkGr6f"),
+    },
+    [Tokens.usdcToken.mint.toString()]: {
+      ...Tokens.usdcToken,
+      addr: new PublicKey("8MxcExnMniQEDs361cZseukEau9Rmd3CmrCXxasmNM1x"),
+    },
+  },
+  curveType: CurveType.ConstantProduct,
+  feeStructure: {
+    traderFee: Percentage.fromFraction(25, 10000),
+    ownerFee: Percentage.fromFraction(5, 10000),
+  },
+});
+
 /**
  * Mapping for OrcaPool parameters
  * Key: poolTokenMint : OrcaPoolParams
@@ -2277,4 +2327,6 @@ export const orcaPoolConfigs: Record<string, OrcaPoolParams> = {
   J3kvcay3N16FBdawgnqoJ9v9p6XCvyCLE2Z9F5RLvGkj: btcUsdcPool,
   "12Uj74zgUUoBe4yeackwQ4qYtFMr9fk1xL6q5Nha6t2N": mndeUsdcPool,
   "71CBZeJ4tw38L9pSPoCz4fRsuWE64Fipyzotte7haoCS": chicksUsdcPool,
+  "6MF5CHWAj5mS7FhpxiKz37CzR2eYTu236XpBKKMXCrGg": onesolUsdcPool,
+  HDgxKmiA8Pv82fNguhVeMkZqQkos2YksFPoP1KttWxX8: wmpUsdcPool,
 };
