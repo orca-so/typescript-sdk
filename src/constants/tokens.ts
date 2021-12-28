@@ -47,6 +47,13 @@ export const avaxToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const basisToken: OrcaToken = Object.freeze({
+  tag: "BASIS",
+  name: "basis.markets",
+  mint: new PublicKey("Basis9oJw9j8cw53oMV7iqsgo6ihi9ALw4QR31rcjUJa"),
+  scale: 6,
+});
+
 export const blockToken: OrcaToken = Object.freeze({
   tag: "BLOCK",
   name: "Blockasset",
@@ -145,6 +152,13 @@ export const grapeToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const gstToken: OrcaToken = Object.freeze({
+  tag: "GST",
+  name: "GST",
+  mint: new PublicKey("AFbX8oGjGpmVFywbVouvhQSRmiW2aR1mohfahi4Y2AdB"),
+  scale: 9,
+});
+
 export const ivnToken: OrcaToken = Object.freeze({
   tag: "IVN",
   name: "Investin",
@@ -191,6 +205,13 @@ export const mapsToken: OrcaToken = Object.freeze({
   tag: "MAPS",
   name: "MAPS",
   mint: new PublicKey("MAPS41MDahZ9QdKXhVa4dWB9RuyfV4XqhyAZ8XcYepb"),
+  scale: 6,
+});
+
+export const meanToken: OrcaToken = Object.freeze({
+  tag: "MEAN",
+  name: "Meanfi",
+  mint: new PublicKey("MEANeD3XDdUmNMsRGjASkSWdC8prLYsoRJ61pPeHctD"),
   scale: 6,
 });
 
@@ -401,6 +422,13 @@ export const tulipToken: OrcaToken = Object.freeze({
   tag: "TULIP",
   name: "Tulip Protocol",
   mint: new PublicKey("TuLipcqtGVXP9XR62wM8WWCm6a9vhLs7T1uoWBk6FDs"),
+  scale: 6,
+});
+
+export const unqToken: OrcaToken = Object.freeze({
+  tag: "UNQ",
+  name: "UNQ",
+  mint: new PublicKey("UNQtEecZ5Zb4gSSVHCAWUQEoNnSVEbWiKCi1v9kdUJJ"),
   scale: 6,
 });
 
