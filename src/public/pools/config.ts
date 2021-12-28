@@ -97,4 +97,8 @@ export enum OrcaPoolConfig {
   CHICKS_USDC = "71CBZeJ4tw38L9pSPoCz4fRsuWE64Fipyzotte7haoCS",
   ONESOL_USDC = "6MF5CHWAj5mS7FhpxiKz37CzR2eYTu236XpBKKMXCrGg",
   WMP_USDC = "HDgxKmiA8Pv82fNguhVeMkZqQkos2YksFPoP1KttWxX8",
+  UNQ_USDC = "2VuGzaMrDnDyZfYvDwSXk38s7M2wpud7LDY3dGA1J9sy",
+  BASIS_USDC = "GoaAiajubRgeCFEz9L6mLnSmT2QFegoJDH5tpLfivpj",
+  GST_USDC = "E6FUnQHGHJVJg7oExVr5Moeaj1QpdpZQF5odYjHXWPZb",
+  MEAN_USDC = "F5BTnwuMA6rxftTdbZ33VWKr2wrr6DuQHnd4guKmPSYQ",
 }
