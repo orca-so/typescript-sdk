@@ -140,4 +140,5 @@ export enum OrcaFarmConfig {
   CHICKS_USDC_DD = "GTcxXu3yw7yotq2UtAMvpEbx84ozJyrBwy77Cmem7m4X",
   UNQ_USDC_DD = "CsGTrgJ6oLx9UQow9aLjuAacjXTY53zT8B2FnAbfVZAS",
   MEAN_USDC_DD = "3h2VBX8533NB8eEH8rPXMdayodFDbgTHpbav6JqLZAQq",
+  WAG_USDC_DD = "8Wu5sJpERA1J5iWcT8aMpt9cTAfKDLPbLpGjNsJoPgLc",
 }
