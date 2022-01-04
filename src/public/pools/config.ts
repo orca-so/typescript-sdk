@@ -102,4 +102,6 @@ export enum OrcaPoolConfig {
   GST_USDC = "E6FUnQHGHJVJg7oExVr5Moeaj1QpdpZQF5odYjHXWPZb",
   MEAN_USDC = "F5BTnwuMA6rxftTdbZ33VWKr2wrr6DuQHnd4guKmPSYQ",
   AART_USDC = "HCtyJzFUtYecXrA52s4Y9atq4J1fhT3cYsTX17XVSFag",
+  SHDW_USDC = "DJqqvzSuPaWThfzwMjXx7H2ZmHDdwxza6NtFudtuXcpc",
+  SHDW_SOL = "2ws7g3LBPdctfKn42Di9qxzQtUJ8ZL1aEAX2rGEQMNqh",
 }
