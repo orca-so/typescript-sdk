@@ -348,6 +348,13 @@ export const sdogeToken: OrcaToken = Object.freeze({
   scale: 0,
 });
 
+export const shdwToken: OrcaToken = Object.freeze({
+  tag: "SHDW",
+  name: "Shadow",
+  mint: new PublicKey("SHDWyBxihqiCj6YekG2GUr7wqKLeLAMK1gHZck9pL6y"),
+  scale: 9,
+});
+
 export const slimToken: OrcaToken = Object.freeze({
   tag: "SLIM",
   name: "Solanium",
