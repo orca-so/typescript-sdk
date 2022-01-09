@@ -341,6 +341,13 @@ export const sbrToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const scyToken: OrcaToken = Object.freeze({
+  tag: "SCY",
+  name: "Synchrony",
+  mint: new PublicKey("SCYfrGCw8aDiqdgcpdGjV6jp4UVVQLuphxTDLNWu36f"),
+  scale: 9,
+});
+
 export const sdogeToken: OrcaToken = Object.freeze({
   tag: "SDOGE",
   name: "SolDoge",
@@ -353,6 +360,13 @@ export const shdwToken: OrcaToken = Object.freeze({
   name: "Shadow",
   mint: new PublicKey("SHDWyBxihqiCj6YekG2GUr7wqKLeLAMK1gHZck9pL6y"),
   scale: 9,
+});
+
+export const slcToken: OrcaToken = Object.freeze({
+  tag: "SLC",
+  name: "Solice",
+  mint: new PublicKey("METAmTMXwdb8gYzyCPfXXFmZZw4rUsXX58PNsDg7zjL"),
+  scale: 6,
 });
 
 export const slimToken: OrcaToken = Object.freeze({
