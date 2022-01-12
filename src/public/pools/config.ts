@@ -106,4 +106,13 @@ export enum OrcaPoolConfig {
   SHDW_SOL = "2ws7g3LBPdctfKn42Di9qxzQtUJ8ZL1aEAX2rGEQMNqh",
   SCY_USDC = "99ZHUQsgxL7K6PHrGNi1gSwawwPr7UA5fbWrYoHQ6qhX",
   SLC_USDC = "E5kSBqTDxFLbLNQaVVtPtnhEYVLMCK2fVSEKoMKL98qR",
+  wUST_SOL = "6c13xsmyk7UaHUWZ2rm1MM3ZdrQRSBkQ9waaG25ridVs",
+  wUST_USDC = "J1KfRtP5y2warpD7LdJhfBLPKoWwSqYuovdArSv1mpQ7",
+  mSOL_wUST = "68YVjgPnTUPcBqZyghqvD2WPNsrLKsjYTmBKJzHRr4qd",
+  wLUNA_wUST = "8Mh7drLbt3jFJYwp948XyvQscGLaLkChNcaH5wwaAoWA",
+  stSOL_wUST = "HTZd53fYwYQRyAjiaPsZy9Gf41gobFdqkF4oKe3XLi95",
+  JSOL_USDC = "AzEoVuNJyo9ByoLRZ5t6vav2Zg24vULNVJM41PgCKUqR",
+  daoSOL_USDC = "CCyDxjdW3G7hPTthTMPTZ4bnhFF19XG6rx2fNiKeRQww",
+  ORCA_USDT = "Gx4PoxenyQwhGGnKagAT35iVg4im1iKhJxDWqVhgu6tk",
+  ORCA_whETH = "GsfyYHkSgC3Ta6aWR9MjB2sxoBrkGGeR2tAwXbpphf3",
 }
