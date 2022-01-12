@@ -180,6 +180,13 @@ export const jetToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const jsolToken: OrcaToken = Object.freeze({
+  tag: "JSOL",
+  name: "JPool",
+  mint: new PublicKey("7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"),
+  scale: 9,
+});
+
 export const kinToken: OrcaToken = Object.freeze({
   tag: "KIN",
   name: "Kin",
@@ -509,6 +516,13 @@ export const woofToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const daosolToken: OrcaToken = Object.freeze({
+  tag: "daoSOL",
+  name: "daoSOL Token",
+  mint: new PublicKey("GEJpt3Wjmr628FqXxTgxMce1pLntcPV4uFi8ksxMyPQh"),
+  scale: 9,
+});
+
 export const msolToken: OrcaToken = Object.freeze({
   tag: "mSOL",
   name: "Marinade.finance",
@@ -549,6 +563,20 @@ export const wldoToken: OrcaToken = Object.freeze({
   name: "Lido DAO",
   mint: new PublicKey("HZRCwxP2Vq9PCpPXooayhJ2bxTpo5xfpQrwB1svh332p"),
   scale: 8,
+});
+
+export const wlunaToken: OrcaToken = Object.freeze({
+  tag: "wLUNA",
+  name: "Terra",
+  mint: new PublicKey("F6v4wfAdJB8D8p77bMXZgYt8TDKsYxLYxH5AFhUkYx9W"),
+  scale: 6,
+});
+
+export const wustToken: OrcaToken = Object.freeze({
+  tag: "wUST",
+  name: "TerraUSD (Wormhole)",
+  mint: new PublicKey("9vMJfxuKxXBoEa7rM12mYLMwTacLMLDJqHozw96WQL8i"),
+  scale: 6,
 });
 
 export const whethToken: OrcaToken = Object.freeze({
