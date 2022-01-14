@@ -163,4 +163,5 @@ export enum OrcaFarmConfig {
   wUST_USDC_DD = "2mhVUMsG7eb3XhHjAbKpRZgWNyGZNCiWU7dRxauzZaGL",
   mSOL_wUST_DD = "6wqME6zPQzGDLugpnwZnVBKBbATC5nTaEa781Vj98yvM",
   wLUNA_wUST_DD = "3ZGKT28NXAqb2YtUAMvKixQvHNHT31Q5mK8AC2iBMs29",
+  stSOL_wUST_DD = "3Q44iV4URXdbS4Tk1PGs5VdWQoCxHB7zdcdMnemo8jfH",
 }
