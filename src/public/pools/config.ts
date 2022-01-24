@@ -115,4 +115,6 @@ export enum OrcaPoolConfig {
   daoSOL_USDC = "CCyDxjdW3G7hPTthTMPTZ4bnhFF19XG6rx2fNiKeRQww",
   ORCA_USDT = "Gx4PoxenyQwhGGnKagAT35iVg4im1iKhJxDWqVhgu6tk",
   ORCA_whETH = "GsfyYHkSgC3Ta6aWR9MjB2sxoBrkGGeR2tAwXbpphf3",
+  GENE_USDC = "7cuu94swKL5PtFQohKMAzyd1mjj65rgMW3GzLY31HCnK",
+  CMFI_USDC = "85krvT9DxdYgoFLQDHTAGdvtNuLdAsc4xE5FkVLpN2aR",
 }

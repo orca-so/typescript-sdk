@@ -96,6 +96,13 @@ export const chicksToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const cmfiToken: OrcaToken = Object.freeze({
+  tag: "CMFI",
+  name: "Compendium.Fi",
+  mint: new PublicKey("5Wsd311hY8NXQhkt9cWHwTnqafk7BGEbLu8Py3DSnPAr"),
+  scale: 6,
+});
+
 export const copeToken: OrcaToken = Object.freeze({
   tag: "COPE",
   name: "Cope",
@@ -143,6 +150,13 @@ export const fttToken: OrcaToken = Object.freeze({
   name: "FTX Token",
   mint: new PublicKey("AGFEad2et2ZJif9jaGpdMixQqvW5i81aBdvKe7PHNfz3"),
   scale: 6,
+});
+
+export const geneToken: OrcaToken = Object.freeze({
+  tag: "GENE",
+  name: "Genopets",
+  mint: new PublicKey("GENEtH5amGSi8kHAtQoezp1XEXwZJ8vcuePYnXdKrMYz"),
+  scale: 9,
 });
 
 export const gofxToken: OrcaToken = Object.freeze({
