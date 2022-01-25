@@ -1,6 +1,6 @@
-import { NATIVE_MINT, Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
+import { Token, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import { TokenSwap } from "@solana/spl-token-swap";
-import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
 import { OrcaPoolToken } from "../../../pools";
 import { Instruction } from "../../models";
@@ -10,8 +10,7 @@ export const createApprovalInstruction = (
   ownerAddress: PublicKey,
   approveAmount: u64,
   tokenUserAddress: PublicKey,
-  userTransferAuthority?: Keypair,
-  tokenMint?: PublicKey
+  userTransferAuthority?: Keypair
 ): { userTransferAuthority: Keypair } & Instruction => {
   userTransferAuthority = userTransferAuthority || new Keypair();
 
@@ -24,19 +23,17 @@ export const createApprovalInstruction = (
     approveAmount
   );
 
-  const cleanupInstructions: TransactionInstruction[] = [];
-
-  // only revoke non-wsol accounts since wsol accounts get closed
-  if (!tokenMint || !tokenMint.equals(NATIVE_MINT)) {
-    cleanupInstructions.push(
-      Token.createRevokeInstruction(TOKEN_PROGRAM_ID, tokenUserAddress, ownerAddress, [])
-    );
-  }
+  const revokeInstruction = Token.createRevokeInstruction(
+    TOKEN_PROGRAM_ID,
+    tokenUserAddress,
+    ownerAddress,
+    []
+  );
 
   return {
     userTransferAuthority: userTransferAuthority,
     instructions: [approvalInstruction],
-    cleanupInstructions,
+    cleanupInstructions: [revokeInstruction],
     signers: [userTransferAuthority],
   };
 };
