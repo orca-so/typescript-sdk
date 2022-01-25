@@ -195,10 +195,13 @@ export class OrcaPoolImpl implements OrcaPool {
       throw new Error("Unable to derive input / output token associated address.");
     }
 
-    const { userTransferAuthority, ...approvalInstruction } = createApprovalInstruction(
+    const userTransferAuthority = new Keypair();
+    const { ...approvalInstruction } = createApprovalInstruction(
       ownerAddress,
       amountInU64,
-      inputPoolTokenUserAddress
+      inputPoolTokenUserAddress,
+      userTransferAuthority,
+      inputToken.mint
     );
 
     const swapInstruction = await createSwapInstruction(
@@ -322,16 +325,20 @@ export class OrcaPoolImpl implements OrcaPool {
       );
 
     // Approve transfer of the tokens being deposited
-    const { userTransferAuthority, ...transferTokenAInstruction } = createApprovalInstruction(
+    const userTransferAuthority = new Keypair();
+    const { ...transferTokenAInstruction } = createApprovalInstruction(
       ownerAddress,
       maxTokenAIn_U64,
-      userTokenAPublicKey
+      userTokenAPublicKey,
+      userTransferAuthority,
+      tokenA.mint
     );
     const { ...transferTokenBInstruction } = createApprovalInstruction(
       ownerAddress,
       maxTokenBIn_U64,
       userTokenBPublicKey,
-      userTransferAuthority
+      userTransferAuthority,
+      tokenB.mint
     );
 
     // Create the deposit instruction
