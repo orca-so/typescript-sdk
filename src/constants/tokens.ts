@@ -530,6 +530,20 @@ export const woofToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const acceloToken: OrcaToken = Object.freeze({
+  tag: "acCELO",
+  name: "Celo",
+  mint: new PublicKey("GNCjk3FmPPgZTkbQRSxr6nCvLtYMbXKMnRxg8BgJs62e"),
+  scale: 9,
+});
+
+export const afftmToken: OrcaToken = Object.freeze({
+  tag: "afFTM",
+  name: "Fantom",
+  mint: new PublicKey("EsPKhGTMf3bGoy4Qm7pCv3UCcWqAmbC1UGHBTDxRjjD4"),
+  scale: 9,
+});
+
 export const daosolToken: OrcaToken = Object.freeze({
   tag: "daoSOL",
   name: "daoSOL Token",

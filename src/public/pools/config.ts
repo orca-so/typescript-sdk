@@ -117,4 +117,7 @@ export enum OrcaPoolConfig {
   ORCA_whETH = "GsfyYHkSgC3Ta6aWR9MjB2sxoBrkGGeR2tAwXbpphf3",
   GENE_USDC = "7cuu94swKL5PtFQohKMAzyd1mjj65rgMW3GzLY31HCnK",
   CMFI_USDC = "85krvT9DxdYgoFLQDHTAGdvtNuLdAsc4xE5FkVLpN2aR",
+  acCELO_USDC = "HVLyX8mD8YvKgZJ4oB6rXJiCYMLpHKwB6iCiCjE1XwdT",
+  afFTM_USDC = "Gpzd833qSmv3kXpQmxEaqkrZTXZaRjhNAoqhf61qAhTG",
+  BTC_ORCA = "DFpLFcQZqDKykyDePgip4r6MExVmBKWqTa12ezq6qxUY",
 }
