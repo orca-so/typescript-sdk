@@ -180,6 +180,13 @@ export const gstToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const hbbToken: OrcaToken = Object.freeze({
+  tag: "HBB",
+  name: "Hubble",
+  mint: new PublicKey("HBB111SCo9jkCejsZfz8Ec8nH7T6THF8KEKSnvwT6XK6"),
+  scale: 6,
+});
+
 export const ivnToken: OrcaToken = Object.freeze({
   tag: "IVN",
   name: "Investin",

@@ -120,4 +120,6 @@ export enum OrcaPoolConfig {
   acCELO_USDC = "HVLyX8mD8YvKgZJ4oB6rXJiCYMLpHKwB6iCiCjE1XwdT",
   afFTM_USDC = "Gpzd833qSmv3kXpQmxEaqkrZTXZaRjhNAoqhf61qAhTG",
   BTC_ORCA = "DFpLFcQZqDKykyDePgip4r6MExVmBKWqTa12ezq6qxUY",
+  HBB_USDC = "cL5WhffCYFRLM4We8VS2W684kM4pHyuvEDwp8Ddw48k",
+  HBB_SOL = "FkKzu2HeMJZf4oHwoYPxLGVy3net5Jq8HAfnA5VqETgk",
 }
