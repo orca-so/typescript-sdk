@@ -122,4 +122,5 @@ export enum OrcaPoolConfig {
   BTC_ORCA = "DFpLFcQZqDKykyDePgip4r6MExVmBKWqTa12ezq6qxUY",
   HBB_USDC = "cL5WhffCYFRLM4We8VS2W684kM4pHyuvEDwp8Ddw48k",
   HBB_SOL = "FkKzu2HeMJZf4oHwoYPxLGVy3net5Jq8HAfnA5VqETgk",
+  SB_USDC = "2Reqt4Sw9xNY8BoJ3EZLpFu5yVgNxFrbw8M3KiJpPn6o",
 }

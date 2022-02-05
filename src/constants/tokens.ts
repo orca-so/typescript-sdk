@@ -362,6 +362,13 @@ export const samoToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const sbToken: OrcaToken = Object.freeze({
+  tag: "SB",
+  name: "SuperBonds",
+  mint: new PublicKey("SuperbZyz7TsSdSoFAZ6RYHfAWe9NmjXBLVQpS8hqdx"),
+  scale: 6,
+});
+
 export const sbrToken: OrcaToken = Object.freeze({
   tag: "SBR",
   name: "Saber",

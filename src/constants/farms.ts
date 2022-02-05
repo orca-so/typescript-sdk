@@ -1031,6 +1031,15 @@ export const hbbSolAqFarm: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const sbUsdcAqFarm: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("Ax8vkRHj3Gqo5Tv6PfWZzmbr8zHfPdeYbJpG7QYkP3r1"),
+  farmTokenMint: new PublicKey("3Wppx86xN7Dg7GLUTD9C7AqCt68qZkWzNYUdCS7t1pCk"),
+  rewardTokenMint: new PublicKey("orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("2Reqt4Sw9xNY8BoJ3EZLpFu5yVgNxFrbw8M3KiJpPn6o"),
+  baseTokenDecimals: 6,
+});
+
 export const liqUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   address: new PublicKey("AraZDjfmkqzDJ3CdbjjYbtpujUYivgTEKKM2TPf6hJ27"),
   farmTokenMint: new PublicKey("5rGtJDiJhD5Mx2fvdEYuLrCiWaMD9z3wpmJSxwGHmo4u"),
@@ -1490,6 +1499,15 @@ export const hbbUsdcDoubleDip: OrcaFarmParams = Object.freeze({
   baseTokenDecimals: 6,
 });
 
+export const sbUsdcDoubleDip: OrcaFarmParams = Object.freeze({
+  address: new PublicKey("74hUtc4MaZUt4YDDjVSqHyUbPT8kbxW16mbAharpZhPV"),
+  farmTokenMint: new PublicKey("EdkL9TXiT2NV1LND5nj4kR1L9SYjozWpJvbcStvrUUJF"),
+  rewardTokenMint: new PublicKey("SuperbZyz7TsSdSoFAZ6RYHfAWe9NmjXBLVQpS8hqdx"),
+  rewardTokenDecimals: 6,
+  baseTokenMint: new PublicKey("3Wppx86xN7Dg7GLUTD9C7AqCt68qZkWzNYUdCS7t1pCk"),
+  baseTokenDecimals: 6,
+});
+
 /**
  * Mapping for OrcaFarm parameters
  * Key: baseTokenMint : OrcaFarmParams
@@ -1609,6 +1627,7 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   DFpLFcQZqDKykyDePgip4r6MExVmBKWqTa12ezq6qxUY: btcOrcaAqFarm,
   cL5WhffCYFRLM4We8VS2W684kM4pHyuvEDwp8Ddw48k: hbbUsdcAqFarm,
   FkKzu2HeMJZf4oHwoYPxLGVy3net5Jq8HAfnA5VqETgk: hbbSolAqFarm,
+  "2Reqt4Sw9xNY8BoJ3EZLpFu5yVgNxFrbw8M3KiJpPn6o": sbUsdcAqFarm,
   "57vGdcMZLnbNr4TZ4hgrpGJZGR9vTPhu8L9bNKDrqxKT": liqUsdcDoubleDip,
   GwrBA1F8rGummDCDd8NY9Eu1cLNuJqbT8WaGxgWpFwGL: stepSolDoubleDip,
   "66xCxkffQZKBZLiHV3PDcfR8ANJTfnDRxPCaBdv4wxB7": slrsUsdcDoubleDip,
@@ -1660,4 +1679,5 @@ export const orcaFarmConfigs: Record<string, OrcaFarmParams> = {
   "3Q44iV4URXdbS4Tk1PGs5VdWQoCxHB7zdcdMnemo8jfH": stsolWustDoubleDip,
   E8RVjS24pBuF3oCCeJVAgC4RQ7mVa5P3FGXqGbiczzvD: cmfiUsdcDoubleDip,
   BxPd4x7gm6WQF6jsDCRQuQVZ2bopQ4KegMrqyQgdkPDk: hbbUsdcDoubleDip,
+  "3Wppx86xN7Dg7GLUTD9C7AqCt68qZkWzNYUdCS7t1pCk": sbUsdcDoubleDip,
 };
