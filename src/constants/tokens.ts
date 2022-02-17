@@ -40,6 +40,13 @@ export const atlasToken: OrcaToken = Object.freeze({
   scale: 8,
 });
 
+export const audioToken: OrcaToken = Object.freeze({
+  tag: "AUDIO",
+  name: "Audius (Wormhole)",
+  mint: new PublicKey("9LzCMqDgTKYz9Drzqnpgee3SGa89up3a247ypMj2xrqM"),
+  scale: 8,
+});
+
 export const auryToken: OrcaToken = Object.freeze({
   tag: "AURY",
   name: "Aurory",
@@ -388,6 +395,13 @@ export const sdogeToken: OrcaToken = Object.freeze({
   name: "SolDoge",
   mint: new PublicKey("8ymi88q5DtmdNTn2sPRNFkvMkszMHuLJ1e3RVdWjPa3s"),
   scale: 0,
+});
+
+export const seededToken: OrcaToken = Object.freeze({
+  tag: "SEEDED",
+  name: "Seeded Network",
+  mint: new PublicKey("seedEDBqu63tJ7PFqvcbwvThrYUkQeqT6NLf81kLibs"),
+  scale: 9,
 });
 
 export const shdwToken: OrcaToken = Object.freeze({
