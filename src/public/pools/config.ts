@@ -123,4 +123,7 @@ export enum OrcaPoolConfig {
   HBB_USDC = "cL5WhffCYFRLM4We8VS2W684kM4pHyuvEDwp8Ddw48k",
   HBB_SOL = "FkKzu2HeMJZf4oHwoYPxLGVy3net5Jq8HAfnA5VqETgk",
   SB_USDC = "2Reqt4Sw9xNY8BoJ3EZLpFu5yVgNxFrbw8M3KiJpPn6o",
+  stSOL_USDT = "4ni1nho89cDKAQ9ddbNQA9ieLYpzvJVmJpuogu5Ct5ur",
+  SEEDED_USDC = "H7gyTmNCDXkD8MGMqnxqoD8ANszjcju4tjT6ERZ5dakf",
+  AUDIO_USDC = "3hksYA17VxgiKSeihjnZkBbjc2CTbEBfvDCYgQhojTo5",
 }
