@@ -96,6 +96,13 @@ export const catoToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const celoToken: OrcaToken = Object.freeze({
+  tag: "CELO",
+  name: "Celo",
+  mint: new PublicKey("GNCjk3FmPPgZTkbQRSxr6nCvLtYMbXKMnRxg8BgJs62e"),
+  scale: 9,
+});
+
 export const chicksToken: OrcaToken = Object.freeze({
   tag: "CHICKS",
   name: "SolChicks Token",
@@ -152,6 +159,13 @@ export const frktToken: OrcaToken = Object.freeze({
   scale: 8,
 });
 
+export const ftmToken: OrcaToken = Object.freeze({
+  tag: "FTM",
+  name: "Fantom",
+  mint: new PublicKey("EsPKhGTMf3bGoy4Qm7pCv3UCcWqAmbC1UGHBTDxRjjD4"),
+  scale: 9,
+});
+
 export const fttToken: OrcaToken = Object.freeze({
   tag: "FTT",
   name: "FTX Token",
@@ -163,6 +177,13 @@ export const geneToken: OrcaToken = Object.freeze({
   tag: "GENE",
   name: "Genopets",
   mint: new PublicKey("GENEtH5amGSi8kHAtQoezp1XEXwZJ8vcuePYnXdKrMYz"),
+  scale: 9,
+});
+
+export const gmtToken: OrcaToken = Object.freeze({
+  tag: "GMT",
+  name: "STEPN",
+  mint: new PublicKey("7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx"),
   scale: 9,
 });
 
@@ -271,6 +292,13 @@ export const merToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const mmaToken: OrcaToken = Object.freeze({
+  tag: "MMA",
+  name: "MMA Gaming",
+  mint: new PublicKey("MMAx26JtJgSWv6yH48nEHCGZcVvRbf9Lt9ALa7jSipe"),
+  scale: 9,
+});
+
 export const mndeToken: OrcaToken = Object.freeze({
   tag: "MNDE",
   name: "Marinade Governance",
@@ -341,6 +369,13 @@ export const prtToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const puffToken: OrcaToken = Object.freeze({
+  tag: "PUFF",
+  name: "PUFF",
+  mint: new PublicKey("G9tt98aYSznRk7jWsfuz9FnTdokxS6Brohdo9hSmjTRB"),
+  scale: 9,
+});
+
 export const rayToken: OrcaToken = Object.freeze({
   tag: "RAY",
   name: "Raydium",
@@ -366,6 +401,13 @@ export const samoToken: OrcaToken = Object.freeze({
   tag: "SAMO",
   name: "Samoyedcoin",
   mint: new PublicKey("7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"),
+  scale: 9,
+});
+
+export const saoToken: OrcaToken = Object.freeze({
+  tag: "SAO",
+  name: "Sator",
+  mint: new PublicKey("2HeykdKjzHKGm2LKHw8pDYwjKPiFEoXAz74dirhUgQvq"),
   scale: 9,
 });
 
@@ -558,17 +600,10 @@ export const woofToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
-export const acceloToken: OrcaToken = Object.freeze({
-  tag: "acCELO",
-  name: "Celo",
-  mint: new PublicKey("GNCjk3FmPPgZTkbQRSxr6nCvLtYMbXKMnRxg8BgJs62e"),
-  scale: 9,
-});
-
-export const afftmToken: OrcaToken = Object.freeze({
-  tag: "afFTM",
-  name: "Fantom",
-  mint: new PublicKey("EsPKhGTMf3bGoy4Qm7pCv3UCcWqAmbC1UGHBTDxRjjD4"),
+export const zbcToken: OrcaToken = Object.freeze({
+  tag: "ZBC",
+  name: "Zebec Protocol",
+  mint: new PublicKey("zebeczgi5fSEtbpfQKVZKCJ3WgYXxjkMUkNNx7fLKAF"),
   scale: 9,
 });
 
@@ -590,6 +625,13 @@ export const psolToken: OrcaToken = Object.freeze({
   tag: "pSOL",
   name: "pSOL",
   mint: new PublicKey("9EaLkQrbjmbbuZG9Wdpo8qfNUEjHATJFSycEmw6f1rGX"),
+  scale: 9,
+});
+
+export const srlyToken: OrcaToken = Object.freeze({
+  tag: "sRLY",
+  name: "Rally (Solana)",
+  mint: new PublicKey("RLYv2ubRMDLcGG2UyvPmnPmkfuQTsMbg4Jtygc7dmnq"),
   scale: 9,
 });
 
