@@ -6,7 +6,7 @@ import { OrcaToken } from "..";
  */
 
 export const onesolToken: OrcaToken = Object.freeze({
-  tag: "ONESOL",
+  tag: "1SOL",
   name: "1Sol",
   mint: new PublicKey("4ThReWAbAVZjNVgs5Ui9Pk3cZ5TYaD9u6Y89fp6EFzoF"),
   scale: 8,
@@ -24,6 +24,13 @@ export const abrToken: OrcaToken = Object.freeze({
   name: "Allbridge",
   mint: new PublicKey("a11bdAAuV8iB2fu7X6AxAvDTo1QZ8FXB3kk5eecdasp"),
   scale: 9,
+});
+
+export const anaToken: OrcaToken = Object.freeze({
+  tag: "ANA",
+  name: "Nirvana ANA",
+  mint: new PublicKey("ANAxByE6G2WjFp7A4NqtWYXb3mgruyzZYg3spfxe6Lbo"),
+  scale: 6,
 });
 
 export const aptToken: OrcaToken = Object.freeze({
@@ -96,6 +103,13 @@ export const catoToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const caveToken: OrcaToken = Object.freeze({
+  tag: "CAVE",
+  name: "Crypto Cavemen",
+  mint: new PublicKey("4SZjjNABoqhbd4hnapbvoEPEqT8mnNkfbEoAwALf1V8t"),
+  scale: 6,
+});
+
 export const celoToken: OrcaToken = Object.freeze({
   tag: "CELO",
   name: "Celo",
@@ -136,6 +150,13 @@ export const ethToken: OrcaToken = Object.freeze({
   name: "Ethereum",
   mint: new PublicKey("2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk"),
   scale: 6,
+});
+
+export const fabToken: OrcaToken = Object.freeze({
+  tag: "FAB",
+  name: "Fabric",
+  mint: new PublicKey("EdAhkbj5nF9sRM7XN7ewuW8C9XEUMs8P7cnoQ57SYE96"),
+  scale: 9,
 });
 
 export const fantToken: OrcaToken = Object.freeze({
@@ -213,6 +234,13 @@ export const hbbToken: OrcaToken = Object.freeze({
   name: "Hubble",
   mint: new PublicKey("HBB111SCo9jkCejsZfz8Ec8nH7T6THF8KEKSnvwT6XK6"),
   scale: 6,
+});
+
+export const hdgToken: OrcaToken = Object.freeze({
+  tag: "HDG",
+  name: "Hedge Token",
+  mint: new PublicKey("5PmpMzWjraf3kSsGEKtqdUsCoLhptg4yriZ17LKKdBBy"),
+  scale: 9,
 });
 
 export const ivnToken: OrcaToken = Object.freeze({
@@ -318,6 +346,13 @@ export const ninjaToken: OrcaToken = Object.freeze({
   name: "NINJA",
   mint: new PublicKey("FgX1WD9WzMU3yLwXaFSarPfkgzjLb2DZCqmkx9ExpuvJ"),
   scale: 6,
+});
+
+export const novaToken: OrcaToken = Object.freeze({
+  tag: "NOVA",
+  name: "Nova Finance",
+  mint: new PublicKey("BDrL8huis6S5tpmozaAaT5zhE5A7ZBAB2jMMvpKEeF8A"),
+  scale: 9,
 });
 
 export const oogiToken: OrcaToken = Object.freeze({
@@ -530,6 +565,13 @@ export const sypToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const takiToken: OrcaToken = Object.freeze({
+  tag: "TAKI",
+  name: "Taki",
+  mint: new PublicKey("Taki7fi3Zicv7Du1xNAWLaf6mRK7ikdn77HeGzgwvo4"),
+  scale: 9,
+});
+
 export const tttToken: OrcaToken = Object.freeze({
   tag: "TTT",
   name: "TabTrader",
@@ -565,11 +607,25 @@ export const usdcToken: OrcaToken = Object.freeze({
   scale: 6,
 });
 
+export const usdhToken: OrcaToken = Object.freeze({
+  tag: "USDH",
+  name: "USDH",
+  mint: new PublicKey("USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX"),
+  scale: 6,
+});
+
 export const usdtToken: OrcaToken = Object.freeze({
   tag: "USDT",
   name: "Tether USD",
   mint: new PublicKey("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"),
   scale: 6,
+});
+
+export const ushToken: OrcaToken = Object.freeze({
+  tag: "USH",
+  name: "Hedge USD",
+  mint: new PublicKey("9iLH8T7zoWhY7sBmj1WK9ENbWdS1nL8n9wAxaeRitTa6"),
+  scale: 9,
 });
 
 export const uxpToken: OrcaToken = Object.freeze({
@@ -607,6 +663,13 @@ export const zbcToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
+export const zigToken: OrcaToken = Object.freeze({
+  tag: "ZIG",
+  name: "Zignaly",
+  mint: new PublicKey("ANqY8h3sRSwkC29FvGJenAh7VGRABVVx7Ls6Mq4BuGT"),
+  scale: 9,
+});
+
 export const daosolToken: OrcaToken = Object.freeze({
   tag: "daoSOL",
   name: "daoSOL Token",
@@ -628,10 +691,17 @@ export const psolToken: OrcaToken = Object.freeze({
   scale: 9,
 });
 
-export const srlyToken: OrcaToken = Object.freeze({
-  tag: "sRLY",
+export const srlyv2Token: OrcaToken = Object.freeze({
+  tag: "sRLYv2",
   name: "Rally (Solana)",
   mint: new PublicKey("RLYv2ubRMDLcGG2UyvPmnPmkfuQTsMbg4Jtygc7dmnq"),
+  scale: 9,
+});
+
+export const srlyToken: OrcaToken = Object.freeze({
+  tag: "sRLY",
+  name: "Rally Solana",
+  mint: new PublicKey("sRLY3migNrkC1HLgqotpvi66qGkdNedqPZ9TJpAQhyh"),
   scale: 9,
 });
 
