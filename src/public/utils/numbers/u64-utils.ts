@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
-import { OrcaToken, OrcaU64 } from "../..";
+import { OrcaU64 } from ".";
+import { OrcaToken } from "../..";
 import { OrcaFarmParams } from "../../../model/orca/farm/farm-types";
 import { OrcaPoolParams } from "../../../model/orca/pool/pool-types";
 import { DecimalUtil } from "./decimal-utils";
