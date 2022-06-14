@@ -42,7 +42,7 @@ export class TransactionBuilder {
     let signers: Signer[] = [];
     this.instructions.forEach((curr) => {
       instructions = instructions.concat(curr.instructions);
-      cleanupInstructions = cleanupInstructions.concat(curr.cleanupInstructions);
+      cleanupInstructions = curr.cleanupInstructions.concat(cleanupInstructions);
       signers = signers.concat(curr.signers);
     });
 

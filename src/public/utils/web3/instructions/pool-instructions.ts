@@ -3,7 +3,6 @@ import { TokenSwap } from "@solana/spl-token-swap";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { OrcaPoolParams } from "../../../../model/orca/pool/pool-types";
 import { OrcaPoolToken } from "../../../pools";
-import { ORCA_TOKEN_SWAP_ID } from "../../constants";
 import { Instruction } from "../../models";
 import { Owner } from "../key-utils";
 
@@ -48,14 +47,15 @@ export const createSwapInstruction = async (
   outputTokenUserAddress: PublicKey,
   amountIn: u64,
   minimumAmountOut: u64,
-  userTransferAuthority: PublicKey
+  userTransferAuthority: PublicKey,
+  orcaTokenSwapId: PublicKey
 ): Promise<Instruction> => {
   const amountInU64 = amountIn;
   const minimumAmountOutU64 = minimumAmountOut;
 
   const [authorityForPoolAddress] = await PublicKey.findProgramAddress(
     [poolParams.address.toBuffer()],
-    ORCA_TOKEN_SWAP_ID
+    orcaTokenSwapId
   );
 
   const swapInstruction = TokenSwap.swapInstruction(
@@ -69,7 +69,7 @@ export const createSwapInstruction = async (
     poolParams.poolTokenMint,
     poolParams.feeAccount,
     null,
-    ORCA_TOKEN_SWAP_ID,
+    orcaTokenSwapId,
     TOKEN_PROGRAM_ID,
     amountInU64,
     minimumAmountOutU64
@@ -93,6 +93,7 @@ export const createDepositInstruction = async (
   maximumTokenB: u64,
   tokenAPublicKey: PublicKey,
   tokenBPublicKey: PublicKey,
+  orcaTokenSwapId: PublicKey,
   owner: Owner
 ): Promise<Instruction> => {
   const depositInstruction = TokenSwap.depositAllTokenTypesInstruction(
@@ -105,7 +106,7 @@ export const createDepositInstruction = async (
     tokenBPublicKey,
     poolParams.poolTokenMint,
     userPoolTokenPublicKey,
-    ORCA_TOKEN_SWAP_ID,
+    orcaTokenSwapId,
     TOKEN_PROGRAM_ID,
     poolTokenAmount,
     maximumTokenA,
@@ -130,6 +131,7 @@ export const createWithdrawInstruction = async (
   minimumTokenB: u64,
   tokenAPublicKey: PublicKey,
   tokenBPublicKey: PublicKey,
+  orcaTokenSwapId: PublicKey,
   owner: Owner
 ): Promise<Instruction> => {
   const withdrawInstruction = TokenSwap.withdrawAllTokenTypesInstruction(
@@ -143,7 +145,7 @@ export const createWithdrawInstruction = async (
     tokenBPublicKey,
     userTokenAPublicKey,
     userTokenBPublicKey,
-    ORCA_TOKEN_SWAP_ID,
+    orcaTokenSwapId,
     TOKEN_PROGRAM_ID,
     poolTokenAmount,
     minimumTokenA,
