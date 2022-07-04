@@ -31,7 +31,7 @@ export class TransactionBuilder {
   }
 
   async build(): Promise<TransactionPayload> {
-    const recentBlockHash = (await this.connection.getRecentBlockhash("singleGossip")).blockhash;
+    const recentBlockHash = (await this.connection.getLatestBlockhash("singleGossip")).blockhash;
     const txFields: TransactionCtorFields = {
       recentBlockhash: recentBlockHash,
       feePayer: this.feePayer,

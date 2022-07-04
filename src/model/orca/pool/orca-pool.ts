@@ -133,6 +133,10 @@ export class OrcaPoolImpl implements OrcaPool {
     );
     const inputAmountU64 = U64Utils.toTokenU64(inputAmount, inputPoolToken, "inputAmount");
 
+    // TODO
+    // getRecentBlockhashAndContext is deprecated
+    // it looks like fee calculation will change going forward starting v2.0
+    // we need to replace this logic once new fee calculation api becomes available
     const {
       value: { feeCalculator },
     } = await this.connection.getRecentBlockhashAndContext("singleGossip");
