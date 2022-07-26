@@ -1,6 +1,6 @@
 # Orca Typescript SDK
 
-The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca exchange platform.
+The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca platform.
 
 Learn more Orca [here](https://docs.orca.so).
 
