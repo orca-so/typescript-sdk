@@ -4,6 +4,9 @@ The Orca SDK contains a set of simple to use APIs to allow developers to integra
 
 Learn more Orca [here](https://docs.orca.so).
 
+### Orca Token Swap V2
+- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [3613cea3]( https://github.com/solana-labs/solana-program-library/tree/3613cea3cabbb5f7e4445d6203b7292d413732da/token-swap)
+
 ### Trading Orca Liquidity Pools
 
 - Get detailed quotes and make swaps between trading pairs in an Orca Pool
