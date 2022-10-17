@@ -2,11 +2,22 @@ import { u64 } from "@solana/spl-token";
 import Decimal from "decimal.js";
 import { computeBaseOutputAmount, computeOutputAmount } from "@orca-so/stablecurve";
 import { QuotePoolParams } from "./quote-builder";
-import { DecimalUtil, OrcaU64, Quote, ZERO } from "../../public";
+import { DecimalUtil, OrcaU64, Quote, ZERO, ONE } from "../../public";
 import { solToken } from "../../constants/tokens";
 
+function calculateFee(inputTradeAmount: u64, feeNumerator: u64, feeDenominator: u64): u64 {
+  if (feeNumerator.eq(ZERO) || inputTradeAmount.eq(ZERO)) {
+    return ZERO;
+  }
+
+  const fee = inputTradeAmount.mul(feeNumerator).div(feeDenominator);
+  // minimum fee of one token
+  return fee.eq(ZERO) ? ONE : fee;
+}
+
 function getInputAmountLessFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
-  return inputTradeAmount.sub(getLPFees(inputTradeAmount, params));
+  const fees = getLPFees(inputTradeAmount, params);
+  return fees.gt(inputTradeAmount) ? new u64(0) : inputTradeAmount.sub(fees);
 }
 
 function getOutputAmountWithNoSlippage(
@@ -69,6 +80,11 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
 
   const noSlippageOutputCountU64 = getExpectedOutputAmountWithNoSlippage(inputTradeAmount, params);
   const outputCountU64 = getExpectedOutputAmount(inputTradeAmount, params);
+  if (noSlippageOutputCountU64.isZero()) {
+    // The minimum fee of one token makes inputTradeLessFees zero when the input is minimal,
+    // and the output is also zero.
+    return new Decimal(0);
+  }
 
   const noSlippageOutputCount = DecimalUtil.fromU64(
     noSlippageOutputCountU64,
@@ -82,20 +98,17 @@ function getPriceImpact(inputTradeAmount: u64, params: QuotePoolParams): Decimal
 
 function getLPFees(inputTradeAmount: u64, params: QuotePoolParams): u64 {
   const { feeStructure } = params;
+  const tradingFee = calculateFee(
+    inputTradeAmount,
+    feeStructure.traderFee.numerator,
+    feeStructure.traderFee.denominator
+  );
 
-  const tradingFee =
-    feeStructure.traderFee.numerator === ZERO
-      ? ZERO
-      : inputTradeAmount
-          .mul(feeStructure.traderFee.numerator)
-          .div(feeStructure.traderFee.denominator);
-
-  const ownerFee =
-    feeStructure.ownerFee.numerator === ZERO
-      ? ZERO
-      : inputTradeAmount
-          .mul(feeStructure.ownerFee.numerator)
-          .div(feeStructure.ownerFee.denominator);
+  const ownerFee = calculateFee(
+    inputTradeAmount,
+    feeStructure.ownerFee.numerator,
+    feeStructure.ownerFee.denominator
+  );
 
   return new u64(tradingFee.add(ownerFee).toString());
 }
