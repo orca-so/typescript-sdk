@@ -9,7 +9,7 @@ import {
   QuotePoolParams,
 } from "../../../../src/model/quote/quote-builder";
 import { DecimalUtil, OrcaU64, Percentage } from "../../../../src/public";
-import { defaultQuotePoolParams } from "../../../test-utils";
+import { defaultQuotePoolParams, defaultSOLToken, defaultUsdcToken } from "../../../test-utils";
 import { Builder } from "builder-pattern";
 
 const builder: QuoteBuilder = QuoteBuilderFactory.getBuilder(
@@ -120,6 +120,104 @@ test("Output Token Count is zero", () => {
   expect(quote.getExpectedOutputAmount()).toEqual(
     new OrcaU64(new u64("0"), params.outputToken.scale)
   );
+});
+
+test("Minimum fee of one token", () => {
+  const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
+    // 1,000,000 defaultUSDCToken = 10,000 defaultSOLToken
+    .inputToken(defaultUsdcToken)
+    .inputTokenCount(new u64("1000000000000"))
+    .outputToken(defaultSOLToken)
+    .outputTokenCount(new u64("10000000000000"))
+    .build();
+
+  const quote = builder.buildQuote(
+    params,
+    DecimalUtil.toU64(new Decimal("0.0001"), params.inputToken.scale)
+  );
+
+  expect(quote.getRate()).toEqual(new Decimal(0.00979));
+  expect(quote.getPriceImpact()).toEqual(new Decimal(0.102040816));
+  expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("2"), params.inputToken.scale));
+  expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
+  expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("978"), params.outputToken.scale));
+  expect(quote.getExpectedOutputAmount()).toEqual(
+    new OrcaU64(new u64("979"), params.outputToken.scale)
+  );
+});
+
+describe("Too small inputTradeAmount", () => {
+  test("Too small inputTradeAmount (1 unit)", () => {
+    const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
+      // 1,000,000 defaultUSDCToken = 10,000 defaultSOLToken
+      .inputToken(defaultUsdcToken)
+      .inputTokenCount(new u64("1000000000000"))
+      .outputToken(defaultSOLToken)
+      .outputTokenCount(new u64("10000000000000"))
+      .build();
+
+    const quote = builder.buildQuote(
+      params,
+      DecimalUtil.toU64(new Decimal("0.000001"), params.inputToken.scale)
+    );
+
+    expect(quote.getRate()).toEqual(new Decimal(0));
+    expect(quote.getPriceImpact()).toEqual(new Decimal(0));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("2"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
+    expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
+    expect(quote.getExpectedOutputAmount()).toEqual(
+      new OrcaU64(new u64("0"), params.outputToken.scale)
+    );
+  });
+
+  test("Too small inputTradeAmount (2 unit)", () => {
+    const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
+      // 1,000,000 defaultUSDCToken = 10,000 defaultSOLToken
+      .inputToken(defaultUsdcToken)
+      .inputTokenCount(new u64("1000000000000"))
+      .outputToken(defaultSOLToken)
+      .outputTokenCount(new u64("10000000000000"))
+      .build();
+
+    const quote = builder.buildQuote(
+      params,
+      DecimalUtil.toU64(new Decimal("0.000002"), params.inputToken.scale)
+    );
+
+    expect(quote.getRate()).toEqual(new Decimal(0));
+    expect(quote.getPriceImpact()).toEqual(new Decimal(0));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("2"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
+    expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("0"), params.outputToken.scale));
+    expect(quote.getExpectedOutputAmount()).toEqual(
+      new OrcaU64(new u64("0"), params.outputToken.scale)
+    );
+  });
+
+  test("Too small inputTradeAmount (3 unit)", () => {
+    const params = Builder<QuotePoolParams>(defaultQuotePoolParams)
+      // 1,000,000 defaultUSDCToken = 10,000 defaultSOLToken
+      .inputToken(defaultUsdcToken)
+      .inputTokenCount(new u64("1000000000000"))
+      .outputToken(defaultSOLToken)
+      .outputTokenCount(new u64("10000000000000"))
+      .build();
+
+    const quote = builder.buildQuote(
+      params,
+      DecimalUtil.toU64(new Decimal("0.000003"), params.inputToken.scale)
+    );
+
+    expect(quote.getRate()).toEqual(new Decimal(0.003));
+    expect(quote.getPriceImpact()).toEqual(new Decimal(10.0));
+    expect(quote.getLPFees()).toEqual(new OrcaU64(new u64("2"), params.inputToken.scale));
+    expect(quote.getNetworkFees()).toEqual(new OrcaU64(new u64("10000")));
+    expect(quote.getMinOutputAmount()).toEqual(new OrcaU64(new u64("8"), params.outputToken.scale));
+    expect(quote.getExpectedOutputAmount()).toEqual(
+      new OrcaU64(new u64("9"), params.outputToken.scale)
+    );
+  });
 });
 
 describe("Slippage tolerance", () => {
