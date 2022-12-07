@@ -5,7 +5,9 @@ The Orca SDK contains a set of simple to use APIs to allow developers to integra
 Learn more Orca [here](https://docs.orca.so).
 
 ### Orca Token Swap V2
-- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [3613cea3]( https://github.com/solana-labs/solana-program-library/tree/3613cea3cabbb5f7e4445d6203b7292d413732da/token-swap)
+
+- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [f4c5fdc](https://github.com/solana-labs/solana-program-library/tree/f4c5fdcfcfa2db5b71d251c1266be49416229e96/token-swap)
+- Several security patches have been applied.
 
 ### Trading Orca Liquidity Pools
 
@@ -160,6 +162,7 @@ main()
 # Devnet Testing
 
 The example code above can be run on devnet by updating the import statement:
+
 ```typescript
 import { getOrca, OrcaFarmConfig, OrcaPoolConfig, Network } from "@orca-so/sdk";
 ```
