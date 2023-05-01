@@ -1,3 +1,11 @@
+⚠️ **WARNING: DEPRECATED TYPESCRIPT SDK** ⚠️
+
+This Typescript SDK is for the **legacy pools** which are **deprecated**. We highly recommend you to use the **Whirlpools SDK** for the new and improved pools. You can find it here:
+
+🌊 [Whirlpools SDK on npmjs](https://www.npmjs.com/package/@orca-so/whirlpools-sdk) 🌊
+
+Please update your implementations to avoid any issues or disruptions in the future.
+
 # Orca Typescript SDK
 
 The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca platform.
@@ -5,7 +13,8 @@ The Orca SDK contains a set of simple to use APIs to allow developers to integra
 Learn more Orca [here](https://docs.orca.so).
 
 ### Orca Token Swap V2
-- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [3613cea3]( https://github.com/solana-labs/solana-program-library/tree/3613cea3cabbb5f7e4445d6203b7292d413732da/token-swap)
+
+- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [3613cea3](https://github.com/solana-labs/solana-program-library/tree/3613cea3cabbb5f7e4445d6203b7292d413732da/token-swap)
 
 ### Trading Orca Liquidity Pools
 
@@ -160,6 +169,7 @@ main()
 # Devnet Testing
 
 The example code above can be run on devnet by updating the import statement:
+
 ```typescript
 import { getOrca, OrcaFarmConfig, OrcaPoolConfig, Network } from "@orca-so/sdk";
 ```
