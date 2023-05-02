@@ -23,10 +23,9 @@ export async function getTokenCount(
     throw new Error("Output token not part of pool");
   }
 
-  // TODO: Batch request?
-  const accountInfos = await Promise.all([
-    connection.getAccountInfo(inputPoolToken.addr),
-    connection.getAccountInfo(outputPoolToken.addr),
+  const accountInfos = await connection.getMultipleAccountsInfo([
+    inputPoolToken.addr,
+    outputPoolToken.addr,
   ]);
 
   const tokens = accountInfos.map((info) =>

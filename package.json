@@ -1,11 +1,12 @@
 {
   "name": "@orca-so/sdk",
-  "version": "1.1.4",
+  "version": "1.2.25",
   "description": "Typescript SDK for the Orca protocol.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@orca-so/aquafarm": "^0.0.12",
     "@orca-so/stablecurve": "^1.0.5",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-swap": "^0.1.2",
@@ -34,6 +35,7 @@
     "watch": "tsc -w -p src",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "prepare": "husky install",
+    "prepublishOnly": "tsc -p src",
     "test": "jest"
   },
   "lint-staged": {

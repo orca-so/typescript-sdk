@@ -8,6 +8,8 @@ import { StablePoolQuoteBuilder } from "./stable-quote";
 export type QuotePoolParams = PoolTokenCount & {
   inputToken: OrcaToken;
   outputToken: OrcaToken;
+  inputTokenCount: u64;
+  outputTokenCount: u64;
   feeStructure: FeeStructure;
   slippageTolerance: Percentage;
   lamportsPerSignature: number;

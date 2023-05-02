@@ -1,8 +1,20 @@
+⚠️ **WARNING: DEPRECATED TYPESCRIPT SDK** ⚠️
+
+This Typescript SDK is for the **legacy pools** which are **deprecated**. We highly recommend you to use the **Whirlpools SDK** for the new and improved pools. You can find it here:
+
+🌊 [Whirlpools SDK on npmjs](https://www.npmjs.com/package/@orca-so/whirlpools-sdk) 🌊
+
+Please update your implementations to avoid any issues or disruptions in the future.
+
 # Orca Typescript SDK
 
-The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca exchange platform.
+The Orca SDK contains a set of simple to use APIs to allow developers to integrate with the Orca platform.
 
 Learn more Orca [here](https://docs.orca.so).
+
+### Orca Token Swap V2
+
+- The [Orca Token Swap V2 program](https://solscan.io/account/9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP) uses the following commit hash of the SPL Token Swap program: [3613cea3](https://github.com/solana-labs/solana-program-library/tree/3613cea3cabbb5f7e4445d6203b7292d413732da/token-swap)
 
 ### Trading Orca Liquidity Pools
 
@@ -13,10 +25,28 @@ Learn more Orca [here](https://docs.orca.so).
 
 - The SDK supports all pools currently listed on [Orca](https://www.orca.so/pools)
 
-**Features Coming Soon**
-- More trader information (APY, Volume)
-- Deposit/Withdraw from OrcaPools
+### Provide Liquidity to Orca Pools
 
+- Deposit liquidity to supported Orca Pools
+  - Deposit a trading pair, and receive LP token
+- Withdraw liquidity from supported Orca Pools
+  - Withdraw a trading pair in exchange for LP token
+
+**Aquafarm Support**
+
+- After depositing liquidtiy to a pool, the LP token can be deposited into
+  the corresponding farm to receive an equivalent amount of farm token
+- Remember to withdraw the LP token in exchange for farm token before
+  withdrawing liquidity from Orca Pool
+
+**DoubleDip Support**
+
+- For farms with double-dip, the aquafarm tokens can be deposited into
+  double-dip farm to receive double-dip rewards
+
+**Features Coming Soon**
+
+- More trader information (APY, Volume)
 
 # Installation
 
@@ -33,37 +63,126 @@ npm install @orca-so/sdk @solana/web3.js decimal.js
 # Usage
 
 ```typescript
+import { readFile } from "mz/fs";
 import { Connection, Keypair } from "@solana/web3.js";
-import { getOrca, OrcaPoolConfig, OrcaU64 } from "@orca-so/sdk";
+import { getOrca, OrcaFarmConfig, OrcaPoolConfig } from "@orca-so/sdk";
+import Decimal from "decimal.js";
 
-try {
-  const connection = new Connection(url, "singleGossip");
+const main = async () => {
+  /*** Setup ***/
+  // 1. Read secret key file to get owner keypair
+  const secretKeyString = await readFile("/Users/scuba/my-wallet/my-keypair.json", {
+    encoding: "utf8",
+  });
+  const secretKey = Uint8Array.from(JSON.parse(secretKeyString));
+  const owner = Keypair.fromSecretKey(secretKey);
+
+  // 2. Initialzie Orca object with mainnet connection
+  const connection = new Connection("https://api.mainnet-beta.solana.com", "singleGossip");
   const orca = getOrca(connection);
-  const owner: Keypair = getKeyPair();
 
-  // Get an instance of the ETH-USDC orca pool
-  let pool = orca.getPool(OrcaPoolConfig.ETH_USDC);
+  try {
+    /*** Swap ***/
+    // 3. We will be swapping 0.1 SOL for some ORCA
+    const orcaSolPool = orca.getPool(OrcaPoolConfig.ORCA_SOL);
+    const solToken = orcaSolPool.getTokenB();
+    const solAmount = new Decimal(0.1);
+    const quote = await orcaSolPool.getQuote(solToken, solAmount);
+    const orcaAmount = quote.getMinOutputAmount();
 
-  // Get the number of ETH-USDC LP tokens in your wallet
-  let ethUsdcLPBalance = await pool.getLPBalance(owner.publicKey);
+    console.log(`Swap ${solAmount.toString()} SOL for at least ${orcaAmount.toNumber()} ORCA`);
+    const swapPayload = await orcaSolPool.swap(owner, solToken, solAmount, orcaAmount);
+    const swapTxId = await swapPayload.execute();
+    console.log("Swapped:", swapTxId, "\n");
 
-  // Get the total supply of ETH-USDC LP tokens
-  let ethUsdcLPSupply = await pool.getLPSupply();
+    /*** Pool Deposit ***/
+    // 4. Deposit SOL and ORCA for LP token
+    const { maxTokenAIn, maxTokenBIn, minPoolTokenAmountOut } = await orcaSolPool.getDepositQuote(
+      orcaAmount,
+      solAmount
+    );
 
-  // Get a quote of exchanging 1.1 ETH to USDC with a slippage tolerance of 0.1%
-  // From the quote, you can get the current rate, fees, expected output amount and minimum output amount
-  let usdcToken = pool.getTokenB();
-  let tradeValue = new Decimal(1.1);
-  let quote = await pool.getQuote(usdcToken, tradeValue, new Decimal(0.1));
+    console.log(
+      `Deposit at most ${maxTokenBIn.toNumber()} SOL and ${maxTokenAIn.toNumber()} ORCA, for at least ${minPoolTokenAmountOut.toNumber()} LP tokens`
+    );
+    const poolDepositPayload = await orcaSolPool.deposit(
+      owner,
+      maxTokenAIn,
+      maxTokenBIn,
+      minPoolTokenAmountOut
+    );
+    const poolDepositTxId = await poolDepositPayload.execute();
+    console.log("Pool deposited:", poolDepositTxId, "\n");
 
-  // Perform a swap for 1USDC to the quoted minimum amount of ETH
-  // If the user does not have the Associated Token Address(ATA) to receive the output token, the ATA 
-  // instructions will be appended in the transaction.
-  const txId = await pool.swap(owner, usdcToken, tradeValue, quote.getMinOutputAmount()).execute();
-} catch (err) {
-  // Handle errors
-}
+    /*** Farm Deposit ***/
+    // 5. Deposit some ORCA_SOL LP token for farm token
+    const lpBalance = await orcaSolPool.getLPBalance(owner.publicKey);
+    const orcaSolFarm = orca.getFarm(OrcaFarmConfig.ORCA_SOL_AQ);
+    const farmDepositPayload = await orcaSolFarm.deposit(owner, lpBalance);
+    const farmDepositTxId = await farmDepositPayload.execute();
+    console.log("Farm deposited:", farmDepositTxId, "\n");
+    // Note 1: for double dip, repeat step 5 but with the double dip farm
+    // Note 2: to harvest reward, orcaSolFarm.harvest(owner)
+    // Note 3: to get harvestable reward amount, orcaSolFarm.getHarvestableAmount(owner.publicKey)
+
+    /*** Farm Withdraw ***/
+    // 6. Withdraw ORCA_SOL LP token, in exchange for farm token
+    const farmBalance = await orcaSolFarm.getFarmBalance(owner.publicKey); // withdraw the entire balance
+    const farmWithdrawPayload = await orcaSolFarm.withdraw(owner, farmBalance);
+    const farmWithdrawTxId = await farmWithdrawPayload.execute();
+    console.log("Farm withdrawn:", farmWithdrawTxId, "\n");
+
+    /*** Pool Withdraw ***/
+    // 6. Withdraw SOL and ORCA, in exchange for ORCA_SOL LP token
+    const withdrawTokenAmount = await orcaSolPool.getLPBalance(owner.publicKey);
+    const withdrawTokenMint = orcaSolPool.getPoolTokenMint();
+    const { maxPoolTokenAmountIn, minTokenAOut, minTokenBOut } = await orcaSolPool.getWithdrawQuote(
+      withdrawTokenAmount,
+      withdrawTokenMint
+    );
+
+    console.log(
+      `Withdraw at most ${maxPoolTokenAmountIn.toNumber()} ORCA_SOL LP token for at least ${minTokenAOut.toNumber()} ORCA and ${minTokenBOut.toNumber()} SOL`
+    );
+    const poolWithdrawPayload = await orcaSolPool.withdraw(
+      owner,
+      maxPoolTokenAmountIn,
+      minTokenAOut,
+      minTokenBOut
+    );
+    const poolWithdrawTxId = await poolWithdrawPayload.execute();
+    console.log("Pool withdrawn:", poolWithdrawTxId, "\n");
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+main()
+  .then(() => {
+    console.log("Done");
+  })
+  .catch((e) => {
+    console.error(e);
+  });
 ```
+
+# Devnet Testing
+
+The example code above can be run on devnet by updating the import statement:
+
+```typescript
+import { getOrca, OrcaFarmConfig, OrcaPoolConfig, Network } from "@orca-so/sdk";
+```
+
+And changing two lines of code like so:
+
+```typescript
+const connection = new Connection("https://api.devnet.solana.com", "singleGossip");
+const orca = getOrca(connection, Network.DEVNET);
+```
+
+One caveat to note is that there are only a few devnet pools available, so if you try to access pools that are only
+available on mainnet, the code will throw an error. The example code uses ORCA_SOL, which exists on the devnet.
 
 # Technical Notes
 

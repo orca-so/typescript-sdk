@@ -1,7 +1,20 @@
+import { u64 } from "@solana/spl-token";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { OrcaU64 } from "..";
 import { TransactionPayload } from "../utils";
+
+export type DepositQuote = {
+  minPoolTokenAmountOut: OrcaU64; // MISNOMER - this value represents the exact poolTokenAmountOut
+  maxTokenAIn: OrcaU64;
+  maxTokenBIn: OrcaU64;
+};
+
+export type WithdrawQuote = {
+  minTokenAOut: OrcaU64;
+  minTokenBOut: OrcaU64;
+  maxPoolTokenAmountIn: OrcaU64; // MISNOMER - this value represents the exact poolTokenAmountIn
+};
 
 /**
  * Allows interactions with an Orca liquidity pool.
@@ -18,6 +31,12 @@ export type OrcaPool = {
    * @returns Returns the token id of tokenB in this pool
    */
   getTokenB: () => OrcaPoolToken;
+
+  /**
+   * Query the mint public key for the pool token of this pool.
+   * @returns Returns the tokenMint public key of this pool
+   */
+  getPoolTokenMint: () => PublicKey;
 
   /**
    * Query the balance for an user address
@@ -39,13 +58,33 @@ export type OrcaPool = {
    *
    * @param inputTokenId The token you want to trade from
    * @param inputAmount The amount of token you would to trade
-   * @param slippage The slippage in percentage you are willing to take in this trade
+   * @param slippage An optional slippage in percentage you are willing to take in this trade (default: 0.1%)
    * @return Returns a quote on the exchanged token based on the input token amount
    */
   getQuote: (
     inputToken: OrcaToken,
     inputAmount: Decimal | OrcaU64,
-    slippage: Decimal
+    slippage?: Decimal
+  ) => Promise<Quote>;
+
+  /**
+   * Get the latest quote to trade on token to another in this pool using user provided pool amounts
+   *
+   * Note: slippage supports a maximum scale of 1 (ex. 0.1%). Additional decimal places will be floored.
+   *
+   * @param inputTokenId The token you want to trade from
+   * @param inputAmount The amount of token you would to trade
+   * @param inputTokenPoolAmount The amount of input tokens in the pool
+   * @param outputTokenPoolAmount The amount of output tokens in the pool
+   * @param slippage An optional slippage in percentage you are willing to take in this trade (default: 0.1%)
+   * @return Returns a quote on the exchanged token based on the input token amount
+   */
+  getQuoteWithPoolAmounts: (
+    inputToken: OrcaToken,
+    inputAmount: Decimal | OrcaU64,
+    inputTokenPoolAmount: u64,
+    outputTokenPoolAmount: u64,
+    slippage?: Decimal
   ) => Promise<Quote>;
 
   /**
@@ -70,6 +109,23 @@ export type OrcaPool = {
   ) => Promise<TransactionPayload>;
 
   /**
+   * Get suggested pool token deposit amount based on required constraints on maximum tokenA amount and maximum tokenB amount
+   *
+   * Note:
+   * 1. minPoolTokenAmountOut in the output type is a misnomer, and it represents the _exact_ poolTokenAmountOut value
+   *
+   * @param maxTokenAIn The maximum amount of tokenA to deposit in exchange for pool token
+   * @param maxTokenBIn The maximum amount of tokenB to deposit in exchange for pool token
+   * @param slippage An optional slippage in percentage you are willing to take in deposit (default: 0.1%)
+   * @return Returns the input for deposit
+   */
+  getDepositQuote: (
+    maxTokenAIn: Decimal | OrcaU64,
+    maxTokenBIn: Decimal | OrcaU64,
+    slippage?: Decimal
+  ) => Promise<DepositQuote>;
+
+  /**
    * Perform a deposit: send tokenA and tokenB, and receive a poolToken in return.
    * Fee for the transaction will be paid by the owner's wallet.
    *
@@ -89,6 +145,25 @@ export type OrcaPool = {
     maxTokenBIn: Decimal | OrcaU64,
     minPoolTokenAmountOut: Decimal | OrcaU64
   ) => Promise<TransactionPayload>;
+
+  /**
+   * Get suggested withdraw token amounts based on required withdraw amount of the pool token / one of the paired tokens
+   *
+   * Throws error if withdrawTokenMint does not equal tokenMint of tokenA, tokenB, or poolToken of this pool
+   *
+   * Note:
+   * 1. maxPoolTokenAmountIn in the output type is a misnomer, and it represents the _exact_ poolTokenAmountIn value
+   *
+   * @param withdrawTokenAmount The amount of tokens to withdraw in terms of tokenA amount, tokenB amount, or poolToken amount
+   * @param withdrawTokenMint The token mint public key of tied to withdrawTokenAmount. It should be the mint of tokenA, tokenB, or poolToken
+   * @param slippage An optional slippage in percentage you are willing to take in withdraw (default: 0.1%)
+   * @return Returns the input for withdraw
+   */
+  getWithdrawQuote: (
+    withdrawTokenAmount: Decimal | OrcaU64,
+    withdrawTokenMint: PublicKey,
+    slippage?: Decimal
+  ) => Promise<WithdrawQuote>;
 
   /**
    * Perform a withdraw: send poolToken, and receive tokenA and tokenB in return.

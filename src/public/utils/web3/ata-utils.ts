@@ -29,7 +29,7 @@ export async function resolveOrCreateAssociatedTokenAddress(
   tokenMint: PublicKey,
   wrappedSolAmountIn = new u64(0)
 ): Promise<ResolvedTokenAddressInstruction> {
-  if (tokenMint !== solToken.mint) {
+  if (!tokenMint.equals(solToken.mint)) {
     const derivedAddress = await deriveAssociatedTokenAddress(owner.publicKey, tokenMint);
 
     // Check if current wallet has an ATA for this spl-token mint. If not, create one.
